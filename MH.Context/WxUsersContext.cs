@@ -6,14 +6,19 @@ using System.Linq;
 
 namespace MH.Context
 {
-    public class WxUsersContext
+    public class WxUsersContext : BaseContext<WxUsers>
     {
-        private IQueryable<WxUsers> Table;
-        private MHContext Entity;
+        protected override IQueryable<WxUsers> Table
+        {
+            get
+            {
+                return Entity.WxUsers.Where(a => !a.IsDel);
+            }
+        }
+
         public WxUsersContext()
         {
             Entity = new MHContext();
-            Table = Entity.WxUsers.Where(a => !a.IsDel);
         }
 
         /// <summary>

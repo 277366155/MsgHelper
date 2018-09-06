@@ -26,9 +26,17 @@ namespace MH.Web.ApiControllers
         public IActionResult CreateMenu()
         {
             var data = new ButtonParam() { button = new List<BaseButton>() };
-            data.button.Add(new ViewButton() { name = "url按钮", type = ButtonType.view.ToString(), url = "http://277366155.cn:10821" });
-            var subBtns=new SubButtonList() { name="test二级菜单", sub_button= new List<Button>() };
-            subBtns.sub_button.Add(new ViewButton() { name="二级链接测试", type = ButtonType.view.ToString(), url = "http://277366155.cn:10821" });
+            //添加一个一级菜单
+            data.button.Add(new ViewButton() { name = "首页", type = ButtonType.view.ToString(), url = "http://277366155.cn" });
+
+            //添加带有二级菜单的按钮
+            var menuBtns = new SubButtonList() { name = "菜单管理", sub_button = new List<Button>() };
+            menuBtns.sub_button.Add(new ViewButton() { name = "重建菜单", type = ButtonType.view.ToString(), url = "http://277366155.cn/wx/menu/create" });
+            menuBtns.sub_button.Add(new ViewButton() { name = "查看菜单", type = ButtonType.view.ToString(), url = "http://277366155.cn/wx/menu/select" });
+            data.button.Add(menuBtns);
+
+            var subBtns=new SubButtonList() { name="其他", sub_button= new List<Button>() };
+            subBtns.sub_button.Add(new ViewButton() { name="个人信息", type = ButtonType.view.ToString(), url = "http://277366155.cn/home/info" });
             data.button.Add(subBtns);
            return Content(WxApi.CreateMenu(data));
         }
@@ -40,7 +48,7 @@ namespace MH.Web.ApiControllers
             return Content(WxApi.DeleteMenu());
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("menu/select")]
         public IActionResult SelectMenu()
         {
