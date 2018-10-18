@@ -7,7 +7,7 @@ namespace MH.Common
     {
         #region 用户消息
         /// <summary>
-        /// 获取用户发送的信息
+        /// 获取用户发送的信息。用户发送公众号信息之后，公众号配置接口会被post用户发送的信息
         /// 文档地址：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140453
         /// </summary>
         /// <returns></returns>

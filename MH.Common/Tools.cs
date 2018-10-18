@@ -236,12 +236,15 @@ namespace MH.Common
             try
             {
                 Stream inputstream = accessor.HttpContext.Request.Body; //  HttpContext.Request.InputStream;
-                byte[] b = new byte[inputstream.Length];
-                inputstream.Read(b, 0, (int)inputstream.Length);
-                string inputstr = UTF8Encoding.UTF8.GetString(b);
+                string inputstr = "";
+                using (StreamReader reader = new StreamReader(inputstream))
+                {
+                    inputstr = reader.ReadToEnd();
+                }
+
                 return inputstr;
             }
-            catch
+            catch(Exception ex)
             {
                 return "";
             }

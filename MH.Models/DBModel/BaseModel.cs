@@ -40,7 +40,7 @@ namespace MH.Models.DBModel
         /// </summary> 
         [Timestamp]
         [ConcurrencyCheck]
-        public DateTime? RowVersion { get;  set; }
+        public DateTime RowVersion { get;  set; }
 
         public override string ToString()
         {

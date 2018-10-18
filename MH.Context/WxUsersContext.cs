@@ -16,6 +16,8 @@ namespace MH.Context
             }
         }
 
+
+
         public WxUsersContext()
         {
             Entity = new MHContext();

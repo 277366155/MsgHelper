@@ -44,7 +44,6 @@ namespace MH.Web.Filter
             var userInfoStr = WxApi.GetUserInfo(userOpenid);
             var data = JsonConvert.DeserializeObject<WxUsers>(userInfoStr);
             wxUsersContext.Create(data);
-
         }
     }
 }

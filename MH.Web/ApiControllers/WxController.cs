@@ -19,6 +19,8 @@ namespace MH.Web.ApiControllers
         [Route("")]
         public ActionResult Index()
         {
+            var msg=accessor.GetUserMsg();
+
             return Content(accessor.CheckWX());
         }
         [HttpPost]

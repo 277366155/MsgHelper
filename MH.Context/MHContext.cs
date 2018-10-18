@@ -29,5 +29,10 @@ namespace MH.Context
         //    modelBuilder.Entity<BaseModel>().Property(p => p.RowVersion).IsConcurrencyToken().HasValueGenerator(Guid.NewGuid().ToString("N"));
         //}
         public DbSet<WxUsers> WxUsers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder  modelBuilder)
+        {
+            modelBuilder.Entity<WxUsers>().Property(p => p.RowVersion).IsConcurrencyToken();
+        }
     }
 }
