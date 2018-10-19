@@ -40,12 +40,12 @@ namespace MH.Common
         /// 检测请求是否来自微信
         /// </summary>
         /// <returns>来自wx则原样返回echostr,否则返回null</returns>
-        public static string CheckWX(this IHttpContextAccessor accessor)
+        public static string CheckWX(this HttpContext httpContext)
         {
-            var signature = accessor.HttpContext.Request.Query["signature"];
-            var timestamp = accessor.HttpContext.Request.Query["timestamp"];
-            var nonce = accessor.HttpContext.Request.Query["nonce"];
-            var echostr = accessor.HttpContext.Request.Query["echostr"];
+            var signature = httpContext.Request.Query["signature"];
+            var timestamp = httpContext.Request.Query["timestamp"];
+            var nonce = httpContext.Request.Query["nonce"];
+            var echostr = httpContext.Request.Query["echostr"];
             var token = "admin";
 
             //三个参数排序
@@ -59,8 +59,6 @@ namespace MH.Common
             }
             //拼接之后hash加密
             checkStr = Tools.SHA1(checkStr, Encoding.UTF8).ToLower();
-
-            //WXAPI.WXAPI.GetUserMsg();
 
             //比较两个值，如果不等相等，则说明不是微信发来的请求
             if (checkStr != signature)
@@ -93,7 +91,7 @@ namespace MH.Common
 
                 string result = "";
                 string requestUrl = WXTokenUrl + "&appid=" + APPID + "&Secret=" + Secret;
-                var resultStr = Tools.Request(new RequstParam() { Method = "GET", Encode = "UTF-8", Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
+                var resultStr = Tools.GetRequest(new GetParam() {  Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
                 var resultObj = JsonConvert.DeserializeObject<AccessToken>(resultStr);
                 if (resultObj != null)
                 {
@@ -113,9 +111,9 @@ namespace MH.Common
         ///网页授权 https://open.weixin.qq.com/connect/oauth2/authorize?appid={appid}&redirect_uri={url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
         /// </summary>
         /// <returns></returns>
-        public static string GetWebCodeRedirect(this IHttpContextAccessor accessor)
+        public static string GetWebCodeRedirect(this HttpContext httpContext)
         {
-            var request = accessor.HttpContext.Request;
+            var request = httpContext.Request;
             var currentUrl = WebUtility.UrlEncode(request.Scheme + "://" + request.Host + request.Path+request.QueryString);
             var requestUrl = WXWebAuthoUrl.Replace("{appid}", APPID).Replace("{url}", currentUrl);
             return requestUrl;
@@ -129,7 +127,7 @@ namespace MH.Common
         public static WebToken GetWebToken(this IHttpContextAccessor accessor,string code = "")
         {
             string requestUrl = WxWebTokenUrl.Replace("{appid}", APPID).Replace("{secret}", Secret).Replace("{code}", code);
-            var resultStr = Tools.Request(new RequstParam() { Method = "GET", Encode = "UTF-8", Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
+            var resultStr = Tools.GetRequest(new GetParam() { Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
             var resultObj = JsonConvert.DeserializeObject<WebToken>(resultStr);
 
             return resultObj;

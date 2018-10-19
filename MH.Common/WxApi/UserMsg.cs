@@ -13,42 +13,47 @@ namespace MH.Common
         /// <returns></returns>
         public static WXMsgBase GetUserMsg(this IHttpContextAccessor accessor)
         {
-            var data = Tools.GetXMLData(accessor);
+            var data = Tools.GetXMLData(accessor.HttpContext);            
+            return XmlToObj(data);
+        }
+
+        public static WXMsgBase XmlToObj(string xmlStr)
+        {
             var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(data);
+            xmlDoc.LoadXml(xmlStr);
             var msgType = xmlDoc.GetElementsByTagName("MsgType").Item(0).InnerText;
             WXMsgBase result = null;
 
             switch (msgType)
             {
                 case MsgType.Text:
-                    result = data.XMLToModel<WXTextMsg>();
+                    result = xmlStr.XMLToModel<WXTextMsg>();
                     break;
                 case MsgType.Img:
-                    result = data.XMLToModel<WXImgMsg>();
+                    result = xmlStr.XMLToModel<WXImgMsg>();
                     break;
                 case MsgType.Link:
-                    result = data.XMLToModel<WXLinkMsg>();
+                    result = xmlStr.XMLToModel<WXLinkMsg>();
                     break;
                 case MsgType.Location:
-                    result = data.XMLToModel<WXLocationMsg>();
+                    result = xmlStr.XMLToModel<WXLocationMsg>();
                     break;
                 case MsgType.Video:
-                    result = data.XMLToModel<WXVideoMsg>();
+                    result = xmlStr.XMLToModel<WXVideoMsg>();
                     break;
                 case MsgType.ShortVideo:
-                    result = data.XMLToModel<WXShortVideoMsg>();
+                    result = xmlStr.XMLToModel<WXShortVideoMsg>();
                     break;
                 case MsgType.Voice:
-                    result = data.XMLToModel<WXVoiceMsg>();
+                    result = xmlStr.XMLToModel<WXVoiceMsg>();
                     break;
                 default:
                     result = null;
                     break;
             }
+
             return result;
         }
-
         #endregion
     }
 }

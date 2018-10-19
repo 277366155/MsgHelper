@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MH.Common\MH.Common.csproj" />
     <ProjectReference Include="..\MH.Context\MH.Context.csproj" />
+    <ProjectReference Include="..\MH.Core\MH.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,7 +17,7 @@ namespace MH.Web.Controllers
     public class HomeController : BaseController
     {
         private WxUsersContext wxUsersContext;
-        public HomeController(IHttpContextAccessor _accessor) : base(_accessor)
+        public HomeController() : base()
         {
             wxUsersContext = new WxUsersContext();
         }
@@ -28,15 +28,15 @@ namespace MH.Web.Controllers
             if (string.IsNullOrWhiteSpace(code))
             {
                 //通过微信服务端跳回到本页面时，会在请求地址上加上code参数
-                return Redirect(accessor.GetWebCodeRedirect());
+                return Redirect(CurrentAccessor.HttpContext.GetWebCodeRedirect());
             }
 
             ViewBag.Code = code;
             //获取access_token、userinfo等
-            var webToken = accessor.GetWebToken(code);
+            var webToken = CurrentAccessor.GetWebToken(code);
             if (webToken != null&&!string.IsNullOrWhiteSpace(webToken.Openid))
             {
-                accessor.SetCookie(webToken.Openid);                
+                CurrentAccessor.SetCookie(webToken.Openid);                
             }
             //若当前页面带有重定向参数，则重定向url
             if (!string.IsNullOrWhiteSpace(redirectUrl))

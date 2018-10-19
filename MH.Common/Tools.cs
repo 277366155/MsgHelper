@@ -19,18 +19,28 @@ namespace MH.Common
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static string Request(RequstParam param)
+        public static string HttpRequest(RequstParam param)
         {
-            if (param == null || string.IsNullOrWhiteSpace(param.Method))
+            if (param == null || !param.Method.HasValue)
             {
                 return "";
             }
-            switch (param.Method.ToLower())
+            switch (param.Method)
             {
-                case "get":
-                    return GetRequest(param);
-                case "post":
-                    return PostRequest(param);
+                case  MethodEnum.Get:
+                    return GetRequest(new GetParam()
+                    {
+                        ContentType = param.ContentType,
+                        RequestData = param.RequestData,
+                        Url = param.Url
+                    });
+                case MethodEnum.Post:
+                    return PostRequest(new PostParam()
+                    {
+                        ContentType = param.ContentType,
+                        RequestData = param.RequestData,
+                        Url = param.Url
+                    });
                 default:
                     return "";
             }
@@ -42,7 +52,7 @@ namespace MH.Common
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static string PostRequest(RequstParam param, string certpath = "", string certpwd = "")
+        public static string PostRequest(PostParam param, string certPath = "", string certPwd = "")
         {
             var resultStr = "";
             //创建一个http请求
@@ -50,7 +60,7 @@ namespace MH.Common
             //request.Proxy = new WebProxy("http://127.0.0.1:8888", false);
 
             //设置请求类型
-            request.Method = param.Method;
+            request.Method = param.Method.ToString();
             //请求内容格式
             request.ContentType = param.ContentType;
             //request.Accept = "*/*";
@@ -59,9 +69,9 @@ namespace MH.Common
             {
                 //当请求为https时，验证服务器证书
                 ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback((a, b, c, d) => true);
-                if (!string.IsNullOrEmpty(certpath) && !string.IsNullOrEmpty(certpwd))
+                if (!string.IsNullOrEmpty(certPath) && !string.IsNullOrEmpty(certPwd))
                 {
-                    X509Certificate2 cer = new X509Certificate2(certpath, certpwd,
+                    X509Certificate2 cer = new X509Certificate2(certPath, certPwd,
                         X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.MachineKeySet);
                     request.ClientCertificates.Add(cer);
                 }
@@ -97,10 +107,10 @@ namespace MH.Common
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static string GetRequest(RequstParam param)
+        public static string GetRequest(GetParam param)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(param.Url + (string.IsNullOrWhiteSpace(param.RequestData) ? "" : "?" + param.RequestData));
-            request.Method = param.Method;
+            request.Method = param.Method.ToString();
             request.ContentType = param.ContentType;
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -128,7 +138,7 @@ namespace MH.Common
             //request.Proxy = new WebProxy("http://127.0.0.1:8888", false);
 
             //设置请求类型
-            request.Method = param.Method;
+            request.Method = param.Method.ToString();
 
             //request.Accept = "*/*";
             //request.AllowAutoRedirect = false;
@@ -231,11 +241,11 @@ namespace MH.Common
         /// <summary>
         /// 获取post过来的xml数据
         /// </summary>
-        public static string GetXMLData(IHttpContextAccessor accessor)
+        public static string GetXMLData(HttpContext httpContext)
         {
             try
             {
-                Stream inputstream = accessor.HttpContext.Request.Body; //  HttpContext.Request.InputStream;
+                Stream inputstream = httpContext.Request.Body;
                 string inputstr = "";
                 using (StreamReader reader = new StreamReader(inputstream))
                 {
@@ -244,38 +254,12 @@ namespace MH.Common
 
                 return inputstr;
             }
-            catch(Exception ex)
+            catch//(Exception ex)
             {
                 return "";
             }
         }
 
-        /// <summary>
-        /// xml转为Model
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="xml"></param>
-        /// <param name="encoding"></param>
-        /// <returns></returns>
-        public static T XMLToModel<T>(this string xml, Encoding encoding = null)
-        {
-            if (string.IsNullOrWhiteSpace(xml))
-            {
-                return default(T);
-            }
-            if (encoding == null)
-            {
-                encoding = Encoding.UTF8;
-            }
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-            using (MemoryStream ms = new MemoryStream(encoding.GetBytes(xml)))
-            {
-                using (StreamReader streamReader = new StreamReader(ms, encoding))
-                {
-                    return (T)xmlSerializer.Deserialize(streamReader);
-                }
-            }
-        }
         #endregion
 
 

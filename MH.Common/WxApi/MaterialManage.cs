@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MH.Common
 {
-    public partial class WxApi
+    public static partial class WxApi
     {
         #region 图片类型素材
         public static string UploadImg(UploadRequestParam requst)

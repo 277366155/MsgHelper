@@ -11,7 +11,7 @@ namespace MH.Web.ApiControllers
     [Route("WxUsers")]
     public class WxUsersController : BaseController
     {
-        public WxUsersController(IHttpContextAccessor _accessor) : base(_accessor)
+        public WxUsersController() 
         {
         }
 

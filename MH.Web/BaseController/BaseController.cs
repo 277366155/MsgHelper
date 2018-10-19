@@ -1,17 +1,17 @@
 ﻿using MH.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using MH.Core;
 namespace MH.Web
 {
     public class BaseController: Controller
     {
-        protected static IHttpContextAccessor accessor;
+        protected static IHttpContextAccessor CurrentAccessor;
         protected string UserOpenid = "";
-        public BaseController(IHttpContextAccessor _accessor)
+        public BaseController()
         {
-            accessor = _accessor;
-            UserOpenid=accessor.GetCookie();
+            CurrentAccessor = Current.CurrentAccessor;
+            UserOpenid = CurrentAccessor.GetCookie();
         }
     }
 }

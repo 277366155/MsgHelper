@@ -23,12 +23,8 @@ namespace MH.Context
             base.OnConfiguring(optionsBuilder);
         }
 
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<BaseModel>().Property(p => p.RowVersion).IsConcurrencyToken().HasValueGenerator(Guid.NewGuid().ToString("N"));
-        //}
         public DbSet<WxUsers> WxUsers { get; set; }
+        public DbSet<WxUserMessage> WxUserMessage { get; set; }
 
         protected override void OnModelCreating(ModelBuilder  modelBuilder)
         {

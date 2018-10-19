@@ -11,9 +11,10 @@ using System;
 namespace MH.Context.Migrations
 {
     [DbContext(typeof(MHContext))]
-    partial class MHContextModelSnapshot : ModelSnapshot
+    [Migration("20181019070730_新增用户消息表结构")]
+    partial class 新增用户消息表结构
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,8 +26,6 @@ namespace MH.Context.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreateTime");
-
-                    b.Property<long>("CreateTimeSpan");
 
                     b.Property<string>("FromUserName")
                         .HasMaxLength(128);

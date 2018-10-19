@@ -10,6 +10,8 @@ using log4net.Repository;
 using log4net;
 using log4net.Config;
 using System.IO;
+using System;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace MH.Web
 {
@@ -35,13 +37,16 @@ namespace MH.Web
                 options.Filters.Add(typeof(ExceptionFilter));
                 //options.Filters.Add(typeof(UserCheckFilter));
             });
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             //services.AddDbContext<MHContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySqlConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider svp)
         {
+            MH.Core.Current.ServiceProvider = svp;
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
@@ -51,7 +56,7 @@ namespace MH.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+           
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

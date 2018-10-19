@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MH.Context.Migrations
 {
-    public partial class InitTable : Migration
+    public partial class 初始化db : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

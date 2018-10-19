@@ -12,10 +12,22 @@ namespace MH.Common
     public class RequstParam
     {
         public string Url { get; set; }
+        /// <summary>
+        /// 取ContentType类中只读字段
+        /// </summary>
         public string ContentType { get; set; }
         public string Encode { get; set; }
-        public string Method { get; set; }
+        public MethodEnum? Method { get; set; }
         public string RequestData { get; set; }
+    }
+
+    /// <summary>
+    /// 请求类型
+    /// </summary>
+    public enum MethodEnum
+    {
+        Post=0,
+        Get=1
     }
 
     /// <summary>
@@ -23,11 +35,24 @@ namespace MH.Common
     /// </summary>
     public class UploadRequestParam : RequstParam
     {
-        public new string Method = "Post";
-        public new string Encode = "UTF-8";
-        public string TypeName ="media";
+        public new MethodEnum Method = MethodEnum.Post;
+        public new string Encode => "UTF-8";
+        public string TypeName =>"media";
         public string FileName { get; set; }
         public Stream InputStream { get; set; }
+    }
+
+    public class PostParam: RequstParam
+    {
+        public new MethodEnum Method => MethodEnum.Post;
+        public new string Encode => "UTF-8";
+    }
+
+    public class GetParam : RequstParam
+    {
+        public new MethodEnum Method => MethodEnum.Get;
+        public new string Encode => "UTF-8";
+
     }
 
     public static class ContentType
@@ -142,6 +167,26 @@ namespace MH.Common
     public class ButtonParam
     {
         public List<BaseButton> button { get; set; }
+    }
+    #endregion
+
+    #region 客服模型
+    public class CustomServiceParam
+    {
+        /// <summary>
+        /// 客服账号
+        /// </summary>
+        public string kf_account { get; set; }
+
+        /// <summary>
+        /// 客服昵称
+        /// </summary>
+        public string nickname { get; set; }
+
+        /// <summary>
+        /// 客服密码
+        /// </summary>
+        public string password { get; set; }
     }
     #endregion
 }

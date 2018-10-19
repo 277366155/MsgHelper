@@ -11,10 +11,9 @@ namespace MH.Web.Filter
 {
     public class UserCheckAttribute : Attribute,IActionFilter
     {
-        private WxUsersContext wxUsersContext;
+        private static WxUsersContext WxUsers=>new WxUsersContext();
         public UserCheckAttribute()
         {
-            wxUsersContext = new WxUsersContext();
         }
         public void OnActionExecuted(ActionExecutedContext context)
         {
@@ -42,8 +41,8 @@ namespace MH.Web.Filter
                 return;
             }
             var userInfoStr = WxApi.GetUserInfo(userOpenid);
-            var data = JsonConvert.DeserializeObject<WxUsers>(userInfoStr);
-            wxUsersContext.Create(data);
+            var data = userInfoStr.JsonToObj<WxUsers>(); 
+            WxUsers.Create(data);
         }
     }
 }

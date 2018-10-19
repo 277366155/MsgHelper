@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MH.Web", "MH.Web\MH.Web.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MH.Models", "MH.Models\MH.Models.csproj", "{7CFB4D4F-CC88-43CD-AACC-9A0CBC696CAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MH.ConsoleTest", "ConsoleTest\MH.ConsoleTest.csproj", "{415C4950-F550-4B63-BB0E-EFBBADED0B12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MH.ConsoleTest", "ConsoleTest\MH.ConsoleTest.csproj", "{415C4950-F550-4B63-BB0E-EFBBADED0B12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MH.Core", "MH.Core\MH.Core.csproj", "{8733FB4D-8178-4778-91BE-F1677728E723}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{415C4950-F550-4B63-BB0E-EFBBADED0B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{415C4950-F550-4B63-BB0E-EFBBADED0B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{415C4950-F550-4B63-BB0E-EFBBADED0B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8733FB4D-8178-4778-91BE-F1677728E723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8733FB4D-8178-4778-91BE-F1677728E723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8733FB4D-8178-4778-91BE-F1677728E723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8733FB4D-8178-4778-91BE-F1677728E723}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

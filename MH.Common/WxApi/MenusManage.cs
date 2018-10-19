@@ -20,16 +20,12 @@ namespace MH.Common
         public static string CreateMenu(ButtonParam buttonParam)
         {
             var requestUrl = WXCreateMenuUrl + "?access_token=" + AccessToken;
-            var result = Tools.Request(new RequstParam()
+            var result = Tools.PostRequest(new PostParam()
             {
-                Method = "POST",
-                Encode = "UTF-8",
                 ContentType = ContentType.FormUrlEncoded,
                 Url = requestUrl,
-                RequestData = JsonConvert.SerializeObject(buttonParam)
+                RequestData = buttonParam.ObjToJson()
             });
-
-            //var result = Tools.HttpPost(requestUrl, JsonConvert.SerializeObject(buttonParam));
             return result;
         }
 
@@ -41,7 +37,7 @@ namespace MH.Common
         public static string DeleteMenu()
         {
             var requestUrl = WXDeleteMenuUrl + "?access_token=" + AccessToken;
-            var result = Tools.Request(new RequstParam() { Method = "Get", Encode = "UTF-8", ContentType = ContentType.TextHtml, Url = requestUrl });
+            var result = Tools.GetRequest(new GetParam() {  ContentType = ContentType.TextHtml, Url = requestUrl });
             return result;
         }
 
@@ -53,7 +49,7 @@ namespace MH.Common
         public static string SelectMenu()
         {
             var requestUrl = WXSelectMenuUrl + "?access_token=" + AccessToken;
-            var result = Tools.Request(new RequstParam() { Method = "Get", Encode = "UTF-8", ContentType = ContentType.TextHtml, Url = requestUrl });
+            var result = Tools.GetRequest(new GetParam() {  ContentType = ContentType.TextHtml, Url = requestUrl });
             return result;
         }
 

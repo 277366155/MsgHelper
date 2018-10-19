@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MH.Common;
+using MH.Context;
 
 namespace MH.Web.ApiControllers
 {
@@ -12,16 +13,16 @@ namespace MH.Web.ApiControllers
     [Route("Wx")]
     public class WxController : BaseController
     {
-        public WxController(IHttpContextAccessor _accessor) : base(_accessor)
+        public WxController() 
         {
         }
 
         [Route("")]
         public ActionResult Index()
         {
-            var msg=accessor.GetUserMsg();
-
-            return Content(accessor.CheckWX());
+            //var msg=accessor.GetUserMsg();
+            new WxUserMessageContext().GetXmlDataAndInsert();
+            return Content(CurrentAccessor.HttpContext.CheckWX());
         }
         [HttpPost]
         [Route("menu/create")]
