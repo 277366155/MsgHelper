@@ -1,10 +1,8 @@
-﻿using MH.Context;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using MH.Web.Filter;
 using log4net.Repository;
 using log4net;
@@ -45,7 +43,7 @@ namespace MH.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider svp)
         {
-            MH.Core.Current.ServiceProvider = svp;
+            Core.Current.ServiceProvider = svp;
 
             if (env.IsDevelopment())
             {

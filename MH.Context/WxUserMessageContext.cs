@@ -38,6 +38,10 @@ namespace MH.Context
         public ResultBase GetXmlDataAndInsert()
         {
           var data=  Tools.GetXMLData(MH.Core.Current.CurrentContext);
+            /*
+             * todo: 1,获取到的data 转为model，
+             * 2， 引入AutoMapper将model转为DBModel
+             * */
             return null;
         }
     }
