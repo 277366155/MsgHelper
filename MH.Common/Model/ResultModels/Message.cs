@@ -61,8 +61,10 @@ namespace MH.Common
         /// 消息创建时间
         /// </summary>
         public long CreateTime { get; set; }
+
         /// <summary>
-        /// 消息类型：文本-text 图片-image 语音-voice 视频-video 小视频-shortvideo 地理位置-location 链接-link
+        /// 取值取MsgType类下的常量属性
+        /// 消息类型：文本-text 图片-image 语音-voice 视频-video 小视频-shortvideo 地理位置-location 链接-link  事件-event
         /// </summary>
         public string MsgType { get; set; }
     }

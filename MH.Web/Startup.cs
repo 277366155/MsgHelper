@@ -10,6 +10,7 @@ using log4net.Config;
 using System.IO;
 using System;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using MH.Common.AutoMapping;
 
 namespace MH.Web
 {
@@ -30,6 +31,7 @@ namespace MH.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AutoMapperConfig.Configure();
             services.AddMemoryCache();
             services.AddCors().AddMvc(options=> {
                 options.Filters.Add(typeof(ExceptionFilter));

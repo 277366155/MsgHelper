@@ -38,30 +38,34 @@ namespace MH.Models.DBModel
         /// <summary>
         /// 文本
         /// </summary>
-        text = 0,
+        TEXT = 0,
         /// <summary>
         /// 图片
         /// </summary>
-        image,
+        IMAGE,
         /// <summary>
         /// 语音
         /// </summary>
-        voice,
+        VOICE,
         /// <summary>
         /// 视频
         /// </summary>
-        video,
+        VIDEO,
         /// <summary>
         /// 小视频
         /// </summary>
-        shortvideo,
+        SHORTVIDEO,
         /// <summary>
         /// 地理位置
         /// </summary>
-        location,
+        LOCATION,
         /// <summary>
         /// 链接
         /// </summary>
-        link
+        LINK,
+        /// <summary>
+        /// 事件
+        /// </summary>
+        EVENT
     }
 }

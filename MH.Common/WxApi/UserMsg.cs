@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MH.Core;
+using Microsoft.AspNetCore.Http;
 using System.Xml;
 
 namespace MH.Common
@@ -11,9 +12,9 @@ namespace MH.Common
         /// 文档地址：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140453
         /// </summary>
         /// <returns></returns>
-        public static WXMsgBase GetUserMsg(this IHttpContextAccessor accessor)
+        public static WXMsgBase GetUserMsg()
         {
-            var data = Tools.GetXMLData(accessor.HttpContext);            
+            var data = Tools.GetXMLData(Current.CurrentContext);            
             return XmlToObj(data);
         }
 

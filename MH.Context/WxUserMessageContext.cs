@@ -1,14 +1,12 @@
 ﻿using MH.Common;
 using MH.Models;
 using MH.Models.DBModel;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using AutoMapper;
 
 namespace MH.Context
 {
-  public   class WxUserMessageContext : BaseContext<WxUserMessage>
+    public   class WxUserMessageContext : BaseContext<WxUserMessage>
     {
         protected override IQueryable<WxUserMessage> Table => Entity.WxUserMessage.Where(a=>!a.IsDel);
 
@@ -37,12 +35,12 @@ namespace MH.Context
 
         public ResultBase GetXmlDataAndInsert()
         {
-          var data=  Tools.GetXMLData(MH.Core.Current.CurrentContext);
-            /*
-             * todo: 1,获取到的data 转为model，
-             * 2， 引入AutoMapper将model转为DBModel
-             * */
-            return null;
+            var data =WxApi.GetUserMsg();
+
+            //autoMapper转换model
+            var dbData = Mapper.Map<WXMsgBase, WxUserMessage>(data);
+
+            return Create(dbData);
         }
     }
 }
