@@ -7,30 +7,30 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-
+using MH.Core;
 namespace MH.Common
 {
     public static partial class WxApi
     {
 
 
-        /// <summary>
-        /// 读取配置
-        /// </summary>
-        private static IConfigurationRoot Configuration
-        {
-            get
-            {
-                var builder = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        ///// <summary>
+        ///// 读取配置
+        ///// </summary>
+        //private static IConfigurationRoot Configuration
+        //{
+        //    get
+        //    {
+        //        var builder = new ConfigurationBuilder()
+        //            .SetBasePath(Directory.GetCurrentDirectory())
+        //            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-                return builder.Build();
-            }
-        }
-        public static string APPID = Configuration["AppSettings:WxConfig:AppId"];
-        public static string Secret = Configuration["AppSettings:WxConfig:Secret"];
-        public static string WXTokenUrl = Configuration["AppSettings:WxConfig:TokenUrl"]; //"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
+        //        return builder.Build();
+        //    }
+        //}
+        public static string APPID = Current.Configuration["AppSettings:WxConfig:AppId"];
+        public static string Secret = Current.Configuration["AppSettings:WxConfig:Secret"];
+        public static string WXTokenUrl = Current.Configuration["AppSettings:WxConfig:TokenUrl"]; //"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
         public static string WXWebAuthoUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={appid}&redirect_uri={url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
         public static string WxWebTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={appid}&secret={secret}&code={code}&grant_type=authorization_code";
         public const string AccessTokenKey = "WXAccessToken";

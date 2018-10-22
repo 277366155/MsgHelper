@@ -1,12 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using MH.Core;
+using Newtonsoft.Json;
 
 namespace MH.Common
 {
     public partial class WxApi
     {
-        public static string WXUserListUrl = Configuration["AppSettings:WxConfig:UserListUrl"]; //"https://api.weixin.qq.com/cgi-bin/user/get";
-        public static string WXUserInfoUrl = Configuration["AppSettings:WxConfig:UserInfoUrl"]; //"https://api.weixin.qq.com/cgi-bin/user/info";
-        public static string WXBatchUserInfoUrl = Configuration["AppSettings:WxConfig:BatchUserInfoUrl"]; // "https://api.weixin.qq.com/cgi-bin/user/info/batchget";
+        public static string WXUserListUrl = Current.Configuration["AppSettings:WxConfig:UserListUrl"]; //"https://api.weixin.qq.com/cgi-bin/user/get";
+        public static string WXUserInfoUrl = Current.Configuration["AppSettings:WxConfig:UserInfoUrl"]; //"https://api.weixin.qq.com/cgi-bin/user/info";
+        public static string WXBatchUserInfoUrl = Current.Configuration["AppSettings:WxConfig:BatchUserInfoUrl"]; // "https://api.weixin.qq.com/cgi-bin/user/info/batchget";
         
         #region 用户信息
 

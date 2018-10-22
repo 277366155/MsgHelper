@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.IO;
 
 namespace MH.Core
 {
@@ -20,6 +22,22 @@ namespace MH.Core
             get
             {
                 return CurrentAccessor.HttpContext;
+            }
+        }
+
+
+        /// <summary>
+        /// 读取配置
+        /// </summary>
+        public static IConfigurationRoot Configuration
+        {
+            get
+            {
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+                return builder.Build();
             }
         }
     }
