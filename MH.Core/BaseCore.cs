@@ -5,10 +5,10 @@ using System.IO;
 
 namespace MH.Core
 {
-    public static class Current
+    public static class BaseCore
     {
         public static IServiceProvider ServiceProvider { get; set; }
-        static Current() { }
+        static BaseCore() { }
         public static IHttpContextAccessor CurrentAccessor
         {
             get

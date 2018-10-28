@@ -1,4 +1,5 @@
 ﻿using MH.Common;
+using MH.Context;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
@@ -11,25 +12,54 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
-            InitConfig();
-            var pwd = "zb871225123";
-            using (var md5 = MD5.Create())
-            {
-                var bytes = Encoding.UTF8.GetBytes(pwd);
-                pwd = Convert.ToBase64String(md5.ComputeHash(bytes));
-            }
-            var data = WxApi.AddCustomerService(new CustomServiceParam() { kf_account = "boo@MsgHelper", nickname = "阿花", password =pwd });
-            Console.WriteLine(data.ObjToJson());
+            Test();
             Console.Read();
         }
 
-        private static void InitConfig()
+        private static void Test()
         {
-            var conf = new ConfigurationBuilder()
-                  .SetBasePath(Directory.GetCurrentDirectory())
-                  .AddJsonFile("appsettings.json", true, true)
-                  .AddJsonFile("appsettings.Development.json", true, true)
-                  .Build();
+            new S("我是谁。。。");
+        }
+    }
+
+    public class P
+    {
+        protected string str;
+        public P()
+        {
+            Console.WriteLine("父类无参构造函数");
+            Con();
+        }
+        public P(string s)
+        {
+            Console.WriteLine("父类有参构造函数："+s);
+            Con();
+        }
+
+        public virtual void Con()
+        {
+            Console.WriteLine("Con参数：" + str);
+        }
+    }
+
+    public class S : P
+    {
+        private string ss;
+        public S()
+        {
+            Console.WriteLine("子类无参构造函数");
+        }
+
+        public S(string s)
+        {
+            ss = s;
+            Console.WriteLine("子类有参构造函数："+s);
+        }
+
+        public override void Con()
+        {
+            base.str = ss;
+            base.Con();
         }
     }
 }

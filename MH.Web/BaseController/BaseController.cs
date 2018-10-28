@@ -10,7 +10,7 @@ namespace MH.Web
         protected string UserOpenid = "";
         public BaseController()
         {
-            CurrentAccessor = Current.CurrentAccessor;
+            CurrentAccessor = BaseCore.CurrentAccessor;
             UserOpenid = CurrentAccessor.GetCookie();
         }
     }

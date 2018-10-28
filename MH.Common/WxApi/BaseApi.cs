@@ -28,11 +28,11 @@ namespace MH.Common
         //        return builder.Build();
         //    }
         //}
-        public static string APPID = Current.Configuration["AppSettings:WxConfig:AppId"];
-        public static string Secret = Current.Configuration["AppSettings:WxConfig:Secret"];
-        public static string WXTokenUrl = Current.Configuration["AppSettings:WxConfig:TokenUrl"]; //"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
-        public static string WXWebAuthoUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={appid}&redirect_uri={url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-        public static string WxWebTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={appid}&secret={secret}&code={code}&grant_type=authorization_code";
+        public static string APPID = BaseCore.Configuration["AppSettings:WxConfig:AppId"];
+        public static string Secret = BaseCore.Configuration["AppSettings:WxConfig:Secret"];
+        public static string WXTokenUrl = BaseCore.Configuration["AppSettings:WxConfig:TokenUrl"]; //"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
+        public static string WXWebAuthoUrl = BaseCore.Configuration["AppSettings:WxConfig:WXWebAuthoUrl"]; //"https://open.weixin.qq.com/connect/oauth2/authorize?appid={appid}&redirect_uri={url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        public static string WxWebTokenUrl = BaseCore.Configuration["AppSettings:WxConfig:WxWebTokenUrl"];// "https://api.weixin.qq.com/sns/oauth2/access_token?appid={appid}&secret={secret}&code={code}&grant_type=authorization_code";
         public const string AccessTokenKey = "WXAccessToken";
         public const string WebTokenKey = "WXWebToken";
         #region 检测是否来自微信的请求

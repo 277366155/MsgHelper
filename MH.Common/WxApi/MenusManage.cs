@@ -4,9 +4,9 @@ namespace MH.Common
 {
     public static partial class WxApi
     {
-        public static string WXCreateMenuUrl = Current.Configuration["AppSettings:WxConfig:CreateMenuUrl"];//https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN
-        public static string WXDeleteMenuUrl = Current.Configuration["AppSettings:WxConfig:DeleteMenuUrl"];//https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN
-        public static string WXSelectMenuUrl = Current.Configuration["AppSettings:WxConfig:SelectMenuUrl"];//https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN
+        public static string WXCreateMenuUrl = BaseCore.Configuration["AppSettings:WxConfig:CreateMenuUrl"];//https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN
+        public static string WXDeleteMenuUrl = BaseCore.Configuration["AppSettings:WxConfig:DeleteMenuUrl"];//https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN
+        public static string WXSelectMenuUrl = BaseCore.Configuration["AppSettings:WxConfig:SelectMenuUrl"];//https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN
         /// <summary>
         /// 创建自定义菜单
         /// 文档地址:https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141013

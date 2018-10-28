@@ -3,7 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MH.Models.DBModel
 {
-    public  class WxUserMessage:BaseModel
+    /// <summary>
+    /// wx用户消息
+    /// </summary>
+    public  class WxUserMessage:ModelBase
     {
         /// <summary>
         /// 发送人openid

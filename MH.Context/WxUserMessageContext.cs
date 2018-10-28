@@ -6,7 +6,7 @@ using AutoMapper;
 
 namespace MH.Context
 {
-    public   class WxUserMessageContext : BaseContext<WxUserMessage>
+    public   class WxUserMessageContext : ContextBase<WxUserMessage>
     {
         protected override IQueryable<WxUserMessage> Table => Entity.WxUserMessage.Where(a=>!a.IsDel);
 

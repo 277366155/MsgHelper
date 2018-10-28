@@ -45,7 +45,7 @@ namespace MH.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider svp)
         {
-            Core.Current.ServiceProvider = svp;
+            Core.BaseCore.ServiceProvider = svp;
 
             if (env.IsDevelopment())
             {

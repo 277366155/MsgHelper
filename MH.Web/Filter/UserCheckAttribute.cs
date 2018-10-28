@@ -28,7 +28,7 @@ namespace MH.Web.Filter
         {
             
             //判断当前是否是根目录，根目录无需获取用户cookie
-            if (string.IsNullOrWhiteSpace(context.HttpContext.Request.Path))
+            if (string.IsNullOrWhiteSpace(context.HttpContext.Request.Path.Value.Trim('/')))
             {
                 return;
             }

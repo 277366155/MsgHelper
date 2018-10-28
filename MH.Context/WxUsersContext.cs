@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MH.Context
 {
-    public class WxUsersContext : BaseContext<WxUsers>
+    public class WxUsersContext : ContextBase<WxUsers>
     {
         protected override IQueryable<WxUsers> Table
         {
@@ -14,13 +14,6 @@ namespace MH.Context
             {
                 return Entity.WxUsers.Where(a => !a.IsDel);
             }
-        }
-
-
-
-        public WxUsersContext()
-        {
-            Entity = new MHContext();
         }
 
         /// <summary>

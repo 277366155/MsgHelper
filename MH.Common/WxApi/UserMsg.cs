@@ -14,7 +14,7 @@ namespace MH.Common
         /// <returns></returns>
         public static WXMsgBase GetUserMsg()
         {
-            var data = Tools.GetXMLData(Current.CurrentContext);            
+            var data = Tools.GetXMLData(BaseCore.CurrentContext);            
             return XmlToObj(data);
         }
 

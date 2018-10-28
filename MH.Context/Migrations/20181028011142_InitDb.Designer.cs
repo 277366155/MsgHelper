@@ -11,8 +11,8 @@ using System;
 namespace MH.Context.Migrations
 {
     [DbContext(typeof(MHContext))]
-    [Migration("20181019072834_更新消息字段")]
-    partial class 更新消息字段
+    [Migration("20181028011142_InitDb")]
+    partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

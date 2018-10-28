@@ -1,25 +1,37 @@
-﻿using MH.Models.DBModel;
+﻿using MH.Core;
+using MH.Models.DBModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MH.Context
 {
     public class MHContext : DbContext
     {
-        //public MHContext(DbContextOptions options) : base(options)
-        //{
+        private string _dbConnStr;
 
-        //}
+        public MHContext()
+        {
+            _dbConnStr = BaseCore.Configuration.GetConnectionString("MySqlConnection");
+        }
+        public MHContext(string connStr)
+        {
+            if (string.IsNullOrWhiteSpace(connStr))
+            {
+                this._dbConnStr = BaseCore.Configuration.GetConnectionString("MySqlConnection");
+            }
+            else
+            {
+                _dbConnStr = connStr;
+            }
+        }
 
-        
-        //startup中未依赖注入的话，可以在此配置数据库连接
+        /// <summary>
+        /// 基类DbContext()构造函数中会调用该方法
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseMySQL(Configuration.GetConnectionString("MySqlConnection"));
-
-            optionsBuilder.UseMySQL("Server=127.0.0.1;database=MsgHelper;uid=root;pwd=1qaz@WSX;SslMode=None");
+            optionsBuilder.UseMySQL(_dbConnStr);
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -28,7 +40,7 @@ namespace MH.Context
 
         protected override void OnModelCreating(ModelBuilder  modelBuilder)
         {
-            modelBuilder.Entity<WxUsers>().Property(p => p.RowVersion).IsConcurrencyToken();
+            modelBuilder.Entity<WxUsers>().Property(p => p.RowVersion).ValueGeneratedOnAddOrUpdate().IsConcurrencyToken();
         }
     }
 }

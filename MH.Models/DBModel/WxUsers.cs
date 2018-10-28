@@ -5,7 +5,10 @@ using System.Text;
 
 namespace MH.Models.DBModel
 {
-    public class WxUsers : BaseModel
+    /// <summary>
+    /// wx用户信息
+    /// </summary>
+    public class WxUsers : ModelBase
     {
         [MaxLength(128)]
         public string Openid { get; set; }

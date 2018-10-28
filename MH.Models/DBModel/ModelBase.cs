@@ -6,9 +6,9 @@ using System.Text;
 
 namespace MH.Models.DBModel
 {
-    public class BaseModel
+    public class ModelBase
     {
-        public BaseModel()
+        public ModelBase()
         {
             var now = DateTime.Now;
             this.CreateTime = now;
