@@ -38,7 +38,7 @@ namespace MH.Models.DBModel
         /// <summary>
         /// 文章状态
         /// </summary>
-        public ArticleStatusEnum Status { get; set; }
+        public AuthorityStatusEnum Status { get; set; }
 
         /// <summary>
         /// 是否置顶
@@ -51,7 +51,7 @@ namespace MH.Models.DBModel
         public bool IsReview { get; set; }
     }
 
-    public enum ArticleStatusEnum
+    public enum AuthorityStatusEnum
     {
         /// <summary>
         /// 私密

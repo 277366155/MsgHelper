@@ -11,9 +11,10 @@ using System;
 namespace MH.Context.Migrations
 {
     [DbContext(typeof(MHContext))]
-    partial class MHContextModelSnapshot : ModelSnapshot
+    [Migration("20181029172056_新增文章表调查投票表")]
+    partial class 新增文章表调查投票表
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

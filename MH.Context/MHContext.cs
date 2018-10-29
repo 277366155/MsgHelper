@@ -37,10 +37,18 @@ namespace MH.Context
 
         public DbSet<WxUsers> WxUsers { get; set; }
         public DbSet<WxUserMessage> WxUserMessage { get; set; }
+        public DbSet<UserInfo> UserInfo { get; set; }
+        public DbSet<Articles> Articles { get; set; }
+        public DbSet<ArticleType> ArticleType { get; set; }
+        public DbSet<Polls> Polls { get; set; }
+        public DbSet<PollOptions> PollOptions { get; set; }
+        public DbSet<PollDetails> PollDetails { get; set; }
+        public DbSet<Reviews> Reviews { get; set; }
+        public DbSet<SystemConfig> SystemConfig { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder  modelBuilder)
-        {
-            modelBuilder.Entity<WxUsers>().Property(p => p.RowVersion).ValueGeneratedOnAddOrUpdate().IsConcurrencyToken();
-        }
+        //protected override void OnModelCreating(ModelBuilder  modelBuilder)
+        //{
+        //    modelBuilder.Entity<WxUsers>().Property(p => p.RowVersion).IsConcurrencyToken();
+        //}
     }
 }

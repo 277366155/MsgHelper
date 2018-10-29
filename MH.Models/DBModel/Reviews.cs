@@ -8,7 +8,7 @@ namespace MH.Models.DBModel
     /// <summary>
     /// 评论留言表
     /// </summary>
-    public class Reviews
+    public class Reviews:ModelBase
     {
         /// <summary>
         /// 留言的对象id【文章id或投票id】
