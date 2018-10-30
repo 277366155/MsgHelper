@@ -11,8 +11,8 @@ using System;
 namespace MH.Context.Migrations
 {
     [DbContext(typeof(MHContext))]
-    [Migration("20181029172056_新增文章表调查投票表")]
-    partial class 新增文章表调查投票表
+    [Migration("20181030183207_撤销test")]
+    partial class 撤销test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,8 @@ namespace MH.Context.Migrations
                         .HasMaxLength(2048);
 
                     b.Property<DateTime>("CreateTime");
+
+                    b.Property<int>("CreatorId");
 
                     b.Property<bool>("IsDel");
 
@@ -52,9 +54,11 @@ namespace MH.Context.Migrations
 
                     b.Property<int>("TypeId");
 
-                    b.Property<int>("UserId");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Articles");
                 });
@@ -65,6 +69,8 @@ namespace MH.Context.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreateTime");
+
+                    b.Property<int?>("CreatorId");
 
                     b.Property<bool>("IsDel");
 
@@ -80,9 +86,9 @@ namespace MH.Context.Migrations
                     b.Property<string>("TypeName")
                         .HasMaxLength(16);
 
-                    b.Property<int>("UserId");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("ArticleType");
                 });
@@ -115,6 +121,12 @@ namespace MH.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PollId");
+
+                    b.HasIndex("PollOptionId");
+
+                    b.HasIndex("VoterId");
+
                     b.ToTable("PollDetails");
                 });
 
@@ -143,6 +155,8 @@ namespace MH.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PollId");
+
                     b.ToTable("PollOptions");
                 });
 
@@ -153,7 +167,7 @@ namespace MH.Context.Migrations
 
                     b.Property<DateTime>("CreateTime");
 
-                    b.Property<int>("CreateUserId");
+                    b.Property<int>("CreatorId");
 
                     b.Property<DateTime?>("Deadline");
 
@@ -181,6 +195,8 @@ namespace MH.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatorId");
+
                     b.ToTable("Polls");
                 });
 
@@ -190,7 +206,7 @@ namespace MH.Context.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Content")
-                        .HasMaxLength(500);
+                        .HasMaxLength(512);
 
                     b.Property<DateTime>("CreateTime");
 
@@ -211,6 +227,10 @@ namespace MH.Context.Migrations
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ObjId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
                 });
@@ -356,6 +376,78 @@ namespace MH.Context.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WxUsers");
+                });
+
+            modelBuilder.Entity("MH.Models.DBModel.Articles", b =>
+                {
+                    b.HasOne("MH.Models.DBModel.UserInfo", "Creator")
+                        .WithMany("ArticlesList")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MH.Models.DBModel.ArticleType", "ArticleType")
+                        .WithMany("ArticlesList")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MH.Models.DBModel.ArticleType", b =>
+                {
+                    b.HasOne("MH.Models.DBModel.UserInfo", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId");
+                });
+
+            modelBuilder.Entity("MH.Models.DBModel.PollDetails", b =>
+                {
+                    b.HasOne("MH.Models.DBModel.Polls", "Poll")
+                        .WithMany("PollDetailsList")
+                        .HasForeignKey("PollId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MH.Models.DBModel.PollOptions", "PollOption")
+                        .WithMany("PollDetailsList")
+                        .HasForeignKey("PollOptionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MH.Models.DBModel.UserInfo", "Voter")
+                        .WithMany("PollDetailsList")
+                        .HasForeignKey("VoterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MH.Models.DBModel.PollOptions", b =>
+                {
+                    b.HasOne("MH.Models.DBModel.Polls", "Poll")
+                        .WithMany("PollOptionsList")
+                        .HasForeignKey("PollId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MH.Models.DBModel.Polls", b =>
+                {
+                    b.HasOne("MH.Models.DBModel.UserInfo", "Creator")
+                        .WithMany("PollsList")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MH.Models.DBModel.Reviews", b =>
+                {
+                    b.HasOne("MH.Models.DBModel.Articles", "Article")
+                        .WithMany("ReviewsList")
+                        .HasForeignKey("ObjId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MH.Models.DBModel.Polls", "Poll")
+                        .WithMany("ReviewsList")
+                        .HasForeignKey("ObjId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MH.Models.DBModel.UserInfo", "UserInfo")
+                        .WithMany("ReviewsList")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

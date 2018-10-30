@@ -11,13 +11,24 @@ using System;
 namespace MH.Context.Migrations
 {
     [DbContext(typeof(MHContext))]
-    partial class MHContextModelSnapshot : ModelSnapshot
+    [Migration("20181030181916_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.3-rtm-10026");
+
+            modelBuilder.Entity("MH.Context.TestTb", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
+
+                    b.HasKey("id");
+
+                    b.ToTable("TestTb");
+                });
 
             modelBuilder.Entity("MH.Models.DBModel.Articles", b =>
                 {

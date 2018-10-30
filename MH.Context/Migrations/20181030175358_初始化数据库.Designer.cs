@@ -11,9 +11,10 @@ using System;
 namespace MH.Context.Migrations
 {
     [DbContext(typeof(MHContext))]
-    partial class MHContextModelSnapshot : ModelSnapshot
+    [Migration("20181030175358_初始化数据库")]
+    partial class 初始化数据库
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

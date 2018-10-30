@@ -10,6 +10,13 @@ namespace MH.Models.DBModel
     /// </summary>
     public class UserInfo : ModelBase
     {
+        public UserInfo()
+        {
+            ArticlesList = new HashSet<Articles>();
+            PollsList = new HashSet<Polls>();
+            ReviewsList = new HashSet<Reviews>();
+            PollDetailsList = new HashSet<PollDetails>();
+        }
         /// <summary>
         /// 关联wxUser.openid
         /// </summary>
@@ -50,5 +57,13 @@ namespace MH.Models.DBModel
         /// 最后登录时间
         /// </summary>
         public DateTime LastLoginTime { get; set; }
+
+        public virtual ICollection<Articles> ArticlesList { get; set; }
+
+        public virtual ICollection<Polls> PollsList { get; set; }
+
+        public virtual ICollection<Reviews> ReviewsList { get; set; }
+
+        public virtual ICollection<PollDetails> PollDetailsList { get; set; }
     }
 }

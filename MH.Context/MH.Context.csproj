@@ -6,15 +6,18 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20181019072530_更新用户消息表结构.cs" />
+    <Compile Remove="Migrations\20181030165146_添加外键关系.cs" />
+    <Compile Remove="Migrations\20181030165751_添加外键关系.cs" />
+    <Compile Remove="Migrations\20181030170047_添加外键关系.cs" />
+    <Compile Remove="Migrations\20181030181226_s.cs" />
+    <Compile Remove="Migrations\20181030181534_test.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.11" />
   </ItemGroup>
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
-  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\MH.Common\MH.Common.csproj" />
     <ProjectReference Include="..\MH.Core\MH.Core.csproj" />

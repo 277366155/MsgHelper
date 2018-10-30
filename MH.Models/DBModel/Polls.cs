@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace MH.Models.DBModel
@@ -10,6 +11,13 @@ namespace MH.Models.DBModel
     /// </summary>
     public class Polls: ModelBase
     {
+
+        public Polls()
+        {
+            PollOptionsList = new HashSet<PollOptions>();
+            PollDetailsList = new HashSet<PollDetails>();
+            ReviewsList = new HashSet<Reviews>();
+        }
         /// <summary>
         /// 投票标题
         /// </summary>
@@ -40,7 +48,7 @@ namespace MH.Models.DBModel
         /// <summary>
         /// 创建者id
         /// </summary>
-        public int CreateUserId { get; set; }
+        public int CreatorId { get; set; }
 
         /// <summary>
         /// 可选择选项的数量：1-单选，>1多选。。。
@@ -51,5 +59,14 @@ namespace MH.Models.DBModel
         /// 截止日期
         /// </summary>
         public DateTime? Deadline { get; set; }
+
+        [ForeignKey("CreatorId")]
+        public virtual UserInfo Creator { get; set; }
+
+        public virtual ICollection<PollOptions> PollOptionsList { get; set; }
+
+        public virtual ICollection<PollDetails> PollDetailsList { get; set; }
+
+        public virtual ICollection<Reviews> ReviewsList { get; set; }
     }
 }

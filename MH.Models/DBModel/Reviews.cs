@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace MH.Models.DBModel
@@ -23,7 +24,7 @@ namespace MH.Models.DBModel
         /// <summary>
         /// 回复内容
         /// </summary>
-        [MaxLength(500)]
+        [MaxLength(512)]
         public string Content { get; set; }
 
         /// <summary>
@@ -35,6 +36,15 @@ namespace MH.Models.DBModel
         /// 回复留言者
         /// </summary>
         public int ReUserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual UserInfo UserInfo { get; set; }
+
+        [ForeignKey("ObjId")]
+        public virtual Articles Article { get; set; }
+
+        [ForeignKey("ObjId")]
+        public virtual Polls Poll { get; set; }
     }
 
     public enum ReviewTypeEnum

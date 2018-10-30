@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MH.Models.DBModel
 {
@@ -7,6 +9,10 @@ namespace MH.Models.DBModel
     /// </summary>
     public class Articles:ModelBase
     {
+        public Articles()
+        {
+            ReviewsList = new HashSet<Reviews>();
+        }
         /// <summary>
         /// 标题
         /// </summary>
@@ -16,7 +22,7 @@ namespace MH.Models.DBModel
         /// <summary>
         ///关联userinfo中的id
         /// </summary>
-        public int UserId { get; set; }
+        public int CreatorId { get; set; }
 
         /// <summary>
         /// 文章类型id
@@ -49,6 +55,14 @@ namespace MH.Models.DBModel
         /// 是否可评论
         /// </summary>
         public bool IsReview { get; set; }
+
+        [ForeignKey("TypeId")]
+        public virtual ArticleType ArticleType { get; set; }
+
+        [ForeignKey("CreatorId")]
+        public virtual UserInfo Creator { get; set; }
+
+        public virtual ICollection<Reviews> ReviewsList { get; set; }
     }
 
     public enum AuthorityStatusEnum

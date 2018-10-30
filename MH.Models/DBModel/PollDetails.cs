@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace MH.Models.DBModel
@@ -36,6 +37,15 @@ namespace MH.Models.DBModel
         /// 客户端类型
         /// </summary>
         public ClientTypeEnum ClientType { get; set; }
+
+        [ForeignKey("PollId")]
+        public virtual Polls Poll { get; set; }
+
+        [ForeignKey("PollOptionId")]
+        public virtual PollOptions PollOption { get; set; }
+
+        [ForeignKey("VoterId")]
+        public virtual UserInfo Voter { get; set; }
     }
 
     public enum ClientTypeEnum
