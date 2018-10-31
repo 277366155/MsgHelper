@@ -8,9 +8,9 @@ namespace MH.Models.DBModel
     /// <summary>
     /// 用户信息表
     /// </summary>
-    public class UserInfo : ModelBase
+    public class User : ModelBase
     {
-        public UserInfo()
+        public User()
         {
             ArticlesList = new HashSet<Articles>();
             PollsList = new HashSet<Polls>();

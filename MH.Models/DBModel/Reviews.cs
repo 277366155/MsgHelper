@@ -38,7 +38,7 @@ namespace MH.Models.DBModel
         public int ReUserId { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual UserInfo UserInfo { get; set; }
+        public virtual User UserInfo { get; set; }
 
         [ForeignKey("ObjId")]
         public virtual Articles Article { get; set; }

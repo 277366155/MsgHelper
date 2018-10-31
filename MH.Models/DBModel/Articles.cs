@@ -60,7 +60,7 @@ namespace MH.Models.DBModel
         public virtual ArticleType ArticleType { get; set; }
 
         [ForeignKey("CreatorId")]
-        public virtual UserInfo Creator { get; set; }
+        public virtual User Creator { get; set; }
 
         public virtual ICollection<Reviews> ReviewsList { get; set; }
     }

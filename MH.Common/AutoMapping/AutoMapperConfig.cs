@@ -1,11 +1,17 @@
 ﻿using System;
 using AutoMapper;
 using MH.Models.DBModel;
+using MH.Models.DTO;
 
 namespace MH.Common.AutoMapping
 {
-    public   class AutoMapperConfig
+    public static class AutoMapperConfig
     {
+        public static TDestination Map<TSource, TDestination>(this TDestination destination, TSource source)
+        {
+            return Mapper.Map(source, destination);
+        }
+
         public static void Configure()
         {
             Mapper.Initialize(cfg =>
@@ -30,7 +36,14 @@ namespace MH.Common.AutoMapping
                     destination.CreateTime = DateTime.Now;
                 });
 
-
+                cfg.CreateMap<Tuple<WxUsers, User>, UserDTO>()
+                .ForMember(
+                    d => d.NickName,
+                    opt => opt.MapFrom(s =>
+                    string.IsNullOrEmpty(s.Item2.CustomNickName)
+                    ? s.Item1.NickName
+                    : s.Item2.CustomNickName
+                ));
             });
         }
     }

@@ -33,7 +33,7 @@ namespace MH.Models.DBModel
         public string Remarks { get; set; }
 
         [ForeignKey("CreatorId")]
-        public virtual UserInfo Creator { get; set; }
+        public virtual User Creator { get; set; }
 
         public virtual ICollection<Articles> ArticlesList { get; set; }
     }

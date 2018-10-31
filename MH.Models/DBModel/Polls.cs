@@ -61,7 +61,7 @@ namespace MH.Models.DBModel
         public DateTime? Deadline { get; set; }
 
         [ForeignKey("CreatorId")]
-        public virtual UserInfo Creator { get; set; }
+        public virtual User Creator { get; set; }
 
         public virtual ICollection<PollOptions> PollOptionsList { get; set; }
 

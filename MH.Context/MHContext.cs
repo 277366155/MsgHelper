@@ -37,7 +37,7 @@ namespace MH.Context
 
         public DbSet<WxUsers> WxUsers { get; set; }
         public DbSet<WxUserMessage> WxUserMessage { get; set; }
-        public DbSet<UserInfo> UserInfo { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<Articles> Articles { get; set; }
         public DbSet<ArticleType> ArticleType { get; set; }
         public DbSet<Polls> Polls { get; set; }

@@ -1,7 +1,8 @@
-﻿using MH.Models;
+﻿using AutoMapper;
+using MH.Models;
 using MH.Models.DBModel;
-using Microsoft.EntityFrameworkCore;
-using MySql.Data.EntityFrameworkCore;
+using MH.Models.DTO;
+using System;
 using System.Linq;
 
 namespace MH.Context
@@ -27,14 +28,28 @@ namespace MH.Context
             {
                 return new Error("用户已存在");
             }
-            var data = Entity.WxUsers.Add(model);
-            Entity.SaveChanges();
-
-            if (data != null)
+            using (var entity = new MHContext())
             {
-                return new Ok<WxUsers>("新增用户成功") { Data = data.Entity };
+                //using (var tran= entity.Database.BeginTransaction())
+                //{
+                    /*
+                 1,插入wxUsers
+                 2,插入UserInfo
+                 */
+                    var wxUser = entity.WxUsers.Add(model);
+                    var userInfo = entity.User.Add(new User()
+                    {
+                        Openid = model.Openid,
+                        CustomNickName = model.NickName
+                    });
+                    entity.SaveChanges();
+                if (wxUser != null&& userInfo!=null)
+                {
+                    return new Ok<UserDTO>("新增用户成功") { Data = Mapper.Map<Tuple<WxUsers,User>,UserDTO>(new Tuple<WxUsers, User>( wxUser.Entity,userInfo.Entity)) };
+                }
+                return new Error("新增用户出错");
+                //}
             }
-            return new Error("新增用户出错");
         }
     }
 }

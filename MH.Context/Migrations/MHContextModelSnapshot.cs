@@ -261,7 +261,7 @@ namespace MH.Context.Migrations
                     b.ToTable("SystemConfig");
                 });
 
-            modelBuilder.Entity("MH.Models.DBModel.UserInfo", b =>
+            modelBuilder.Entity("MH.Models.DBModel.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -298,7 +298,7 @@ namespace MH.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserInfo");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("MH.Models.DBModel.WxUserMessage", b =>
@@ -379,7 +379,7 @@ namespace MH.Context.Migrations
 
             modelBuilder.Entity("MH.Models.DBModel.Articles", b =>
                 {
-                    b.HasOne("MH.Models.DBModel.UserInfo", "Creator")
+                    b.HasOne("MH.Models.DBModel.User", "Creator")
                         .WithMany("ArticlesList")
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -392,7 +392,7 @@ namespace MH.Context.Migrations
 
             modelBuilder.Entity("MH.Models.DBModel.ArticleType", b =>
                 {
-                    b.HasOne("MH.Models.DBModel.UserInfo", "Creator")
+                    b.HasOne("MH.Models.DBModel.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
                 });
@@ -409,7 +409,7 @@ namespace MH.Context.Migrations
                         .HasForeignKey("PollOptionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("MH.Models.DBModel.UserInfo", "Voter")
+                    b.HasOne("MH.Models.DBModel.User", "Voter")
                         .WithMany("PollDetailsList")
                         .HasForeignKey("VoterId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -425,7 +425,7 @@ namespace MH.Context.Migrations
 
             modelBuilder.Entity("MH.Models.DBModel.Polls", b =>
                 {
-                    b.HasOne("MH.Models.DBModel.UserInfo", "Creator")
+                    b.HasOne("MH.Models.DBModel.User", "Creator")
                         .WithMany("PollsList")
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -443,7 +443,7 @@ namespace MH.Context.Migrations
                         .HasForeignKey("ObjId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("MH.Models.DBModel.UserInfo", "UserInfo")
+                    b.HasOne("MH.Models.DBModel.User", "UserInfo")
                         .WithMany("ReviewsList")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

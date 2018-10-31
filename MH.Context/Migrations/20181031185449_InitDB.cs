@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MH.Context.Migrations
 {
-    public partial class 初始化数据库 : Migration
+    public partial class InitDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,7 @@ namespace MH.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserInfo",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -47,7 +47,7 @@ namespace MH.Context.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserInfo", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,9 +113,9 @@ namespace MH.Context.Migrations
                 {
                     table.PrimaryKey("PK_ArticleType", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ArticleType_UserInfo_CreatorId",
+                        name: "FK_ArticleType_User_CreatorId",
                         column: x => x.CreatorId,
-                        principalTable: "UserInfo",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -143,9 +143,9 @@ namespace MH.Context.Migrations
                 {
                     table.PrimaryKey("PK_Polls", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Polls_UserInfo_CreatorId",
+                        name: "FK_Polls_User_CreatorId",
                         column: x => x.CreatorId,
-                        principalTable: "UserInfo",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -173,9 +173,9 @@ namespace MH.Context.Migrations
                 {
                     table.PrimaryKey("PK_Articles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Articles_UserInfo_CreatorId",
+                        name: "FK_Articles_User_CreatorId",
                         column: x => x.CreatorId,
-                        principalTable: "UserInfo",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -244,9 +244,9 @@ namespace MH.Context.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reviews_UserInfo_UserId",
+                        name: "FK_Reviews_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "UserInfo",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -283,9 +283,9 @@ namespace MH.Context.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PollDetails_UserInfo_VoterId",
+                        name: "FK_PollDetails_User_VoterId",
                         column: x => x.VoterId,
-                        principalTable: "UserInfo",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -371,7 +371,7 @@ namespace MH.Context.Migrations
                 name: "ArticleType");
 
             migrationBuilder.DropTable(
-                name: "UserInfo");
+                name: "User");
         }
     }
 }

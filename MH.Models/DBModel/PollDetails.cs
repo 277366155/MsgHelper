@@ -45,7 +45,7 @@ namespace MH.Models.DBModel
         public virtual PollOptions PollOption { get; set; }
 
         [ForeignKey("VoterId")]
-        public virtual UserInfo Voter { get; set; }
+        public virtual User Voter { get; set; }
     }
 
     public enum ClientTypeEnum

@@ -11,6 +11,14 @@
     <Compile Remove="Migrations\20181030170047_添加外键关系.cs" />
     <Compile Remove="Migrations\20181030181226_s.cs" />
     <Compile Remove="Migrations\20181030181534_test.cs" />
+    <Compile Remove="Migrations\20181030181916_test.cs" />
+    <Compile Remove="Migrations\20181030181916_test.Designer.cs" />
+    <Compile Remove="Migrations\20181030183207_撤销test.cs" />
+    <Compile Remove="Migrations\20181030183207_撤销test.Designer.cs" />
+    <Compile Remove="Migrations\20181031184156_updateDB.cs" />
+    <Compile Remove="Migrations\20181031184156_updateDB.Designer.cs" />
+    <Compile Remove="Migrations\20181031184418_UserInfosUpdate.cs" />
+    <Compile Remove="Migrations\20181031184418_UserInfosUpdate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
