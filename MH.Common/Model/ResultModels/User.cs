@@ -3,7 +3,7 @@
 namespace MH.Common
 {
     #region 用户列表信息
-    public class UserListModel
+    public class OpenidListModel
     {
         public int Total { get; set; }
 
@@ -21,6 +21,11 @@ namespace MH.Common
     #endregion
 
     #region 用户详细信息
+    public class UserInfoList
+    {
+        public List<UserInfo> User_info_list { get; set; }
+    }
+
     public class UserInfo
     {
         public int Subscribe { get; set; }

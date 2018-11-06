@@ -78,7 +78,7 @@ namespace MH.Common
     }
     
 
-    public class UserList
+    public class OpenidListParam
     {
         public List<GetUserInfoParam> user_list { get; set; }
     }

@@ -54,12 +54,12 @@ namespace MH.Common
         ///请求地址：https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token=ACCESS_TOKEN
         /// </summary>
         /// <returns></returns>
-        public static string GetBatchUserInfos(UserList param)
+        public static string GetBatchUserInfos(OpenidListParam param)
         {
             var requestUrl = WXBatchUserInfoUrl + "?access_token=" + AccessToken;
             if (param == null)
             {
-                param = new UserList();
+                param = new OpenidListParam();
             }
             var resultStr = Tools.PostRequest(new PostParam() { Url = requestUrl, ContentType = ContentType.FormUrlEncoded, RequestData = param.ObjToJson() });
             return resultStr;

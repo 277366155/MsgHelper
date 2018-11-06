@@ -4,7 +4,10 @@ using MH.Models;
 using MH.Models.DBModel;
 using MH.Models.DTO;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MH.Context
 {
@@ -23,7 +26,7 @@ namespace MH.Context
         /// </summary>
         /// <param name="userOpenid"></param>
         /// <returns></returns>
-        public ResultBase GetWxUserInfoAndInsertToDb(string userOpenid)
+        public UserDTO GetWxUserInfoAndInsertToDb(string userOpenid)
         {
             var userInfoStr = WxApi.GetUserInfo(userOpenid);
             var data = userInfoStr.JsonToObj<WxUsers>();
@@ -35,11 +38,11 @@ namespace MH.Context
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public ResultBase Create(WxUsers model)
+        public UserDTO Create(WxUsers model)
         {
             if (Table.Any(a => a.Openid == model.Openid))
             {
-                return new Error("用户已存在");
+              throw new SystemException("用户已存在");
             }
             using (var entity = new MHContext())
             {
@@ -58,49 +61,80 @@ namespace MH.Context
                     entity.SaveChanges();
                 if (wxUser != null&& userInfo!=null)
                 {
-                    return new Ok<UserDTO>("新增用户成功") { Data = Mapper.Map<Tuple<WxUsers,User>,UserDTO>(new Tuple<WxUsers, User>( wxUser.Entity,userInfo.Entity)) };
+                    return Mapper.Map<Tuple<WxUsers,User>,UserDTO>(new Tuple<WxUsers, User>( wxUser.Entity,userInfo.Entity)) ;
                 }
-                return new Error("新增用户出错");
-                //}
+                return null;
             }
         }
 
         public bool GetUserListAndUpdateDb()
         {
             var nextOpenid = "";
-           var userListJson= WxApi.GetUserList(nextOpenid);
-            
-            //获取已关注用户列表
-            var userList = userListJson.JsonToObj<UserListModel>();
-            if (userList == null)
-            {
-                return true;
-            }
 
-            nextOpenid = userList.Next_Openid;
-            var openidList = userList.Data.Openid;
+            //用户详情列表对象，用于最后批量插入数据库
+            var userInfoList = new UserInfoList() { User_info_list = new List<UserInfo>() };
+            var lockObj = new object();
 
+            //用于标识异步操作是否全部完成
+            var isFinished = false;
             //nextOpenid不为空则继续获取下一页
-            while (!nextOpenid.IsNullOrWhiteSpace())
+            do
             {
-                var newUserList=WxApi.GetUserList(nextOpenid).JsonToObj<UserListModel>();
-                if (newUserList == null)
+                var openidList = WxApi.GetUserList(nextOpenid).JsonToObj<OpenidListModel>();
+                if (openidList == null || openidList.Data.Openid == null || openidList.Data.Openid.Count <= 0)
                 {
-                    nextOpenid = "";
-                    continue;
+                    //nextOpenid = "";
+                    //continue;
+                    break;//跳出循环体
                 }
-                openidList.AddRange(newUserList.Data.Openid);
-                nextOpenid = newUserList.Next_Openid;
+
+                //构造批量获取用户详情参数
+                var openidListParam = new OpenidListParam() { user_list = new List<GetUserInfoParam>() };
+                openidList.Data.Openid.ForEach(a =>
+                {
+                    openidListParam.user_list.Add(new GetUserInfoParam() { lang = "zh-CN", openid = a });
+                });
+                nextOpenid = openidList.Next_Openid;
+
+                //每500个openid启动一个线程请求，每个请求最多100个openid
+                Task.Run(() =>
+                {
+                    var requestDataCount = 100;
+                    var threadDataCount = requestDataCount * 5;
+                    var times = openidListParam.user_list.Count % threadDataCount > 0 ? openidListParam.user_list.Count / threadDataCount + 1 : openidListParam.user_list.Count / threadDataCount;
+                    for (var i = 1; i <= times; i++)
+                    {
+                        Task.Run(() =>
+                        {
+                            //最多请求100条用户详情，存入变量中。
+                            var userInfoListJson = WxApi.GetBatchUserInfos(new OpenidListParam() { user_list = openidListParam.user_list.Skip((i - 1) * requestDataCount).Take(requestDataCount).ToList() });
+                            lock (lockObj)
+                            {
+                                userInfoList.User_info_list.AddRange(userInfoListJson.JsonToObj<List<UserInfo>>());
+                            }
+                            if (i == times && nextOpenid.IsNullOrWhiteSpace())
+                            {
+                                isFinished = true;
+                            }
+                        });
+                    }
+                });
+
+            } while (!nextOpenid.IsNullOrWhiteSpace());
+
+            //如果线程未全部完成，则等待2秒钟
+            while (!isFinished)
+            {
+                Thread.Sleep(2000);
             }
 
-            if (openidList.Count <= 0)
+            //无已关注用户，正常情况
+            if (userInfoList.User_info_list.Count <= 0)
             {
                 return true;
             }
-            /*todo:
-            1，调用wx接口获取用户详情
-            2，获取到用户详细信息之后，批量插入db
-             */
+
+            //todo:批量插入userInfoList.User_info_list到DB;
 
             return true;
         }
