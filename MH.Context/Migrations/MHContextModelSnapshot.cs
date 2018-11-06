@@ -27,6 +27,9 @@ namespace MH.Context.Migrations
                     b.Property<string>("Content")
                         .HasMaxLength(2048);
 
+                    b.Property<string>("CoverImg")
+                        .HasMaxLength(256);
+
                     b.Property<DateTime>("CreateTime");
 
                     b.Property<int>("CreatorId");
@@ -140,7 +143,8 @@ namespace MH.Context.Migrations
 
                     b.Property<DateTime>("ModifyTime");
 
-                    b.Property<string>("OptionContent");
+                    b.Property<string>("OptionContent")
+                        .HasMaxLength(512);
 
                     b.Property<int>("OrderNo");
 
@@ -163,6 +167,12 @@ namespace MH.Context.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content")
+                        .HasMaxLength(512);
+
+                    b.Property<string>("CoverImg")
+                        .HasMaxLength(256);
 
                     b.Property<DateTime>("CreateTime");
 

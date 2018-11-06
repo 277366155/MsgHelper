@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MH.Models.DBModel
@@ -17,6 +18,7 @@ namespace MH.Models.DBModel
         /// <summary>
         /// 选项内容
         /// </summary>
+        [MaxLength(512)]
         public string OptionContent { get; set; }
 
         /// <summary>

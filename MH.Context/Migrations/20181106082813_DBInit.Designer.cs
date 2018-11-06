@@ -11,8 +11,8 @@ using System;
 namespace MH.Context.Migrations
 {
     [DbContext(typeof(MHContext))]
-    [Migration("20181031185449_InitDB")]
-    partial class InitDB
+    [Migration("20181106082813_DBInit")]
+    partial class DBInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,9 @@ namespace MH.Context.Migrations
 
                     b.Property<string>("Content")
                         .HasMaxLength(2048);
+
+                    b.Property<string>("CoverImg")
+                        .HasMaxLength(256);
 
                     b.Property<DateTime>("CreateTime");
 
@@ -141,7 +144,8 @@ namespace MH.Context.Migrations
 
                     b.Property<DateTime>("ModifyTime");
 
-                    b.Property<string>("OptionContent");
+                    b.Property<string>("OptionContent")
+                        .HasMaxLength(512);
 
                     b.Property<int>("OrderNo");
 
@@ -164,6 +168,12 @@ namespace MH.Context.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content")
+                        .HasMaxLength(512);
+
+                    b.Property<string>("CoverImg")
+                        .HasMaxLength(256);
 
                     b.Property<DateTime>("CreateTime");
 

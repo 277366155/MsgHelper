@@ -26,23 +26,24 @@ namespace MH.Web.Filter
         /// <param name="context"></param>
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            
+
             //判断当前是否是根目录，根目录无需获取用户cookie
             if (string.IsNullOrWhiteSpace(context.HttpContext.Request.Path.Value.Trim('/')))
             {
                 return;
             }
+
             //若不是，取身份信息
             var userOpenid = context.GetCookie();
             if (string.IsNullOrWhiteSpace(userOpenid))
             {
                 //无身份信息跳回主页
-                context.HttpContext.Response.Redirect($"/?redirectUrl=" + WebUtility.UrlEncode(context.HttpContext.Request.Path));
+                //context.HttpContext.Response.Redirect();
+                context.Result =new Microsoft.AspNetCore.Mvc.RedirectResult($"/?redirectUrl=" + WebUtility.UrlEncode(context.HttpContext.Request.Path));
                 return;
             }
-            var userInfoStr = WxApi.GetUserInfo(userOpenid);
-            var data = userInfoStr.JsonToObj<WxUsers>(); 
-            WxUsers.Create(data);
-        }
+ 
+            WxUsers.GetWxUserInfoAndInsertToDb(userOpenid);
+        }        
     }
 }

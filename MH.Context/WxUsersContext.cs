@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MH.Common;
 using MH.Models;
 using MH.Models.DBModel;
 using MH.Models.DTO;
@@ -15,6 +16,18 @@ namespace MH.Context
             {
                 return Entity.WxUsers.Where(a => !a.IsDel);
             }
+        }
+
+        /// <summary>
+        /// 根据openid从wx端获取用户的详细信息
+        /// </summary>
+        /// <param name="userOpenid"></param>
+        /// <returns></returns>
+        public ResultBase GetWxUserInfoAndInsertToDb(string userOpenid)
+        {
+            var userInfoStr = WxApi.GetUserInfo(userOpenid);
+            var data = userInfoStr.JsonToObj<WxUsers>();
+           return Create(data);
         }
 
         /// <summary>
@@ -50,6 +63,46 @@ namespace MH.Context
                 return new Error("新增用户出错");
                 //}
             }
+        }
+
+        public bool GetUserListAndUpdateDb()
+        {
+            var nextOpenid = "";
+           var userListJson= WxApi.GetUserList(nextOpenid);
+            
+            //获取已关注用户列表
+            var userList = userListJson.JsonToObj<UserListModel>();
+            if (userList == null)
+            {
+                return true;
+            }
+
+            nextOpenid = userList.Next_Openid;
+            var openidList = userList.Data.Openid;
+
+            //nextOpenid不为空则继续获取下一页
+            while (!nextOpenid.IsNullOrWhiteSpace())
+            {
+                var newUserList=WxApi.GetUserList(nextOpenid).JsonToObj<UserListModel>();
+                if (newUserList == null)
+                {
+                    nextOpenid = "";
+                    continue;
+                }
+                openidList.AddRange(newUserList.Data.Openid);
+                nextOpenid = newUserList.Next_Openid;
+            }
+
+            if (openidList.Count <= 0)
+            {
+                return true;
+            }
+            /*todo:
+            1，调用wx接口获取用户详情
+            2，获取到用户详细信息之后，批量插入db
+             */
+
+            return true;
         }
     }
 }

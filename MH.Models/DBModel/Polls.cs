@@ -25,6 +25,18 @@ namespace MH.Models.DBModel
         public string Title { get; set; }
 
         /// <summary>
+        /// 投票封面
+        /// </summary>
+        [MaxLength(256)]
+        public string CoverImg { get; set; }
+
+        /// <summary>
+        /// 投票正文
+        /// </summary>
+        [MaxLength(512)]
+        public string Content { get; set; }
+
+        /// <summary>
         /// 备注信息
         /// </summary>
         [MaxLength(256)]

@@ -20,6 +20,12 @@ namespace MH.Models.DBModel
         public string Title { get; set; }
 
         /// <summary>
+        /// 封面图片
+        /// </summary>
+        [MaxLength(256)]
+        public string CoverImg { get; set; }
+
+        /// <summary>
         ///关联userinfo中的id
         /// </summary>
         public int CreatorId { get; set; }

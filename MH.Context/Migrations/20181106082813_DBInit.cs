@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MH.Context.Migrations
 {
-    public partial class InitDB : Migration
+    public partial class DBInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -126,6 +126,8 @@ namespace MH.Context.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
+                    Content = table.Column<string>(maxLength: 512, nullable: true),
+                    CoverImg = table.Column<string>(maxLength: 256, nullable: true),
                     CreateTime = table.Column<DateTime>(nullable: false),
                     CreatorId = table.Column<int>(nullable: false),
                     Deadline = table.Column<DateTime>(nullable: true),
@@ -157,6 +159,7 @@ namespace MH.Context.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
                     Content = table.Column<string>(maxLength: 2048, nullable: true),
+                    CoverImg = table.Column<string>(maxLength: 256, nullable: true),
                     CreateTime = table.Column<DateTime>(nullable: false),
                     CreatorId = table.Column<int>(nullable: false),
                     IsDel = table.Column<bool>(nullable: false),
@@ -195,7 +198,7 @@ namespace MH.Context.Migrations
                     CreateTime = table.Column<DateTime>(nullable: false),
                     IsDel = table.Column<bool>(nullable: false),
                     ModifyTime = table.Column<DateTime>(nullable: false),
-                    OptionContent = table.Column<string>(nullable: true),
+                    OptionContent = table.Column<string>(maxLength: 512, nullable: true),
                     OrderNo = table.Column<int>(nullable: false),
                     PollId = table.Column<int>(nullable: false),
                     RowVersion = table.Column<DateTime>(nullable: false),

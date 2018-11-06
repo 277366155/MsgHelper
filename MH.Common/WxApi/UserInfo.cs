@@ -14,7 +14,7 @@ namespace MH.Common
 
 
         /// <summary>
-        /// 获取用户openid列表信息，需要认证
+        /// 获取已关注的用户openid列表信息，需要认证
         /// 文档地址：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140840
         /// 请求地址：https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&next_openid=NEXT_OPENID
         /// </summary>
