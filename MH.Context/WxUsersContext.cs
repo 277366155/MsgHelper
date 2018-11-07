@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Z.EntityFramework.Extensions.EFCore;
 namespace MH.Context
 {
     public class WxUsersContext : ContextBase<WxUsers>
@@ -30,7 +29,7 @@ namespace MH.Context
         {
             var userInfoStr = WxApi.GetUserInfo(userOpenid);
             var data = userInfoStr.JsonToObj<WxUsers>();
-           return Create(data);
+            return Create(data);
         }
 
         /// <summary>
@@ -42,26 +41,26 @@ namespace MH.Context
         {
             if (Table.Any(a => a.Openid == model.Openid))
             {
-              throw new SystemException("用户已存在");
+                throw new SystemException("用户已存在");
             }
             using (var entity = new MHContext())
             {
                 //using (var tran= entity.Database.BeginTransaction())
                 //{
-                    /*
-                 1,插入wxUsers
-                 2,插入UserInfo
-                 */
-                    var wxUser = entity.WxUsers.Add(model);
-                    var userInfo = entity.User.Add(new User()
-                    {
-                        Openid = model.Openid,
-                        CustomNickName = model.NickName
-                    });
-                    entity.SaveChanges();
-                if (wxUser != null&& userInfo!=null)
+                /*
+             1,插入wxUsers
+             2,插入UserInfo
+             */
+                var wxUser = entity.WxUsers.Add(model);
+                var userInfo = entity.User.Add(new User()
                 {
-                    return Mapper.Map<Tuple<WxUsers,User>,UserDTO>(new Tuple<WxUsers, User>( wxUser.Entity,userInfo.Entity)) ;
+                    Openid = model.Openid,
+                    CustomNickName = model.NickName
+                });
+                entity.SaveChanges();
+                if (wxUser != null && userInfo != null)
+                {
+                    return Mapper.Map<Tuple<WxUsers, User>, UserDTO>(new Tuple<WxUsers, User>(wxUser.Entity, userInfo.Entity));
                 }
                 return null;
             }
@@ -75,8 +74,10 @@ namespace MH.Context
             var userInfoList = new UserInfoList() { User_info_list = new List<MassUserInfo>() };
             var lockObj = new object();
 
-            //用于标识异步操作是否全部完成，此处需要为引用类型
-            var  isFinished = "false";
+            //用于标识异步操作是否全部完成
+            var isFinished = false;
+            //是否有待获取用户详情的任务
+            var hasTask = false;
             //nextOpenid不为空则继续获取下一页
             #region 获取已关注用户列表
             do
@@ -84,8 +85,6 @@ namespace MH.Context
                 var openidList = WxApi.GetUserList(nextOpenid).JsonToObj<OpenidListModel>();
                 if (openidList == null || openidList.Data == null || openidList.Data.Openid.Count <= 0)
                 {
-                    //nextOpenid = "";
-                    //continue;
                     break;//跳出循环体
                 }
 
@@ -93,10 +92,24 @@ namespace MH.Context
                 var openidListParam = new OpenidListParam() { user_list = new List<GetUserInfoParam>() };
                 openidList.Data.Openid.ForEach(a =>
                 {
-                    openidListParam.user_list.Add(new GetUserInfoParam() { lang = "zh-CN", openid = a });
+                    //db中不存在的用户，才加入待获取列表
+                    if (!Table.Any(m => m.Openid == a))
+                        openidListParam.user_list.Add(new GetUserInfoParam() { lang = "zh-CN", openid = a });
                 });
                 nextOpenid = openidList.Next_Openid;
 
+                //待获取列表为空时，跳出循环体
+                if (openidListParam.user_list.Count <= 0)
+                {
+                    //如果无任务，直接完成
+                    if (!hasTask)
+                        isFinished = true;
+                    break;
+                }
+                else
+                {
+                    hasTask = true;
+                }
                 #region 每500用户启动一个线程获取详细信息
                 //每500个openid启动一个线程请求，每个请求最多100个openid
                 Task.Run(() =>
@@ -104,32 +117,31 @@ namespace MH.Context
                     var requestDataCount = 100;
                     var threadDataCount = requestDataCount * 5;
                     var times = openidListParam.user_list.Count % threadDataCount > 0 ? openidListParam.user_list.Count / threadDataCount + 1 : openidListParam.user_list.Count / threadDataCount;
-                    for (var i = 1; i <= times; i++)
-                    {
-                        Task.Run(() =>
-                        {
-                            var taskI = i;
+
+                        //并行for循环，for()循环参数小于第二个参数值
+                        Parallel.For(1, times + 1, i =>
+                            {
                             //最多请求100条用户详情，存入变量中。
-                            var userInfoListJson = WxApi.GetBatchUserInfos(new OpenidListParam() { user_list = openidListParam.user_list.Skip((taskI - 1) * requestDataCount).Take(requestDataCount).ToList() });
-                            lock (lockObj)
-                            {
-                                userInfoList.User_info_list.AddRange(userInfoListJson.JsonToObj<UserInfoList>()?.User_info_list);
-                            }
-                            if (taskI == times && nextOpenid.IsNullOrWhiteSpace())
-                            {
-                                isFinished = "true";
-                            }
-                        });
-                    }
+                            var userInfoListJson = WxApi.GetBatchUserInfos(new OpenidListParam() { user_list = openidListParam.user_list.Skip((i - 1) * requestDataCount).Take(requestDataCount).ToList() });
+                        lock (lockObj)
+                        {
+                            userInfoList.User_info_list.AddRange(userInfoListJson.JsonToObj<UserInfoList>()?.User_info_list);
+                        }
+                        if (i == times)
+                        {
+                            isFinished = true;
+                        }
+                    });
                 });
                 #endregion 每500用户启动一个线程获取细信息
-            } while (!nextOpenid.IsNullOrWhiteSpace());
+
+            } while (true);
             #endregion 获取已关注用户列表
 
             //如果线程未全部完成，则等待2秒钟
-            while (isFinished=="false")
+            while (!isFinished)//=="false")
             {
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
             }
 
             //无已关注用户，正常情况
@@ -141,21 +153,12 @@ namespace MH.Context
             //todo:批量插入userInfoList.User_info_list到DB;
             using (var entity = new MHContext())
             {
-                //using (var tran = entity.Database.BeginTransaction())
-                //{
-                //entity.WxUsers.AddRange();
-                entity.BulkInsert(Mapper.Map<List<MassUserInfo>, List<WxUsers>>(userInfoList.User_info_list),
-                    act =>
-                    {
-                        act.ColumnPrimaryKeyExpression = m => m.Openid;
-                    });
-                entity.BulkMerge(Mapper.Map<List<MassUserInfo>, List<WxUsers>>(userInfoList.User_info_list),
-                    act =>
-                    {
-                        act.ColumnPrimaryKeyExpression = m => m.Openid;
-                    });
-                entity.BulkSaveChanges();
-                //}
+                var wxUsersList = Mapper.Map<List<MassUserInfo>, List<WxUsers>>(userInfoList.User_info_list);
+                entity.WxUsers.AddRange(wxUsersList.Where(a => !Table.Any(m => m.Openid == a.Openid)));
+                //todo:批量插入user表。。
+                var usersList = Mapper.Map<List<WxUsers>, List<User>>(wxUsersList);
+                entity.User.AddRange(usersList.Where(a=>!entity.User.Any(m=>m.Openid==a.Openid)));
+                entity.SaveChanges();
             }
             return true;
         }

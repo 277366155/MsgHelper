@@ -49,6 +49,10 @@ namespace MH.Context
         public WxUserMessage GetXmlDataAndInsert()
         {
             var data =WxApi.GetUserMsg();
+            if (data == null)
+            {
+                return null;
+            }
 
             //autoMapper转换model
             var msgData = Mapper.Map<WXMsgBase, WxUserMessage>(data);

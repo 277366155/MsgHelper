@@ -25,7 +25,7 @@ namespace MH.Common.AutoMapping
                 ////        return sMember != null;
                 ////    });
                 ////});
-                
+
                 //// CreateMap<PagerResponse, TestEntity.Models.Pager<TestEntity.Models.Person>>();
 
                 cfg.CreateMap<WXMsgBase, WxUserMessage>().AfterMap((source, destination) =>
@@ -46,8 +46,9 @@ namespace MH.Common.AutoMapping
                 ));
 
                 cfg.CreateMap<MassUserInfo, WxUsers>();
-                cfg.CreateMap<WxUsers, User>().AfterMap((source, destination)=> {
-                    destination.CustomNickName = source.NickName;                    
+                cfg.CreateMap<WxUsers, User>().AfterMap((source, destination) =>
+                {
+                    destination.CustomNickName = source.NickName;
                 });
             });
         }
