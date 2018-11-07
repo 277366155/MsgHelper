@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Z.EntityFramework.Extensions.EFCore;
 namespace MH.Context
 {
     public class WxUsersContext : ContextBase<WxUsers>
@@ -72,16 +72,17 @@ namespace MH.Context
             var nextOpenid = "";
 
             //用户详情列表对象，用于最后批量插入数据库
-            var userInfoList = new UserInfoList() { User_info_list = new List<UserInfo>() };
+            var userInfoList = new UserInfoList() { User_info_list = new List<MassUserInfo>() };
             var lockObj = new object();
 
-            //用于标识异步操作是否全部完成
-            var isFinished = false;
+            //用于标识异步操作是否全部完成，此处需要为引用类型
+            var  isFinished = "false";
             //nextOpenid不为空则继续获取下一页
+            #region 获取已关注用户列表
             do
             {
                 var openidList = WxApi.GetUserList(nextOpenid).JsonToObj<OpenidListModel>();
-                if (openidList == null || openidList.Data.Openid == null || openidList.Data.Openid.Count <= 0)
+                if (openidList == null || openidList.Data == null || openidList.Data.Openid.Count <= 0)
                 {
                     //nextOpenid = "";
                     //continue;
@@ -96,6 +97,7 @@ namespace MH.Context
                 });
                 nextOpenid = openidList.Next_Openid;
 
+                #region 每500用户启动一个线程获取详细信息
                 //每500个openid启动一个线程请求，每个请求最多100个openid
                 Task.Run(() =>
                 {
@@ -106,24 +108,26 @@ namespace MH.Context
                     {
                         Task.Run(() =>
                         {
+                            var taskI = i;
                             //最多请求100条用户详情，存入变量中。
-                            var userInfoListJson = WxApi.GetBatchUserInfos(new OpenidListParam() { user_list = openidListParam.user_list.Skip((i - 1) * requestDataCount).Take(requestDataCount).ToList() });
+                            var userInfoListJson = WxApi.GetBatchUserInfos(new OpenidListParam() { user_list = openidListParam.user_list.Skip((taskI - 1) * requestDataCount).Take(requestDataCount).ToList() });
                             lock (lockObj)
                             {
-                                userInfoList.User_info_list.AddRange(userInfoListJson.JsonToObj<List<UserInfo>>());
+                                userInfoList.User_info_list.AddRange(userInfoListJson.JsonToObj<UserInfoList>()?.User_info_list);
                             }
-                            if (i == times && nextOpenid.IsNullOrWhiteSpace())
+                            if (taskI == times && nextOpenid.IsNullOrWhiteSpace())
                             {
-                                isFinished = true;
+                                isFinished = "true";
                             }
                         });
                     }
                 });
-
+                #endregion 每500用户启动一个线程获取细信息
             } while (!nextOpenid.IsNullOrWhiteSpace());
+            #endregion 获取已关注用户列表
 
             //如果线程未全部完成，则等待2秒钟
-            while (!isFinished)
+            while (isFinished=="false")
             {
                 Thread.Sleep(2000);
             }
@@ -135,7 +139,24 @@ namespace MH.Context
             }
 
             //todo:批量插入userInfoList.User_info_list到DB;
-
+            using (var entity = new MHContext())
+            {
+                //using (var tran = entity.Database.BeginTransaction())
+                //{
+                //entity.WxUsers.AddRange();
+                entity.BulkInsert(Mapper.Map<List<MassUserInfo>, List<WxUsers>>(userInfoList.User_info_list),
+                    act =>
+                    {
+                        act.ColumnPrimaryKeyExpression = m => m.Openid;
+                    });
+                entity.BulkMerge(Mapper.Map<List<MassUserInfo>, List<WxUsers>>(userInfoList.User_info_list),
+                    act =>
+                    {
+                        act.ColumnPrimaryKeyExpression = m => m.Openid;
+                    });
+                entity.BulkSaveChanges();
+                //}
+            }
             return true;
         }
     }

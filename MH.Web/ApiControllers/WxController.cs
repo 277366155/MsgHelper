@@ -23,6 +23,12 @@ namespace MH.Web.ApiControllers
             new WxUserMessageContext().GetXmlDataAndInsert();
             return Content(CurrentAccessor.HttpContext.CheckWX());
         }
+
+        [Route("Init")]
+        public ActionResult Init()
+        {
+          return Content(new WxUsersContext().GetUserListAndUpdateDb().ObjToJson());
+        }
         [HttpPost]
         [Route("menu/create")]
         public IActionResult CreateMenu()

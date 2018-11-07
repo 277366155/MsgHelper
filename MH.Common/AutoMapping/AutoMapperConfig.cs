@@ -44,6 +44,11 @@ namespace MH.Common.AutoMapping
                     ? s.Item1.NickName
                     : s.Item2.CustomNickName
                 ));
+
+                cfg.CreateMap<MassUserInfo, WxUsers>();
+                cfg.CreateMap<WxUsers, User>().AfterMap((source, destination)=> {
+                    destination.CustomNickName = source.NickName;                    
+                });
             });
         }
     }

@@ -23,7 +23,7 @@ namespace MH.Common
     #region 用户详细信息
     public class UserInfoList
     {
-        public List<UserInfo> User_info_list { get; set; }
+        public List<MassUserInfo> User_info_list { get; set; }
     }
 
     public class UserInfo
@@ -41,6 +41,20 @@ namespace MH.Common
         public string Remark { get; set; }
         public int GroupId { get; set; }
         public string Subscribe_scene { get; set; }
+    }
+
+    /// <summary>
+    /// 批量获取用户详情的model
+    /// </summary>
+    public class MassUserInfo:UserInfo
+    {
+        public string UnionId { get; set; }
+
+        public int[] TagId_List { get; set; }
+
+        public int qr_scene { get; set; }
+
+        public string qr_scene_str { get; set; }
     }
     #endregion
 }

@@ -24,6 +24,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="2.1.38" />
   </ItemGroup>
 
   <ItemGroup>
