@@ -3,6 +3,7 @@ using MH.Context;
 using MH.Models.DBModel;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -26,12 +27,12 @@ namespace MH.Web.Filter
         /// <param name="context"></param>
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            //用户第一次请求该域名，Cookie为空，跳转至wx端重定向之后，cookie还是空。。
-            ////判断当前是否是根目录，根目录无需获取用户cookie
-            //if (string.IsNullOrWhiteSpace(context.HttpContext.Request.Path.Value.Trim('/')))
-            //{
-            //    return;
-            //}
+            //home允许无身份访问
+            if (!context.HttpContext.IsFromWx())
+            {
+                return;
+            }
+
             var code=context.HttpContext.Request.Query["code"].ToString();
             //如果请求参数有code，则从wx获取用户身份
             if (!code.IsNullOrWhiteSpace())

@@ -21,7 +21,7 @@ namespace MH.Web.ApiControllers
         public ActionResult Index()
         {
             new WxUserMessageContext().GetXmlDataAndInsert();
-            return Content(CurrentAccessor.HttpContext.CheckWX());
+            return Content(HttpContext.CheckWX());
         }
 
         [Route("Init")]

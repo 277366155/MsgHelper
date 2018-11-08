@@ -25,7 +25,7 @@ namespace MH.Context
         /// </summary>
         /// <param name="userOpenid"></param>
         /// <returns></returns>
-        public UserDTO GetWxUserInfoAndInsertToDb(string userOpenid)
+        public bool GetWxUserInfoAndInsertToDb(string userOpenid)
         {
             var userInfoStr = WxApi.GetUserInfo(userOpenid);
             var data = userInfoStr.JsonToObj<WxUsers>();
@@ -36,21 +36,15 @@ namespace MH.Context
         /// 插入数据
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
-        public UserDTO Create(WxUsers model)
+        /// <returns>是否成功</returns>
+        public bool Create(WxUsers model)
         {
             if (Table.Any(a => a.Openid == model.Openid))
             {
-                throw new SystemException("用户已存在");
+                return true;
             }
             using (var entity = new MHContext())
             {
-                //using (var tran= entity.Database.BeginTransaction())
-                //{
-                /*
-             1,插入wxUsers
-             2,插入UserInfo
-             */
                 var wxUser = entity.WxUsers.Add(model);
                 var userInfo = entity.User.Add(new User()
                 {
@@ -60,9 +54,9 @@ namespace MH.Context
                 entity.SaveChanges();
                 if (wxUser != null && userInfo != null)
                 {
-                    return Mapper.Map<Tuple<WxUsers, User>, UserDTO>(new Tuple<WxUsers, User>(wxUser.Entity, userInfo.Entity));
+                    return true;//Mapper.Map<Tuple<WxUsers, User>, UserDTO>(new Tuple<WxUsers, User>(wxUser.Entity, userInfo.Entity));
                 }
-                return null;
+                return false;
             }
         }
 

@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace MH.Web.Filter
 {
-    public class ExceptionFilter : IExceptionFilter
+    //IFilterMetadata主要起到标记的作用
+    public class ExceptionFilter : IExceptionFilter, IFilterMetadata
     {
         private ILog log = LogManager.GetLogger(Startup.log.Name, typeof(ExceptionFilter));
         //private MHContext mhContext;
@@ -21,10 +22,14 @@ namespace MH.Web.Filter
         //}
         public void OnException(ExceptionContext context)
         {
-            log.Error(context.Exception);
+            if (context.ExceptionHandled == false)
+            {
+                log.Error(context.Exception);
 
-            context.Result = new ContentResult() {   StatusCode=200, Content=$"alert('{context.Exception.Message}');"} ;
-            //context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                context.Result = new ContentResult() {   StatusCode=200, Content=$"<script>alert('{context.Exception.Message}');</script>" } ;
+                
+                context.ExceptionHandled = true;
+            }
         }
     }
 

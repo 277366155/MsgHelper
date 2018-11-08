@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Assets\**" />
+    <Content Remove="Assets\**" />
+    <EmbeddedResource Remove="Assets\**" />
+    <None Remove="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.0.4" />
@@ -24,12 +31,6 @@
     <ProjectReference Include="..\MH.Common\MH.Common.csproj" />
     <ProjectReference Include="..\MH.Context\MH.Context.csproj" />
     <ProjectReference Include="..\MH.Core\MH.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Assets\JS\" />
-    <Folder Include="Assets\CSS\" />
-    <Folder Include="Assets\Img\" />
   </ItemGroup>
 
 </Project>

@@ -48,6 +48,8 @@ namespace MH.Common.AutoMapping
                 cfg.CreateMap<MassUserInfo, WxUsers>();
                 cfg.CreateMap<WxUsers, User>().AfterMap((source, destination) =>
                 {
+                    //WxUsers映射到User时，id会被映射过来，出现问题
+                    destination.Id = 0;
                     destination.CustomNickName = source.NickName;
                 });
             });

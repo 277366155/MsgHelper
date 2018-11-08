@@ -16,19 +16,24 @@ namespace MH.Web.Controllers
     [UserCheck]
     public class HomeController : BaseController
     {
-        private WxUsersContext wxUsersContext;
+        private WxUsersContext wxUsersContext => new WxUsersContext();
         public HomeController() : base()
         {
-            wxUsersContext = new WxUsersContext();
         }
 
-        public IActionResult Index(string code,string redirectUrl)
+        public IActionResult Index(string code, string redirectUrl)
         {
+            if (!IsFromWx)
+            {
+                return View();
+            }
+
+            #region wx浏览器打开才执行以下方法
             //首次客户端请求不会带code参数。
             if (string.IsNullOrWhiteSpace(code))
             {
                 //通过微信服务端跳回到本页面时，会在请求地址上加上code参数
-                return Redirect(CurrentAccessor.HttpContext.GetWebCodeRedirect());
+                return Redirect(HttpContext.GetWebCodeRedirect());
             }
 
             ViewBag.Code = code;
@@ -39,6 +44,7 @@ namespace MH.Web.Controllers
                 return Redirect(WebUtility.UrlDecode(redirectUrl));
             }
             return View();
+            #endregion
         }
 
 

@@ -8,6 +8,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using MH.Core;
+using Microsoft.Extensions.Primitives;
+
 namespace MH.Common
 {
     public static partial class WxApi
@@ -67,6 +69,18 @@ namespace MH.Common
             }
 
             return echostr;
+        }
+
+        /// <summary>
+        /// 是否通过wx浏览器打开。
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
+        public static bool IsFromWx(this HttpContext httpContext)
+        {
+            var val= httpContext.Request.Headers["User-Agent"];
+            var isFromWx = val.ToString().ToLower().IndexOf("micromessenger") != -1;
+            return isFromWx;
         }
         #endregion
 

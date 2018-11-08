@@ -34,7 +34,7 @@ namespace MH.Web
             AutoMapperConfig.Configure();
             services.AddMemoryCache();
             services.AddCors().AddMvc(options=> {
-                options.Filters.Add(typeof(ExceptionFilter));
+                options.Filters.Add<ExceptionFilter>();
                 //options.Filters.Add(typeof(UserCheckFilter));
             });
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -46,15 +46,15 @@ namespace MH.Web
         {
             Core.BaseCore.ServiceProvider = svp;
 
-            if (env.IsDevelopment())
-            {
-                app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseBrowserLink();
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //}
            
             app.UseStaticFiles();
 

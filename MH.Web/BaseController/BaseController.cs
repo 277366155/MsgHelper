@@ -8,12 +8,14 @@ namespace MH.Web
 {
     public class BaseController: Controller
     {
-        protected static IHttpContextAccessor CurrentAccessor;
+        protected new static HttpContext HttpContext;
         protected string UserOpenid = "";
+        protected bool IsFromWx = false;
         public BaseController()
         {
-            CurrentAccessor = BaseCore.CurrentAccessor;
-            UserOpenid = CurrentAccessor.HttpContext.GetCookie();
+            HttpContext = BaseCore.CurrentAccessor.HttpContext;
+            IsFromWx = HttpContext.IsFromWx();
+            UserOpenid = HttpContext.GetCookie();
         }
     }
 }
