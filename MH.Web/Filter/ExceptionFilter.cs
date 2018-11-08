@@ -23,8 +23,8 @@ namespace MH.Web.Filter
         {
             log.Error(context.Exception);
 
-            context.Result = new ApplicationErrorResult("服务器内部错误");
-            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Result = new ContentResult() {   StatusCode=200, Content=$"alert('{context.Exception.Message}');"} ;
+            //context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         }
     }
 

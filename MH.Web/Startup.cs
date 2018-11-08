@@ -39,7 +39,6 @@ namespace MH.Web
             });
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //services.AddDbContext<MHContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySqlConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

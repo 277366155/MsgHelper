@@ -271,13 +271,13 @@ namespace MH.Common
         /// </summary>
         /// <param name="accessor"></param>
         /// <returns></returns>
-        public static string GetCookie(this IHttpContextAccessor accessor, string cookieKey = CookieKey)
+        public static string GetCookie(this HttpContext httpContext, string cookieKey = CookieKey)
         {
             if (string.IsNullOrWhiteSpace(cookieKey))
             {
                 return "";
             }
-            return DEncrypt.Decrypt(accessor.HttpContext.Request.Cookies[cookieKey]);
+            return DEncrypt.Decrypt(httpContext.Request.Cookies[cookieKey]);
         }
 
         /// <summary>
@@ -301,13 +301,13 @@ namespace MH.Common
         /// <param name="accessor"></param>
         /// <param name="cookieValue"></param>
         /// <returns></returns>
-        public static bool SetCookie(this IHttpContextAccessor accessor, string cookieValue, string cookieKey = CookieKey)
+        public static bool SetCookie(this HttpContext httpContext, string cookieValue, string cookieKey = CookieKey)
         {
             if (string.IsNullOrWhiteSpace(cookieValue) || string.IsNullOrWhiteSpace(cookieKey))
             {
                 return false;
             }
-            accessor.HttpContext.Response.Cookies.Append(CookieKey, DEncrypt.Encrypt(cookieValue), new CookieOptions() { Expires = DateTimeOffset.Now.AddHours(1) });
+            httpContext.Response.Cookies.Append(CookieKey, DEncrypt.Encrypt(cookieValue), new CookieOptions() { Expires = DateTimeOffset.Now.AddHours(1) });
 
             return true;
         }

@@ -13,7 +13,7 @@ namespace MH.Web
         public BaseController()
         {
             CurrentAccessor = BaseCore.CurrentAccessor;
-            UserOpenid = CurrentAccessor.GetCookie();
+            UserOpenid = CurrentAccessor.HttpContext.GetCookie();
         }
     }
 }

@@ -124,7 +124,7 @@ namespace MH.Common
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        public static WebToken GetWebToken(this IHttpContextAccessor accessor,string code = "")
+        public static WebToken GetWebToken(this HttpContext httpContext, string code = "")
         {
             string requestUrl = WxWebTokenUrl.Replace("{appid}", APPID).Replace("{secret}", Secret).Replace("{code}", code);
             var resultStr = Tools.GetRequest(new GetParam() { Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });

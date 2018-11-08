@@ -32,12 +32,7 @@ namespace MH.Web.Controllers
             }
 
             ViewBag.Code = code;
-            //获取access_token、userinfo等
-            var webToken = CurrentAccessor.GetWebToken(code);
-            if (webToken != null&&!string.IsNullOrWhiteSpace(webToken.Openid))
-            {
-                CurrentAccessor.SetCookie(webToken.Openid);                
-            }
+
             //若当前页面带有重定向参数，则重定向url
             if (!string.IsNullOrWhiteSpace(redirectUrl))
             {
