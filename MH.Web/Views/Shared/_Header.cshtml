@@ -4,17 +4,21 @@
         <div class="container">
             <div class="header-topbar hidden-xs link-border">
                 <ul class="site-nav topmenu">
-                    <li><a href="tags.html">标签云</a></li>
+                    @*<li><a href="tags.html">标签云</a></li>*@
+
+                    <!--todo:读者墙，考虑对活跃用户排名前十排行榜-->
                     <li><a href="readers.html" rel="nofollow">读者墙</a></li>
                     <li><a href="links.html" rel="nofollow">友情链接</a></li>
-                    <li class="dropdown">
+                    <li><a data-toggle="modal" data-target="#Notice" rel="nofollow"><i class="fa fa-rss"></i> 公告</a></li>
+                    <li><a data-toggle="modal" data-target="#WeChat" rel="nofollow"><i class="fa fa-weixin"></i> 微信公众号</a></li>
+                    
+                    @*<li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" rel="nofollow">关注本站 <span class="caret"></span></a>
                         <ul class="dropdown-menu header-topbar-dropdown-menu">
-                            <li><a data-toggle="modal" data-target="#WeChat" rel="nofollow"><i class="fa fa-weixin"></i> 微信</a></li>
-                            <li><a href="#" rel="nofollow"><i class="fa fa-weibo"></i> 微博</a></li>
-                            <li><a data-toggle="modal" data-target="#areDeveloping" rel="nofollow"><i class="fa fa-rss"></i> RSS</a></li>
+                            <li><a data-toggle="modal" data-target="#WeChat" rel="nofollow"><i class="fa fa-weixin"></i> 微信公众号</a></li>
+                            <li><a data-toggle="modal" data-target="#Notice" rel="nofollow"><i class="fa fa-rss"></i> 公告</a></li>
                         </ul>
-                    </li>
+                    </li>*@
                 </ul>
                 <a data-toggle="modal" data-target="#loginModal" class="login" rel="nofollow">Hi,请登录</a>&nbsp;&nbsp;<a href="javascript:;" class="register" rel="nofollow">我要注册</a>&nbsp;&nbsp;<a href="" rel="nofollow">找回密码</a>
             </div>
@@ -47,3 +51,35 @@
         </div>
     </nav>
 </header>
+
+<!--微信二维码模态框-->
+<div class="modal fade user-select" id="WeChat" tabindex="-1" role="dialog" aria-labelledby="WeChatModalLabel">
+    <div class="modal-dialog" role="document" style="margin-top:120px;max-width:280px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="WeChatModalLabel" style="cursor:default;">微信扫一扫</h4>
+            </div>
+            <div class="modal-body" style="text-align:center"> <img src="~/Assets/images/wx.jpg" alt="" style="cursor:pointer" /> </div>
+        </div>
+    </div>
+</div>
+
+<!--公告 该功能正在日以继夜的开发中-->
+<div class="modal fade user-select" id="Notice" tabindex="-1" role="dialog" aria-labelledby="areDevelopingModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="areDevelopingModalLabel" style="cursor:default;">该功能正在日以继夜的开发中…</h4>
+            </div>
+            <div class="modal-body">
+                <img src="~/Assets/images/baoman/baoman_01.gif" alt="深思熟虑" />
+                <p style="padding:15px 15px 15px 100px; position:absolute; top:15px; cursor:default;">很抱歉，程序猿正在日以继夜的开发此功能，本程序将会在以后的版本中持续完善！</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">朕已阅</button>
+            </div>
+        </div>
+    </div>
+</div>

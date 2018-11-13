@@ -125,7 +125,7 @@ jQuery.ias({
 	pagination: '.pagination',
 	next: '.next-page a',
 	trigger: '查看更多',
-	loader: '<div class="pagination-loading"><img src="/Home/images/loading.gif" /></div>',
+	loader: '<div class="pagination-loading"><img src="/Assets/images/loading2.gif" /></div>',
 	triggerPageThreshold: 5,
 	onRenderComplete: function() {
 		$('.excerpt .thumb').lazyload({
@@ -195,13 +195,13 @@ $(window).scroll(function () {
     }
 })();
 
-/*禁止键盘操作*/
-document.onkeydown=function(event){
-	var e = event || window.event || arguments.callee.caller.arguments[0];
-	if((e.keyCode === 123) || (e.ctrlKey) || (e.ctrlKey) && (e.keyCode === 85)){
-		return false;
-	}
-}; 
+///*禁止键盘操作*/
+//document.onkeydown=function(event){
+//	var e = event || window.event || arguments.callee.caller.arguments[0];
+//	if((e.keyCode === 123) || (e.ctrlKey) || (e.ctrlKey) && (e.keyCode === 85)){
+//		return false;
+//	}
+//}; 
 
 /*文章评论*/
 $(function(){
@@ -248,11 +248,11 @@ function replace_em(str){
 	return str;
 }
 
-//Console
-try {
-    if (window.console && window.console.log) {
-        console.log("\n欢迎访问异清轩博客！\n\n在本站可以看到前端技术，后端程序，网站内容管理系统等文章；\n\n还有我的程序人生！！！\n");
-        console.log("\n请记住我们的网址：%c www.ylsat.com", "color:red");
-        console.log("\nPOWERED BY WY ALL RIGHTS RESERVED");
-    }
-} catch (e) {};
+////Console
+//try {
+//    if (window.console && window.console.log) {
+//        console.log("\n欢迎访问异清轩博客！\n\n在本站可以看到前端技术，后端程序，网站内容管理系统等文章；\n\n还有我的程序人生！！！\n");
+//        console.log("\n请记住我们的网址：%c www.ylsat.com", "color:red");
+//        console.log("\nPOWERED BY WY ALL RIGHTS RESERVED");
+//    }
+//} catch (e) {};

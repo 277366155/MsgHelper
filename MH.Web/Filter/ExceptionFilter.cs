@@ -26,7 +26,7 @@ namespace MH.Web.Filter
             {
                 log.Error(context.Exception);
 
-                context.Result = new ContentResult() {   StatusCode=200, Content=$"<script>alert('{context.Exception.Message}');</script>" } ;
+                context.Result = new ContentResult() {   StatusCode=200, Content=context.Exception.Message } ;
                 
                 context.ExceptionHandled = true;
             }
