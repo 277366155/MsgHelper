@@ -178,7 +178,8 @@ color:#FFF;
 @media (min-width:1200px) {
     .container {
         width: auto;
-        min-height:100%;
+        max-width: 80%;
+        min-height: 100%;
         margin: 0 auto -48px;
     }
 }

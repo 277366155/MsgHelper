@@ -33,7 +33,8 @@ namespace MH.Web
         {
             AutoMapperConfig.Configure();
             services.AddMemoryCache();
-            services.AddCors().AddMvc(options=> {
+            services.AddCors().AddMvc(options =>
+            {
                 options.Filters.Add<ExceptionFilter>();
                 //options.Filters.Add(typeof(UserCheckFilter));
             });
@@ -55,7 +56,7 @@ namespace MH.Web
             //{
             //    app.UseExceptionHandler("/Home/Error");
             //}
-           
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
@@ -63,6 +64,10 @@ namespace MH.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                  name: "areas",
+                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
             });
         }
     }

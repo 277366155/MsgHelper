@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrap">
+    <div class="content">
+        <!--公告巨幕-->
+        <div class="jumbotron">
+            <h1>欢迎访问信息助手</h1>
+            <p>在这里可以看到前端技术，后端程序，网站内容管理系统等文章，还有我的程序人生！</p>
+        </div>
+        @await Component.InvokeAsync("Banner")
+        @await Component.InvokeAsync("Recommend")
+
+        @RenderBody()
+    </div>
+</div>
+
