@@ -18,7 +18,8 @@ html, body {
 	color: #444;
 	background-color: #f6f6f6;
 	overflow-x: hidden;
-    height: 100%;
+    /*高度设置100%后会导致滚动条事件无法触发*/
+    /*height: 100%;*/
 }
 /*页面滚动条*/
 html::-webkit-scrollbar {
@@ -186,6 +187,7 @@ color:#FFF;
 .container {
     position: relative;
     margin: 0 auto -48px;
+    max-width: 1500px;
     min-height:100%;
     padding: 0;
 }

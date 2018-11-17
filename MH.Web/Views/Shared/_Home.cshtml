@@ -7,14 +7,30 @@
 <div class="content-wrap">
     <div class="content">
         <!--公告巨幕-->
-        <div class="jumbotron">
-            <h1>欢迎访问信息助手</h1>
-            <p>在这里可以看到前端技术，后端程序，网站内容管理系统等文章，还有我的程序人生！</p>
-        </div>
+        @*<div class="jumbotron">
+                <h1>欢迎访问信息助手</h1>
+                <p>在这里可以看到前端技术，后端程序，网站内容管理系统等文章，还有我的程序人生！</p>
+            </div>*@
         @await Component.InvokeAsync("Banner")
         @await Component.InvokeAsync("Recommend")
 
         @RenderBody()
     </div>
 </div>
-
+<aside class="sidebar">
+    <div class="fixed">
+        @await Component.InvokeAsync("Notice")
+        @await Component.InvokeAsync("Search")
+    </div>
+    <div class="widget widget_sentence">
+        <h3>每日一句</h3>
+        <div class="widget-sentence-content">
+            <h4>2016年01月05日星期二</h4>
+            <p>
+                Do not let what you cannot do interfere with what you can do.<br />
+                别让你不能做的事妨碍到你能做的事。（John Wooden）
+            </p>
+        </div>
+    </div>
+    @await Component.InvokeAsync("HotArticle")
+</aside>

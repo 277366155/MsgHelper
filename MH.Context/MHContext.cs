@@ -8,6 +8,7 @@ namespace MH.Context
     public class MHContext : DbContext
     {
         private string _dbConnStr;
+        public bool IsDisposed = false;
 
         public MHContext()
         {
@@ -33,6 +34,12 @@ namespace MH.Context
         {
             optionsBuilder.UseMySQL(_dbConnStr);
             base.OnConfiguring(optionsBuilder);
+        }
+
+        public override void Dispose()
+        {
+            IsDisposed = true;
+            base.Dispose();
         }
 
         public DbSet<WxUsers> WxUsers { get; set; }
