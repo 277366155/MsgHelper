@@ -27,7 +27,7 @@ namespace MH.Common
             {
                 requestUrl += "&&next_openid=" + nextOpenid;
             }
-            var resultStr = Tools.GetRequest(new GetParam() {  Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
+            var resultStr = Tools.Get(new GetParam() {  Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
             return resultStr;
 
         }
@@ -44,7 +44,7 @@ namespace MH.Common
         public static string GetUserInfo(string openId, string lang = "zh_CN")
         {
             var requestUrl = WXUserInfoUrl + "?access_token=" + AccessToken + "&openid=" + openId + "&lang=" + lang;
-            var resultStr = Tools.GetRequest(new GetParam() {  Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
+            var resultStr = Tools.Get(new GetParam() {  Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
             return resultStr;
         }
 
@@ -61,7 +61,7 @@ namespace MH.Common
             {
                 param = new OpenidListParam();
             }
-            var resultStr = Tools.PostRequest(new PostParam() { Url = requestUrl, ContentType = ContentType.FormUrlEncoded, RequestData = param.ObjToJson() });
+            var resultStr = Tools.Post(new PostParam() { Url = requestUrl, ContentType = ContentType.FormUrlEncoded, RequestData = param.ObjToJson() });
             return resultStr;
         }
         #endregion

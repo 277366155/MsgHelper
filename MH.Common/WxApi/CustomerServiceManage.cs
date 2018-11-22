@@ -17,7 +17,7 @@ namespace MH.Common
         public static CustomServiceResult AddCustomerService(CustomServiceParam param)
         {
             var requestUrl = AddCustomerServiceUrl.Replace("{token}", AccessToken);
-            var data = Tools.PostRequest(new PostParam()
+            var data = Tools.Post(new PostParam()
             {
                 ContentType = ContentType.Json,
                 Url = requestUrl,
