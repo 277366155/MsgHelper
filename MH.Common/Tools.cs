@@ -241,7 +241,7 @@ namespace MH.Common
         /// <summary>
         /// 获取post过来的xml数据
         /// </summary>
-        public static string GetXMLData(HttpContext httpContext)
+        public static string GetXMLData(this HttpContext httpContext)
         {
             try
             {
@@ -280,19 +280,19 @@ namespace MH.Common
             return DEncrypt.Decrypt(httpContext.Request.Cookies[cookieKey]);
         }
 
-        /// <summary>
-        /// 从cookie中拿到信息并解密
-        /// </summary>
-        /// <param name="accessor"></param>
-        /// <returns></returns>
-        public static string GetCookie(this FilterContext filter, string cookieKey = CookieKey)
-        {
-            if (string.IsNullOrWhiteSpace(cookieKey))
-            {
-                return "";
-            }
-            return DEncrypt.Decrypt(filter.HttpContext.Request.Cookies[cookieKey]);
-        }
+        ///// <summary>
+        ///// 从cookie中拿到信息并解密
+        ///// </summary>
+        ///// <param name="accessor"></param>
+        ///// <returns></returns>
+        //public static string GetCookie(this FilterContext filter, string cookieKey = CookieKey)
+        //{
+        //    if (string.IsNullOrWhiteSpace(cookieKey))
+        //    {
+        //        return "";
+        //    }
+        //    return DEncrypt.Decrypt(filter.HttpContext.Request.Cookies[cookieKey]);
+        //}
 
 
         /// <summary>
@@ -312,5 +312,6 @@ namespace MH.Common
             return true;
         }
         #endregion
+
     }
 }

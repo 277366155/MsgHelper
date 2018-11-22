@@ -37,13 +37,17 @@ namespace MH.Common.AutoMapping
                 });
 
                 cfg.CreateMap<Tuple<WxUsers, User>, UserDTO>()
-                .ForMember(
-                    d => d.NickName,
-                    opt => opt.MapFrom(s =>
-                    string.IsNullOrEmpty(s.Item2.CustomNickName)
-                    ? s.Item1.NickName
-                    : s.Item2.CustomNickName
-                ));
+                .AfterMap((s,d)=> {
+                    d.UserId = s.Item2.Id;
+                    d.HeadImgUrl = s.Item1.HeadImgUrl;
+                    d.IDCardNo = s.Item2.IDCardNo;
+                    d.NickName = string.IsNullOrEmpty(s.Item2.CustomNickName)? s.Item1.NickName : s.Item2.CustomNickName;
+                    d.Openid = s.Item1.Openid;
+                    d.PhoneNumber = s.Item2.PhoneNumber;
+                    d.RealName = s.Item2.RealName;
+                    d.Sex = s.Item1.Sex;
+                    d.Email = s.Item2.Email;
+                });
 
                 cfg.CreateMap<MassUserInfo, WxUsers>();
                 cfg.CreateMap<WxUsers, User>().AfterMap((source, destination) =>

@@ -32,7 +32,7 @@ namespace MH.Web
         public void ConfigureServices(IServiceCollection services)
         {
             AutoMapperConfig.Configure();
-            services.AddMemoryCache();
+            //services.AddMemoryCache();
             services.AddCors().AddMvc(options =>
             {
                 options.Filters.Add<ExceptionFilter>();

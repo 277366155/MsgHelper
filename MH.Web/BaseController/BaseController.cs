@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MH.Core;
 using MH.Web.Filter;
+using MH.Models.DTO;
 
 namespace MH.Web
 {
@@ -11,6 +12,7 @@ namespace MH.Web
         protected new static HttpContext HttpContext;
         protected string UserOpenid = "";
         protected bool IsFromWx = false;
+        protected UserDTO UserInfo = null;
         public BaseController()
         {
             HttpContext = BaseCore.CurrentAccessor.HttpContext;

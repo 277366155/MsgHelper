@@ -22,7 +22,11 @@ namespace MH.Models.DBModel
         /// </summary>
         [MaxLength(128)]
         public string Openid { get; set; }
-
+        /// <summary>
+        /// 登录密码
+        /// </summary>
+        [MaxLength(256)]
+        public string Pwd { get; set; }
         /// <summary>
         /// 站点中的昵称，与wx昵称区分开
         /// </summary>

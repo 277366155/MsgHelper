@@ -39,12 +39,16 @@ namespace MH.Context
         /// <returns>是否成功</returns>
         public bool Create(WxUsers model)
         {
-            if (Table.Any(a => a.Openid == model.Openid))
-            {
-                return true;
-            }
             using (var entity = new MHContext())
             {
+                if (Table.Any(a => a.Openid == model.Openid))
+                {
+                    var user = entity.User.FirstOrDefault(a => a.Openid == model.Openid);
+                    user.LastLoginTime = DateTime.Now;
+                    entity.SaveChanges();
+                    return true;
+                }
+
                 var wxUser = entity.WxUsers.Add(model);
                 var userInfo = entity.User.Add(new User()
                 {
@@ -54,12 +58,16 @@ namespace MH.Context
                 entity.SaveChanges();
                 if (wxUser != null && userInfo != null)
                 {
-                    return true;//Mapper.Map<Tuple<WxUsers, User>, UserDTO>(new Tuple<WxUsers, User>(wxUser.Entity, userInfo.Entity));
+                    return true;
                 }
                 return false;
             }
         }
 
+        /// <summary>
+        /// 批量获取关注用户信息
+        /// </summary>
+        /// <returns></returns>
         public bool GetUserListAndUpdateDb()
         {
             var nextOpenid = "";
@@ -132,7 +140,7 @@ namespace MH.Context
             } while (true);
             #endregion 获取已关注用户列表
 
-            //如果线程未全部完成，则等待2秒钟
+            //如果线程未全部完成，则等待1秒钟
             while (!isFinished)//=="false")
             {
                 Thread.Sleep(1000);

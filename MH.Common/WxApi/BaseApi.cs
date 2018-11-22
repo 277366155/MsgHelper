@@ -95,8 +95,8 @@ namespace MH.Common
         {
             get
             {
-                var cache = new MemoryCache(new MemoryCacheOptions());  // MemoryCache.Default;
-                object cacheValue = cache.Get(AccessTokenKey);
+              
+                object cacheValue =  CacheTools.GetData<string>(AccessTokenKey);
                 //cache.TryGetValue(AccessTokenKey,out cacheValue);
                 if (cacheValue != null)
                 {
@@ -109,7 +109,7 @@ namespace MH.Common
                 var resultObj = JsonConvert.DeserializeObject<AccessToken>(resultStr);
                 if (resultObj != null)
                 {
-                    cache.Set(AccessTokenKey, resultObj.Access_token, DateTimeOffset.Now.AddSeconds(resultObj.Expires_in));
+                    CacheTools.SetData(AccessTokenKey, resultObj.Access_token, resultObj.Expires_in);
                     result = resultObj.Access_token;
                 }
                 return result;

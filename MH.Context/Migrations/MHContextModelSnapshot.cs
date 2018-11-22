@@ -299,6 +299,9 @@ namespace MH.Context.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(32);
 
+                    b.Property<string>("Pwd")
+                        .HasMaxLength(256);
+
                     b.Property<string>("RealName")
                         .HasMaxLength(32);
 

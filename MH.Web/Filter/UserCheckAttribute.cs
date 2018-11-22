@@ -1,6 +1,8 @@
 ﻿using MH.Common;
 using MH.Context;
+using MH.Core;
 using MH.Models.DBModel;
+using MH.Models.DTO;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
@@ -41,15 +43,22 @@ namespace MH.Web.Filter
                 var webToken = context.HttpContext.GetWebToken(code);
                 if (webToken != null && !string.IsNullOrWhiteSpace(webToken.Openid))
                 {
-                    context.HttpContext.SetCookie(webToken.Openid);
-
+                    //context.HttpContext.SetCookie(webToken.Openid);
+                    BaseCore.CurrentContext.SetCookie(webToken.Openid);
                     WxUsers.GetWxUserInfoAndInsertToDb(webToken.Openid);
+                    #region 获取当前用户信息，并缓存
+                    var userInfo = new UserContext().GetUserDTOByOpenid(webToken.Openid);                    
+                    var ip = context.HttpContext.Connection.RemoteIpAddress;
+                    var port = context.HttpContext.Connection.RemotePort;
+                    //todo:考虑在缓存时，对key添加上ip/mac地址标识。
+                    CacheTools.SetData(webToken.Openid+ip+port, userInfo);
+                    #endregion
                 }
             }
 
 
             //若不是，取身份信息
-            var userOpenid = context.GetCookie();
+            var userOpenid = BaseCore.CurrentContext.GetCookie();
             if (string.IsNullOrWhiteSpace(userOpenid))
             {
                 //无身份信息跳回主页
