@@ -45,13 +45,13 @@
                 </h1>
             </div>
             <div class="collapse navbar-collapse" id="header-navbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden-index active"><a asp-area="" asp-controller="Home" asp-action="Index">首页</a></li>
+                <ul class="nav navbar-nav navbar-right" id="menu">
+                    <li  area="" class="hidden-index active"><a asp-area="" asp-controller="Home" asp-action="Index">首页</a></li>
                     <li><a asp-area="" asp-controller="Article" asp-action="Index">我的文章</a></li>
                     <li><a asp-area="" asp-controller="Poll" asp-action="Index">我的投票</a></li>
-                    @if (UserInfo != null)
+                    @if (true)//(UserInfo != null)
                     {
-                    <li><a asp-area="" asp-controller="User" asp-action="Index">个人设置</a></li>
+                        <li area="User"><a asp-area="User" asp-controller="Account" asp-action="Index">个人设置</a></li>
                     }
                 </ul>
                 <form class="navbar-form visible-xs" action="/Search" method="post">
@@ -137,5 +137,18 @@
     </ul>
 </div>
 <script type="text/javascript">
-
+    //渲染一级菜单被选中的样式
+    $(function () {
+        var area = window.location.pathname.split("/")[1];
+        var liArr = $("#menu").find("li");
+        $.each(liArr, function () {
+            console.log($(this).html());
+            if ($(this).attr("area") == area) {
+                $(this).addClass("hidden-index active");
+            }
+            else {
+                $(this).removeClass("hidden-index active");
+            }
+        });
+    });
 </script>
