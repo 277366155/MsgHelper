@@ -23,8 +23,8 @@ namespace MH.Common
 		/// <param name="xmlKeys"></param>
 		/// <param name="xmlPublicKey"></param>
 		public void RSAKey(out string xmlKeys,out string xmlPublicKey) 
-		{ 			
-				System.Security.Cryptography.RSACryptoServiceProvider rsa=new RSACryptoServiceProvider(); 
+		{
+            RSACryptoServiceProvider rsa =new RSACryptoServiceProvider(); 
 				xmlKeys=rsa.ToXmlString(true); 
 				xmlPublicKey = rsa.ToXmlString(false); 			
 		} 
@@ -73,8 +73,8 @@ namespace MH.Common
 		{			
 			byte[] PlainTextBArray; 
 			byte[] DypherTextBArray; 
-			string Result; 
-			System.Security.Cryptography.RSACryptoServiceProvider rsa=new RSACryptoServiceProvider(); 
+			string Result;
+            RSACryptoServiceProvider rsa =new RSACryptoServiceProvider(); 
 			rsa.FromXmlString(xmlPrivateKey); 
 			PlainTextBArray =Convert.FromBase64String(m_strDecryptString); 
 			DypherTextBArray=rsa.Decrypt(PlainTextBArray, false); 
@@ -87,8 +87,8 @@ namespace MH.Common
 		public string RSADecrypt(string xmlPrivateKey, byte[] DecryptString ) 
 		{			
 			byte[] DypherTextBArray; 
-			string Result; 
-			System.Security.Cryptography.RSACryptoServiceProvider rsa=new RSACryptoServiceProvider(); 
+			string Result;
+            RSACryptoServiceProvider rsa =new RSACryptoServiceProvider(); 
 			rsa.FromXmlString(xmlPrivateKey); 
 			DypherTextBArray=rsa.Decrypt(DecryptString, false); 
 			Result=(new UnicodeEncoding()).GetString(DypherTextBArray); 
@@ -106,9 +106,9 @@ namespace MH.Common
 		public bool GetHash(string m_strSource, ref byte[] HashData) 
 		{ 			
 			//从字符串中取得Hash描述 
-			byte[] Buffer; 
-			System.Security.Cryptography.HashAlgorithm MD5 = System.Security.Cryptography.HashAlgorithm.Create("MD5"); 
-			Buffer = System.Text.Encoding.GetEncoding("GB2312").GetBytes(m_strSource); 
+			byte[] Buffer;
+            HashAlgorithm MD5 = HashAlgorithm.Create("MD5"); 
+			Buffer = Encoding.GetEncoding("GB2312").GetBytes(m_strSource); 
 			HashData = MD5.ComputeHash(Buffer); 
 
 			return true; 			
@@ -120,9 +120,9 @@ namespace MH.Common
 			
 			//从字符串中取得Hash描述 
 			byte[] Buffer; 
-			byte[] HashData; 
-			System.Security.Cryptography.HashAlgorithm MD5 = System.Security.Cryptography.HashAlgorithm.Create("MD5"); 
-			Buffer = System.Text.Encoding.GetEncoding("GB2312").GetBytes(m_strSource); 
+			byte[] HashData;
+            HashAlgorithm MD5 = HashAlgorithm.Create("MD5"); 
+			Buffer = Encoding.GetEncoding("GB2312").GetBytes(m_strSource); 
 			HashData = MD5.ComputeHash(Buffer); 
 
 			strHashData = Convert.ToBase64String(HashData); 
@@ -132,10 +132,10 @@ namespace MH.Common
 
 		//获取Hash描述表 
 		public bool GetHash(System.IO.FileStream objFile, ref byte[] HashData) 
-		{ 
-			
-			//从文件中取得Hash描述 
-			System.Security.Cryptography.HashAlgorithm MD5 = System.Security.Cryptography.HashAlgorithm.Create("MD5"); 
+		{
+
+            //从文件中取得Hash描述 
+            HashAlgorithm MD5 = HashAlgorithm.Create("MD5"); 
 			HashData = MD5.ComputeHash(objFile); 
 			objFile.Close(); 
 
@@ -148,8 +148,8 @@ namespace MH.Common
 		{ 
 			
 			//从文件中取得Hash描述 
-			byte[] HashData; 
-			System.Security.Cryptography.HashAlgorithm MD5 = System.Security.Cryptography.HashAlgorithm.Create("MD5"); 
+			byte[] HashData;
+            HashAlgorithm MD5 = HashAlgorithm.Create("MD5"); 
 			HashData = MD5.ComputeHash(objFile); 
 			objFile.Close(); 
 
@@ -157,197 +157,181 @@ namespace MH.Common
 
 			return true; 
 			
-		} 
-		#endregion 
+		}
+        #endregion
 
-		#region RSA签名 
-		//RSA签名 
-		public bool SignatureFormatter(string p_strKeyPrivate, byte[] HashbyteSignature, ref byte[] EncryptedSignatureData) 
-		{ 
-			
-				System.Security.Cryptography.RSACryptoServiceProvider RSA = new System.Security.Cryptography.RSACryptoServiceProvider(); 
+        #region RSA签名 
+        //RSA签名 
+        public bool SignatureFormatter(string p_strKeyPrivate, byte[] HashbyteSignature, ref byte[] EncryptedSignatureData)
+        {
+            RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
 
-				RSA.FromXmlString(p_strKeyPrivate); 
-				System.Security.Cryptography.RSAPKCS1SignatureFormatter RSAFormatter = new System.Security.Cryptography.RSAPKCS1SignatureFormatter(RSA); 
-				//设置签名的算法为MD5 
-				RSAFormatter.SetHashAlgorithm("MD5"); 
-				//执行签名 
-				EncryptedSignatureData = RSAFormatter.CreateSignature(HashbyteSignature); 
+            RSA.FromXmlString(p_strKeyPrivate);
+            RSAPKCS1SignatureFormatter RSAFormatter = new RSAPKCS1SignatureFormatter(RSA);
+            //设置签名的算法为MD5 
+            RSAFormatter.SetHashAlgorithm("MD5");
+            //执行签名 
+            EncryptedSignatureData = RSAFormatter.CreateSignature(HashbyteSignature);
 
-				return true; 
-			
-		} 
+            return true;
+        }
 
-		//RSA签名 
-		public bool SignatureFormatter(string p_strKeyPrivate, byte[] HashbyteSignature, ref string m_strEncryptedSignatureData) 
-		{ 
-			
-				byte[] EncryptedSignatureData; 
+        //RSA签名 
+        public bool SignatureFormatter(string p_strKeyPrivate, byte[] HashbyteSignature, ref string m_strEncryptedSignatureData)
+        {
+            byte[] EncryptedSignatureData;
 
-				System.Security.Cryptography.RSACryptoServiceProvider RSA = new System.Security.Cryptography.RSACryptoServiceProvider(); 
+            RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
 
-				RSA.FromXmlString(p_strKeyPrivate); 
-				System.Security.Cryptography.RSAPKCS1SignatureFormatter RSAFormatter = new System.Security.Cryptography.RSAPKCS1SignatureFormatter(RSA); 
-				//设置签名的算法为MD5 
-				RSAFormatter.SetHashAlgorithm("MD5"); 
-				//执行签名 
-				EncryptedSignatureData = RSAFormatter.CreateSignature(HashbyteSignature); 
+            RSA.FromXmlString(p_strKeyPrivate);
+            RSAPKCS1SignatureFormatter RSAFormatter = new RSAPKCS1SignatureFormatter(RSA);
+            //设置签名的算法为MD5 
+            RSAFormatter.SetHashAlgorithm("MD5");
+            //执行签名 
+            EncryptedSignatureData = RSAFormatter.CreateSignature(HashbyteSignature);
 
-				m_strEncryptedSignatureData = Convert.ToBase64String(EncryptedSignatureData); 
+            m_strEncryptedSignatureData = Convert.ToBase64String(EncryptedSignatureData);
 
-				return true; 
-			
-		} 
+            return true;
+        }
 
-		//RSA签名 
-		public bool SignatureFormatter(string p_strKeyPrivate, string m_strHashbyteSignature, ref byte[] EncryptedSignatureData) 
-		{ 
-			
-				byte[] HashbyteSignature; 
+        //RSA签名 
+        public bool SignatureFormatter(string p_strKeyPrivate, string m_strHashbyteSignature, ref byte[] EncryptedSignatureData)
+        {
+            byte[] HashbyteSignature;
 
-				HashbyteSignature = Convert.FromBase64String(m_strHashbyteSignature); 
-				System.Security.Cryptography.RSACryptoServiceProvider RSA = new System.Security.Cryptography.RSACryptoServiceProvider(); 
+            HashbyteSignature = Convert.FromBase64String(m_strHashbyteSignature);
+            RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
 
-				RSA.FromXmlString(p_strKeyPrivate); 
-				System.Security.Cryptography.RSAPKCS1SignatureFormatter RSAFormatter = new System.Security.Cryptography.RSAPKCS1SignatureFormatter(RSA); 
-				//设置签名的算法为MD5 
-				RSAFormatter.SetHashAlgorithm("MD5"); 
-				//执行签名 
-				EncryptedSignatureData = RSAFormatter.CreateSignature(HashbyteSignature); 
+            RSA.FromXmlString(p_strKeyPrivate);
+            RSAPKCS1SignatureFormatter RSAFormatter = new RSAPKCS1SignatureFormatter(RSA);
+            //设置签名的算法为MD5 
+            RSAFormatter.SetHashAlgorithm("MD5");
+            //执行签名 
+            EncryptedSignatureData = RSAFormatter.CreateSignature(HashbyteSignature);
 
-				return true; 
-			
-		} 
+            return true;
+        }
 
-		//RSA签名 
-		public bool SignatureFormatter(string p_strKeyPrivate, string m_strHashbyteSignature, ref string m_strEncryptedSignatureData) 
-		{ 
-			
-				byte[] HashbyteSignature; 
-				byte[] EncryptedSignatureData; 
+        //RSA签名 
+        public bool SignatureFormatter(string p_strKeyPrivate, string m_strHashbyteSignature, ref string m_strEncryptedSignatureData)
+        {
+            byte[] HashbyteSignature;
+            byte[] EncryptedSignatureData;
 
-				HashbyteSignature = Convert.FromBase64String(m_strHashbyteSignature); 
-				System.Security.Cryptography.RSACryptoServiceProvider RSA = new System.Security.Cryptography.RSACryptoServiceProvider(); 
+            HashbyteSignature = Convert.FromBase64String(m_strHashbyteSignature);
+            RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
 
-				RSA.FromXmlString(p_strKeyPrivate); 
-				System.Security.Cryptography.RSAPKCS1SignatureFormatter RSAFormatter = new System.Security.Cryptography.RSAPKCS1SignatureFormatter(RSA); 
-				//设置签名的算法为MD5 
-				RSAFormatter.SetHashAlgorithm("MD5"); 
-				//执行签名 
-				EncryptedSignatureData = RSAFormatter.CreateSignature(HashbyteSignature); 
+            RSA.FromXmlString(p_strKeyPrivate);
+            RSAPKCS1SignatureFormatter RSAFormatter = new RSAPKCS1SignatureFormatter(RSA);
+            //设置签名的算法为MD5 
+            RSAFormatter.SetHashAlgorithm("MD5");
+            //执行签名 
+            EncryptedSignatureData = RSAFormatter.CreateSignature(HashbyteSignature);
 
-				m_strEncryptedSignatureData = Convert.ToBase64String(EncryptedSignatureData); 
+            m_strEncryptedSignatureData = Convert.ToBase64String(EncryptedSignatureData);
 
-				return true; 
-			
-		} 
-		#endregion 
+            return true;
+        }
+        #endregion
 
-		#region RSA 签名验证 
+        #region RSA 签名验证 
 
-		public bool SignatureDeformatter(string p_strKeyPublic, byte[] HashbyteDeformatter, byte[] DeformatterData) 
-		{ 
-			
-				System.Security.Cryptography.RSACryptoServiceProvider RSA = new System.Security.Cryptography.RSACryptoServiceProvider(); 
+        public bool SignatureDeformatter(string p_strKeyPublic, byte[] HashbyteDeformatter, byte[] DeformatterData)
+        {
+            RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
 
-				RSA.FromXmlString(p_strKeyPublic); 
-				System.Security.Cryptography.RSAPKCS1SignatureDeformatter RSADeformatter = new System.Security.Cryptography.RSAPKCS1SignatureDeformatter(RSA); 
-				//指定解密的时候HASH算法为MD5 
-				RSADeformatter.SetHashAlgorithm("MD5"); 
+            RSA.FromXmlString(p_strKeyPublic);
+            RSAPKCS1SignatureDeformatter RSADeformatter = new RSAPKCS1SignatureDeformatter(RSA);
+            //指定解密的时候HASH算法为MD5 
+            RSADeformatter.SetHashAlgorithm("MD5");
 
-				if(RSADeformatter.VerifySignature(HashbyteDeformatter,DeformatterData)) 
-				{ 
-					return true; 
-				} 
-				else 
-				{ 
-					return false; 
-				} 
-			
-		} 
+            if (RSADeformatter.VerifySignature(HashbyteDeformatter, DeformatterData))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-		public bool SignatureDeformatter(string p_strKeyPublic, string p_strHashbyteDeformatter, byte[] DeformatterData) 
-		{ 
-			
-				byte[] HashbyteDeformatter; 
+        public bool SignatureDeformatter(string p_strKeyPublic, string p_strHashbyteDeformatter, byte[] DeformatterData)
+        {
+            byte[] HashbyteDeformatter;
 
-				HashbyteDeformatter = Convert.FromBase64String(p_strHashbyteDeformatter); 
+            HashbyteDeformatter = Convert.FromBase64String(p_strHashbyteDeformatter);
 
-				System.Security.Cryptography.RSACryptoServiceProvider RSA = new System.Security.Cryptography.RSACryptoServiceProvider(); 
+            RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
 
-				RSA.FromXmlString(p_strKeyPublic); 
-				System.Security.Cryptography.RSAPKCS1SignatureDeformatter RSADeformatter = new System.Security.Cryptography.RSAPKCS1SignatureDeformatter(RSA); 
-				//指定解密的时候HASH算法为MD5 
-				RSADeformatter.SetHashAlgorithm("MD5"); 
+            RSA.FromXmlString(p_strKeyPublic);
+            RSAPKCS1SignatureDeformatter RSADeformatter = new RSAPKCS1SignatureDeformatter(RSA);
+            //指定解密的时候HASH算法为MD5 
+            RSADeformatter.SetHashAlgorithm("MD5");
 
-				if(RSADeformatter.VerifySignature(HashbyteDeformatter,DeformatterData)) 
-				{ 
-					return true; 
-				} 
-				else 
-				{ 
-					return false; 
-				} 
-			
-		} 
+            if (RSADeformatter.VerifySignature(HashbyteDeformatter, DeformatterData))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-		public bool SignatureDeformatter(string p_strKeyPublic, byte[] HashbyteDeformatter, string p_strDeformatterData) 
-		{ 
-			
-				byte[] DeformatterData; 
+        public bool SignatureDeformatter(string p_strKeyPublic, byte[] HashbyteDeformatter, string p_strDeformatterData)
+        {
+            byte[] DeformatterData;
 
-				System.Security.Cryptography.RSACryptoServiceProvider RSA = new System.Security.Cryptography.RSACryptoServiceProvider(); 
+            RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
 
-				RSA.FromXmlString(p_strKeyPublic); 
-				System.Security.Cryptography.RSAPKCS1SignatureDeformatter RSADeformatter = new System.Security.Cryptography.RSAPKCS1SignatureDeformatter(RSA); 
-				//指定解密的时候HASH算法为MD5 
-				RSADeformatter.SetHashAlgorithm("MD5"); 
+            RSA.FromXmlString(p_strKeyPublic);
+            RSAPKCS1SignatureDeformatter RSADeformatter = new RSAPKCS1SignatureDeformatter(RSA);
+            //指定解密的时候HASH算法为MD5 
+            RSADeformatter.SetHashAlgorithm("MD5");
 
-				DeformatterData =Convert.FromBase64String(p_strDeformatterData); 
+            DeformatterData = Convert.FromBase64String(p_strDeformatterData);
 
-				if(RSADeformatter.VerifySignature(HashbyteDeformatter,DeformatterData)) 
-				{ 
-					return true; 
-				} 
-				else 
-				{ 
-					return false; 
-				} 
-			
-		} 
+            if (RSADeformatter.VerifySignature(HashbyteDeformatter, DeformatterData))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-		public bool SignatureDeformatter(string p_strKeyPublic, string p_strHashbyteDeformatter, string p_strDeformatterData) 
-		{ 
-			
-				byte[] DeformatterData; 
-				byte[] HashbyteDeformatter; 
+        public bool SignatureDeformatter(string p_strKeyPublic, string p_strHashbyteDeformatter, string p_strDeformatterData)
+        {
+            byte[] DeformatterData;
+            byte[] HashbyteDeformatter;
 
-				HashbyteDeformatter = Convert.FromBase64String(p_strHashbyteDeformatter); 
-				System.Security.Cryptography.RSACryptoServiceProvider RSA = new System.Security.Cryptography.RSACryptoServiceProvider(); 
+            HashbyteDeformatter = Convert.FromBase64String(p_strHashbyteDeformatter);
+            RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
 
-				RSA.FromXmlString(p_strKeyPublic); 
-				System.Security.Cryptography.RSAPKCS1SignatureDeformatter RSADeformatter = new System.Security.Cryptography.RSAPKCS1SignatureDeformatter(RSA); 
-				//指定解密的时候HASH算法为MD5 
-				RSADeformatter.SetHashAlgorithm("MD5"); 
+            RSA.FromXmlString(p_strKeyPublic);
+            RSAPKCS1SignatureDeformatter RSADeformatter = new RSAPKCS1SignatureDeformatter(RSA);
+            //指定解密的时候HASH算法为MD5 
+            RSADeformatter.SetHashAlgorithm("MD5");
 
-				DeformatterData =Convert.FromBase64String(p_strDeformatterData); 
+            DeformatterData = Convert.FromBase64String(p_strDeformatterData);
 
-				if(RSADeformatter.VerifySignature(HashbyteDeformatter,DeformatterData)) 
-				{ 
-					return true; 
-				} 
-				else 
-				{ 
-					return false; 
-				} 
-			
-		} 
+            if (RSADeformatter.VerifySignature(HashbyteDeformatter, DeformatterData))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
 
-		#endregion 
+        #endregion
 
 
-		#endregion 
+        #endregion
 
-	} 
+    } 
 } 
