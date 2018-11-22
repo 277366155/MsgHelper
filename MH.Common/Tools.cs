@@ -28,14 +28,14 @@ namespace MH.Common
             switch (param.Method)
             {
                 case  MethodEnum.Get:
-                    return GetRequest(new GetParam()
+                    return Get(new GetParam()
                     {
                         ContentType = param.ContentType,
                         RequestData = param.RequestData,
                         Url = param.Url
                     });
                 case MethodEnum.Post:
-                    return PostRequest(new PostParam()
+                    return Post(new PostParam()
                     {
                         ContentType = param.ContentType,
                         RequestData = param.RequestData,
@@ -52,7 +52,7 @@ namespace MH.Common
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static string PostRequest(PostParam param, string certPath = "", string certPwd = "")
+        public static string Post(PostParam param, string certPath = "", string certPwd = "")
         {
             var resultStr = "";
             //创建一个http请求
@@ -107,7 +107,7 @@ namespace MH.Common
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static string GetRequest(GetParam param)
+        public static string Get(GetParam param)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(param.Url + (string.IsNullOrWhiteSpace(param.RequestData) ? "" : "?" + param.RequestData));
             request.Method = param.Method.ToString();

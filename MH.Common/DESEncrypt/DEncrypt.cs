@@ -19,39 +19,6 @@ namespace MH.Common
 
 		#region 使用 缺省密钥字符串 加密/解密string
 
-		/// <summary>
-		/// 使用缺省密钥字符串加密string
-		/// </summary>
-		/// <param name="original">明文</param>
-		/// <returns>密文</returns>
-		public static string Encrypt(string original)
-		{
-            try
-            {
-                return Encrypt(original, Key);
-            }
-            catch 
-            {
-                return "";
-            }
-		}
-		/// <summary>
-		/// 使用缺省密钥字符串解密string
-		/// </summary>
-		/// <param name="original">密文</param>
-		/// <returns>明文</returns>
-		public static string Decrypt(string original)
-		{
-            try
-            {
-                return Decrypt(original, Key, System.Text.Encoding.Default);
-            }
-            catch 
-            {
-                return "";
-            }
-		}
-
 		#endregion
 
 		#region 使用 给定密钥字符串 加密/解密string
@@ -62,46 +29,62 @@ namespace MH.Common
 		/// <param name="key">密钥</param>
 		/// <param name="encoding">字符编码方案</param>
 		/// <returns>密文</returns>
-		public static string Encrypt(string original, string key)  
-		{  
-			byte[] buff = System.Text.Encoding.Default.GetBytes(original);  
-			byte[] kb = System.Text.Encoding.Default.GetBytes(key);
-			return Convert.ToBase64String(Encrypt(buff,kb));      
+		public static string Encrypt(string original, string key=Key)  
+		{
+            try
+            {
+                byte[] buff = System.Text.Encoding.Default.GetBytes(original);
+                byte[] kb = System.Text.Encoding.Default.GetBytes(key);
+                return Convert.ToBase64String(Encrypt(buff, kb));
+            }
+            catch
+            {
+                return "";
+            }
 		}
-		/// <summary>
+		
+        /// <summary>
 		/// 使用给定密钥字符串解密string
 		/// </summary>
 		/// <param name="original">密文</param>
 		/// <param name="key">密钥</param>
 		/// <returns>明文</returns>
-		public static string Decrypt(string original, string key)
+		public static string Decrypt(string original, string key=Key)
 		{
-			return Decrypt(original,key,System.Text.Encoding.Default);
-		}
+		
+            try
+            {
+                return Decrypt(original, key, Encoding.Default);
+            }
+            catch
+            {
+                return "";
+            }
+        }
 
-		/// <summary>
-		/// 使用给定密钥字符串解密string,返回指定编码方式明文
-		/// </summary>
-		/// <param name="encrypted">密文</param>
-		/// <param name="key">密钥</param>
-		/// <param name="encoding">字符编码方案</param>
-		/// <returns>明文</returns>
-		public static string Decrypt(string encrypted, string key,Encoding encoding)  
-		{       
-			byte[] buff = Convert.FromBase64String(encrypted);  
-			byte[] kb = System.Text.Encoding.Default.GetBytes(key);
-			return encoding.GetString(Decrypt(buff,kb));      
-		}  
-		#endregion
+        /// <summary>
+        /// 使用给定密钥字符串解密string,返回指定编码方式明文
+        /// </summary>
+        /// <param name="encrypted">密文</param>
+        /// <param name="key">密钥</param>
+        /// <param name="encoding">字符编码方案</param>
+        /// <returns>明文</returns>
+        public static string Decrypt(string encrypted, string key, Encoding encoding)
+        {
+            byte[] buff = Convert.FromBase64String(encrypted);
+            byte[] kb = Encoding.Default.GetBytes(key);
+            return encoding.GetString(Decrypt(buff, kb));
+        }
+        #endregion
 
-		#region 使用 缺省密钥字符串 加密/解密/byte[]
-		/// <summary>
-		/// 使用缺省密钥字符串解密byte[]
-		/// </summary>
-		/// <param name="encrypted">密文</param>
-		/// <param name="key">密钥</param>
-		/// <returns>明文</returns>
-		public static byte[] Decrypt(byte[] encrypted)  
+        #region 使用 缺省密钥字符串 加密/解密/byte[]
+        /// <summary>
+        /// 使用缺省密钥字符串解密byte[]
+        /// </summary>
+        /// <param name="encrypted">密文</param>
+        /// <param name="key">密钥</param>
+        /// <returns>明文</returns>
+        public static byte[] Decrypt(byte[] encrypted)  
 		{  
 			byte[] key = System.Text.Encoding.Default.GetBytes(Key); 
 			return Decrypt(encrypted,key);     
