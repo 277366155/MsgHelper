@@ -7,18 +7,18 @@
                     @*<li><a href="tags.html">标签云</a></li>*@
 
                     <!--todo:读者墙，考虑对活跃用户排名前十排行榜-->
-                    <li><a href="readers.html" rel="nofollow">读者墙</a></li>
-                    <li><a href="links.html" rel="nofollow">友情链接</a></li>
-                    <li><a data-toggle="modal" data-target="#Notice" rel="nofollow"><i class="fa fa-rss"></i> 公告</a></li>
+                    <li><a href="readers.html" rel="nofollow"><i class="fa fa-signal"></i> 读者墙</a></li>
+                    <li><a href="links.html" rel="nofollow"><i class="fa fa-chain"></i> 友情链接</a></li>
+                    <li><a data-toggle="modal" data-target="#Notice" rel="nofollow"><i class="fa fa-bullhorn"></i> 公告</a></li>
                     <li><a data-toggle="modal" data-target="#WeChat" rel="nofollow"><i class="fa fa-weixin"></i> 微信公众号</a></li>
-                    
+
                     @*<li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" rel="nofollow">关注本站 <span class="caret"></span></a>
-                        <ul class="dropdown-menu header-topbar-dropdown-menu">
-                            <li><a data-toggle="modal" data-target="#WeChat" rel="nofollow"><i class="fa fa-weixin"></i> 微信公众号</a></li>
-                            <li><a data-toggle="modal" data-target="#Notice" rel="nofollow"><i class="fa fa-rss"></i> 公告</a></li>
-                        </ul>
-                    </li>*@
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" rel="nofollow">关注本站 <span class="caret"></span></a>
+                            <ul class="dropdown-menu header-topbar-dropdown-menu">
+                                <li><a data-toggle="modal" data-target="#WeChat" rel="nofollow"><i class="fa fa-weixin"></i> 微信公众号</a></li>
+                                <li><a data-toggle="modal" data-target="#Notice" rel="nofollow"><i class="fa fa-rss"></i> 公告</a></li>
+                            </ul>
+                        </li>*@
                 </ul>
                 <a data-toggle="modal" data-target="#loginModal" class="login" rel="nofollow">Hi,请登录</a>&nbsp;&nbsp;<a href="javascript:;" class="register" rel="nofollow">我要注册</a>&nbsp;&nbsp;<a href="" rel="nofollow">找回密码</a>
             </div>
@@ -60,7 +60,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="WeChatModalLabel" style="cursor:default;">微信扫一扫</h4>
             </div>
-            <div class="modal-body" style="text-align:center"> <img src="~/Assets/images/wx.jpg" alt="" style="cursor:pointer" /> </div>
+            <div class="modal-body" style="text-align:center"> <img src="~/Assets/images/wx.jpg" alt="" style="cursor:pointer;" width="248" /> </div>
         </div>
     </div>
 </div>
@@ -82,4 +82,42 @@
             </div>
         </div>
     </div>
+</div>
+<!--登录注册模态框-->
+<div class="modal fade user-select" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/Admin/Index/login" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="loginModalLabel">登录</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="loginModalUserNmae">用户名</label>
+                        <input type="text" class="form-control" id="loginModalUserNmae" placeholder="请输入用户名" autofocus maxlength="15" autocomplete="off" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginModalUserPwd">密码</label>
+                        <input type="password" class="form-control" id="loginModalUserPwd" placeholder="请输入密码" maxlength="18" autocomplete="off" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--右键菜单列表-->
+<div id="rightClickMenu">
+    <ul class="list-group rightClickMenuList">
+        <li class="list-group-item disabled">欢迎访问信息助手官网</li>
+        @*<li class="list-group-item"><span>IP：</span>172.16.10.129</li>
+            <li class="list-group-item"><span>地址：</span>河南省郑州市</li>
+            <li class="list-group-item"><span>系统：</span>Windows10 </li>
+            <li class="list-group-item"><span>浏览器：</span>Chrome47</li>*@
+    </ul>
 </div>

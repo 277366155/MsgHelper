@@ -17,10 +17,27 @@ namespace MH.Context
         /// </summary>
         protected abstract IQueryable<T> Table { get;  }
 
+        private static MHContext entity;
         /// <summary>
         /// 单例数据库实例
         /// </summary>
-        protected static MHContext Entity;
+        protected static MHContext Entity
+        {
+            get
+            {
+                if (entity == null||entity.IsDisposed)
+                {
+                    lock (obj)
+                    {
+                        if (entity == null || entity.IsDisposed)
+                        {
+                            entity = new MHContext(DbConnection);
+                        }
+                    }
+                }
+                return entity;
+            }
+        }
         /// <summary>
         /// 数据库连接地址
         /// </summary>
@@ -32,24 +49,13 @@ namespace MH.Context
             {
                 DbConnection=BaseCore.Configuration.GetConnectionString("MySqlConnection");
             }
-
-            if (Entity == null)
-            {
-                lock (obj)
-                {
-                    if (Entity == null)
-                    {
-                        Entity = new MHContext(DbConnection);
-                    }
-                }
-            }
         }
 
          ~ContextBase()
         {
-            if (Entity != null)
+            if (entity != null&&!entity.IsDisposed)
             {
-                Entity.Dispose();
+                entity.Dispose();
             }
         }
     }

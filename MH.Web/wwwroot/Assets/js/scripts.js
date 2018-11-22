@@ -95,7 +95,7 @@ $(window).scroll(function () {
 $("#gotop").click(function () {
     $('html,body').animate({
         'scrollTop': 0
-    }, 500);
+    }, 300);
 });
  
 //图片延时加载
@@ -180,12 +180,12 @@ $(window).scroll(function () {
     //自定义菜单
     document.oncontextmenu = function (event) {
 		$(oMenu).fadeOut(0);
-        var event = event || window.event;
+        var event2 = event || window.event;
         var style = oMenu.style;
         $(oMenu).fadeIn(300);
 		//style.display = "block";
-        style.top = event.clientY + "px";
-        style.left = event.clientX + "px";
+        style.top = event2.clientY + "px";
+        style.left = event2.clientX + "px";
         return false;
     };
     //页面点击后自定义菜单消失

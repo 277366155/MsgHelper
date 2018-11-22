@@ -33,4 +33,8 @@
     <ProjectReference Include="..\MH.Core\MH.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\" />
+  </ItemGroup>
+
 </Project>
