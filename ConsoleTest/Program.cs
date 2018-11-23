@@ -1,5 +1,7 @@
 ﻿using MH.Common;
 using System;
+using System.Threading;
+using System.Xml.Serialization;
 
 namespace ConsoleTest
 {
@@ -7,8 +9,26 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
-            Test();
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    Thread.Sleep(1000);
+            //    Console.WriteLine($"生成第{i+1}张验证码");
+            //    ImgTest();
+            //}
+            //Console.WriteLine("生成验证码完成");
+            T();
             Console.Read();
+        }
+
+        public static void T()
+        {
+            ValidateCodeImgHelper.GetValCodeImg("13265");
+        }
+
+        public static void ImgTest()
+        {
+           var imgBytes= ValidateCodeImgHelper.CreateValidateGraphic("51s5t");
+            FileHelper.CreateFileByBytes(DateTime.Now.ToString("yyyyMMddHHmmss")+".jpeg",imgBytes);
         }
 
         private static void Test()

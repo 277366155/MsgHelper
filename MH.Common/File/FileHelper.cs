@@ -17,5 +17,18 @@ namespace MH.Common
                 return str;
             }
         }
+
+        public static void CreateFileByBytes(string path,byte[] bytesData)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            using (var fs = new FileStream(path, FileMode.CreateNew, FileAccess.Write))
+            {
+                fs.Write(bytesData);                
+            }
+        }
     }
 }
