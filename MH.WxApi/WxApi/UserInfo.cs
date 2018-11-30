@@ -1,7 +1,8 @@
-﻿using MH.Core;
-using Newtonsoft.Json;
+﻿using MH.Common;
+using MH.Core;
+using MH.WxApiModels;
 
-namespace MH.Common
+namespace MH.WxApi
 {
     public partial class WxApi
     {

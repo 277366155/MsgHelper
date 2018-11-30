@@ -1,6 +1,5 @@
 ﻿using MH.Common;
 using MH.Core;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
 

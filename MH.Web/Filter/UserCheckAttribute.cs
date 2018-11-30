@@ -1,23 +1,16 @@
 ﻿using MH.Common;
 using MH.Context;
 using MH.Core;
-using MH.Models.DBModel;
-using MH.Models.DTO;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
 using System;
 using System.Net;
+using MH.WxApi;
 
 namespace MH.Web.Filter
 {
     public class UserCheckAttribute : Attribute,IActionFilter
     {
         private static WxUsersContext WxUsers=>new WxUsersContext();
-        public UserCheckAttribute()
-        {
-        }
         public void OnActionExecuted(ActionExecutedContext context)
         {
             //throw new NotImplementedException();

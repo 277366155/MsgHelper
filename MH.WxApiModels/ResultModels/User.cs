@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MH.Common
+namespace MH.WxApiModels
 {
     #region 用户列表信息
     public class OpenidListModel

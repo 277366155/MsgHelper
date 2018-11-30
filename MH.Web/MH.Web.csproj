@@ -22,9 +22,9 @@
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.13" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +35,9 @@
     <ProjectReference Include="..\MH.Common\MH.Common.csproj" />
     <ProjectReference Include="..\MH.Context\MH.Context.csproj" />
     <ProjectReference Include="..\MH.Core\MH.Core.csproj" />
+    <ProjectReference Include="..\MH.Models\MH.Models.csproj" />
+    <ProjectReference Include="..\MH.WxApiModels\MH.WxApiModels.csproj" />
+    <ProjectReference Include="..\MH.WxApi\MH.WxApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>

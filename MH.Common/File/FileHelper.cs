@@ -27,7 +27,7 @@ namespace MH.Common
 
             using (var fs = new FileStream(path, FileMode.CreateNew, FileAccess.Write))
             {
-                fs.Write(bytesData);                
+                fs.Write(bytesData,0,bytesData.Length);                
             }
         }
     }

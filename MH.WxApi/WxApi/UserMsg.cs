@@ -1,8 +1,9 @@
 ﻿using MH.Core;
-using Microsoft.AspNetCore.Http;
 using System.Xml;
+using MH.Common;
+using MH.WxApiModels;
 
-namespace MH.Common
+namespace MH.WxApi
 {
     public partial  class WxApi
     {

@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace MH.Common
+namespace MH.WxApiModels
 {
     #region 接收消息model
     /// <summary>

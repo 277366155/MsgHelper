@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MH.Common;
 
-namespace MH.Common
+namespace MH.WxApi
 {
     public static partial class WxApi
     {

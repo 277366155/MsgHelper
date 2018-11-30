@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MH.Common;
 using MH.Context;
+using MH.WxApi;
+using MH.WxApiModels;
 
 namespace MH.Web.ApiControllers
 {
@@ -46,21 +45,21 @@ namespace MH.Web.ApiControllers
             var subBtns=new SubButtonList() { name="其他", sub_button= new List<Button>() };
             subBtns.sub_button.Add(new ViewButton() { name="个人信息", type = ButtonType.view.ToString(), url = "http://277366155.cn/home/info" });
             data.button.Add(subBtns);
-           return Content(WxApi.CreateMenu(data));
+           return Content(WxApi.WxApi.CreateMenu(data));
         }
 
         [HttpPost]
         [Route("menu/delete")]
         public IActionResult DeleteMenu()
         {
-            return Content(WxApi.DeleteMenu());
+            return Content(WxApi.WxApi.DeleteMenu());
         }
 
         [HttpGet]
         [Route("menu/select")]
         public IActionResult SelectMenu()
         {
-            return Content(WxApi.SelectMenu());
+            return Content(WxApi.WxApi.SelectMenu());
         }
     }
 }

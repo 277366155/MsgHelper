@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MH.Common;
+using MH.WxApiModels;
 
-namespace MH.Common
+namespace MH.WxApi
 {
     //客服账号管理
     public static partial class WxApi

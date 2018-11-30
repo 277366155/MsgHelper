@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MH.WxApiModels;
+
 namespace MH.Context
 {
     public class WxUsersContext : ContextBase<WxUsers>
@@ -27,7 +29,7 @@ namespace MH.Context
         /// <returns></returns>
         public bool GetWxUserInfoAndInsertToDb(string userOpenid)
         {
-            var userInfoStr = WxApi.GetUserInfo(userOpenid);
+            var userInfoStr = WxApi.WxApi.GetUserInfo(userOpenid);
             var data = userInfoStr.JsonToObj<WxUsers>();
             return Create(data);
         }
@@ -84,7 +86,7 @@ namespace MH.Context
             #region 获取已关注用户列表
             do
             {
-                var openidList = WxApi.GetUserList(nextOpenid).JsonToObj<OpenidListModel>();
+                var openidList = WxApi.WxApi.GetUserList(nextOpenid).JsonToObj<OpenidListModel>();
                 if (openidList == null || openidList.Data == null || openidList.Data.Openid.Count <= 0)
                 {
                     break;//跳出循环体
@@ -124,7 +126,7 @@ namespace MH.Context
                         Parallel.For(1, times + 1, i =>
                             {
                             //最多请求100条用户详情，存入变量中。
-                            var userInfoListJson = WxApi.GetBatchUserInfos(new OpenidListParam() { user_list = openidListParam.user_list.Skip((i - 1) * requestDataCount).Take(requestDataCount).ToList() });
+                            var userInfoListJson = WxApi.WxApi.GetBatchUserInfos(new OpenidListParam() { user_list = openidListParam.user_list.Skip((i - 1) * requestDataCount).Take(requestDataCount).ToList() });
                         lock (lockObj)
                         {
                             userInfoList.User_info_list.AddRange(userInfoListJson.JsonToObj<UserInfoList>()?.User_info_list);

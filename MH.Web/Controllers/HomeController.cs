@@ -4,12 +4,9 @@ using MH.Web.Models;
 using Microsoft.AspNetCore.Http;
 using MH.Common;
 using System.Net;
-using Newtonsoft.Json;
-using MH.Models.DBModel;
-using Microsoft.EntityFrameworkCore;
 using MH.Context;
-using MH.Web;
 using MH.Web.Filter;
+using MH.WxApi;
 
 namespace MH.Web.Controllers
 {

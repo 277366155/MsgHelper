@@ -1,4 +1,4 @@
-﻿namespace MH.Common
+﻿namespace MH.WxApiModels
 {
     #region 客服模型
     public class CustomServiceResult

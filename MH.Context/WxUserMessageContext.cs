@@ -4,6 +4,8 @@ using MH.Models.DBModel;
 using System.Linq;
 using AutoMapper;
 using System;
+using MH.WxApiModels;
+using MH.WxApi;
 
 namespace MH.Context
 {
@@ -48,7 +50,7 @@ namespace MH.Context
         /// <returns></returns>
         public WxUserMessage GetXmlDataAndInsert()
         {
-            var data =WxApi.GetUserMsg();
+            var data =WxApi.WxApi.GetUserMsg();
             if (data == null)
             {
                 return null;
@@ -68,7 +70,7 @@ namespace MH.Context
                         //如果db不存在该用户信息，则插入
                         if (!entity.WxUsers.Any(a => !a.IsDel && a.Openid == msgData.FromUserName))
                         {
-                            var userInfoJson = WxApi.GetUserInfo(msgData.FromUserName);
+                            var userInfoJson = WxApi.WxApi.GetUserInfo(msgData.FromUserName);
                             entity.WxUsers.Add(userInfoJson.JsonToObj<WxUsers>());
                             userAddReulst = entity.SaveChanges();
                         }

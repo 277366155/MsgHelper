@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MH.Core;
 using MH.Web.Filter;
 using MH.Models.DTO;
+using MH.WxApi;
 
 namespace MH.Web
 {

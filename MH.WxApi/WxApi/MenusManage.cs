@@ -1,6 +1,8 @@
-﻿using MH.Core;
+﻿using MH.Common;
+using MH.Core;
+using MH.WxApiModels;
 
-namespace MH.Common
+namespace MH.WxApi
 {
     public static partial class WxApi
     {

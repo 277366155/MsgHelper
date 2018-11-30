@@ -8,7 +8,6 @@ namespace MH.Core
     public static class BaseCore
     {
         public static IServiceProvider ServiceProvider { get; set; }
-        static BaseCore() { }
         public static IHttpContextAccessor CurrentAccessor
         {
             get

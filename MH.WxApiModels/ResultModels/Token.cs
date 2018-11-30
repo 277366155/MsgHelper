@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MH.Common
+﻿namespace MH.WxApiModels
 {
     #region token信息
     /// <summary>

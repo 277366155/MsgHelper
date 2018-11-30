@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using MH.Core;
 using MH.Models.DTO;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace MH.Common
 {
-   public class CacheTools
+    public class CacheTools
     {
         /// <summary>
         /// 程序内存缓存对象

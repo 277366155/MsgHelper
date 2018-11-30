@@ -1,35 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using MH.Common;
 using MH.Core;
-using Microsoft.Extensions.Primitives;
+using MH.WxApiModels;
 
-namespace MH.Common
+namespace MH.WxApi
 {
     public static partial class WxApi
     {
-
-
-        ///// <summary>
-        ///// 读取配置
-        ///// </summary>
-        //private static IConfigurationRoot Configuration
-        //{
-        //    get
-        //    {
-        //        var builder = new ConfigurationBuilder()
-        //            .SetBasePath(Directory.GetCurrentDirectory())
-        //            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-        //        return builder.Build();
-        //    }
-        //}
         public static string APPID = BaseCore.Configuration["AppSettings:WxConfig:AppId"];
         public static string Secret = BaseCore.Configuration["AppSettings:WxConfig:Secret"];
         public static string WXTokenUrl = BaseCore.Configuration["AppSettings:WxConfig:TokenUrl"]; //"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";

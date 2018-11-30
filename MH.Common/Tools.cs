@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.IO;
 using System.Net;
@@ -7,7 +6,6 @@ using System.Net.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace MH.Common
 {
@@ -279,22 +277,7 @@ namespace MH.Common
             }
             return DEncrypt.Decrypt(httpContext.Request.Cookies[cookieKey]);
         }
-
-        ///// <summary>
-        ///// 从cookie中拿到信息并解密
-        ///// </summary>
-        ///// <param name="accessor"></param>
-        ///// <returns></returns>
-        //public static string GetCookie(this FilterContext filter, string cookieKey = CookieKey)
-        //{
-        //    if (string.IsNullOrWhiteSpace(cookieKey))
-        //    {
-        //        return "";
-        //    }
-        //    return DEncrypt.Decrypt(filter.HttpContext.Request.Cookies[cookieKey]);
-        //}
-
-
+        
         /// <summary>
         /// 将信息加密保存到cookie
         /// </summary>

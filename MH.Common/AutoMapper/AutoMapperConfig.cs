@@ -2,6 +2,7 @@
 using AutoMapper;
 using MH.Models.DBModel;
 using MH.Models.DTO;
+using MH.WxApiModels;
 
 namespace MH.Common.AutoMapping
 {
@@ -30,7 +31,7 @@ namespace MH.Common.AutoMapping
 
                 cfg.CreateMap<WXMsgBase, WxUserMessage>().AfterMap((source, destination) =>
                 {
-                    destination.MsgType = (MsgTypeEnum)Enum.Parse<MsgTypeEnum>(source.MsgType.ToUpper());
+                    destination.MsgType = (MsgTypeEnum)Enum.Parse(typeof(MsgTypeEnum),source.MsgType.ToUpper());
                     destination.MsgContent = source.ObjToJson();
                     destination.CreateTimeSpan = source.CreateTime;
                     destination.CreateTime = DateTime.Now;

@@ -1,41 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20181019072530_更新用户消息表结构.cs" />
-    <Compile Remove="Migrations\20181030165146_添加外键关系.cs" />
-    <Compile Remove="Migrations\20181030165751_添加外键关系.cs" />
-    <Compile Remove="Migrations\20181030170047_添加外键关系.cs" />
-    <Compile Remove="Migrations\20181030181226_s.cs" />
-    <Compile Remove="Migrations\20181030181534_test.cs" />
-    <Compile Remove="Migrations\20181030181916_test.cs" />
-    <Compile Remove="Migrations\20181030181916_test.Designer.cs" />
-    <Compile Remove="Migrations\20181030183207_撤销test.cs" />
-    <Compile Remove="Migrations\20181030183207_撤销test.Designer.cs" />
-    <Compile Remove="Migrations\20181031184156_updateDB.cs" />
-    <Compile Remove="Migrations\20181031184156_updateDB.Designer.cs" />
-    <Compile Remove="Migrations\20181031184418_UserInfosUpdate.cs" />
-    <Compile Remove="Migrations\20181031184418_UserInfosUpdate.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
+    <PackageReference Include="MySql.Data" Version="8.0.13" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore.Design" Version="8.0.13" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MH.Common\MH.Common.csproj" />
     <ProjectReference Include="..\MH.Core\MH.Core.csproj" />
     <ProjectReference Include="..\MH.Models\MH.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore">
-      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore\2.0.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\MH.WxApi\MH.WxApi.csproj" />
   </ItemGroup>
 
 </Project>
