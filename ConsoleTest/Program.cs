@@ -1,25 +1,25 @@
 ﻿using MH.Common;
 using System;
 using System.Threading;
-using System.Xml.Serialization;
+using System.Threading.Tasks;
 
-namespace ConsoleTest
+namespace MH.ConsoleTest
 {
     class Program
     {
+       
         static void Main(string[] args)
         {
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    Thread.Sleep(1000);
-            //    Console.WriteLine($"生成第{i+1}张验证码");
-            //    ImgTest();
-            //}
-            //Console.WriteLine("生成验证码完成");
-            T();
+            TaskTest.PrintTaskId("进入Main");
+            TaskTest.PrintAsync();
+            for (var i = 0; i < 5; i++)
+            {
+                Thread.Sleep(500);
+                Console.WriteLine("Main结束，i="+i);
+            }
             Console.Read();
         }
-
+        
         public static void T()
         {
             ValidateCodeImgHelper.GetValCodeImg("13265");
@@ -31,8 +31,10 @@ namespace ConsoleTest
             FileHelper.CreateFileByBytes(DateTime.Now.ToString("yyyyMMddHHmmss")+".jpeg",imgBytes);
         }
 
-        private static void Test()
+        private static async  Task SendMailTest(Action action)
         {
+            action();
+
             var body = FileHelper.FileReadText("/template.html");
             body= body.Replace("{code}","651368");
             var toMail = "277366155@qq.com";
