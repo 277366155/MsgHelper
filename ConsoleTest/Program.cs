@@ -1,4 +1,7 @@
-﻿using MH.Common;
+﻿using Com.Ctrip.Framework.Apollo;
+using MH.Common;
+using MH.Core;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Text;
 using System.Threading;
@@ -11,10 +14,22 @@ namespace MH.ConsoleTest
        
         static void Main(string[] args)
         {
-			UTF8Base64EncodeAndDecode();
-
+			//UTF8Base64EncodeAndDecode();
+			ConfigBuilderTest();
 			Console.Read();
         }
+
+		private static void ConfigBuilderTest()
+		{
+			var config = BaseCore.Configuration.GetSection("apollo");
+			Console.WriteLine("1:"+config.ObjToJson()+"\r\n");
+			BaseCore.InitConfigurationBuilder((a)=> {
+				a.AddJsonFile("appsettings03.json", optional: true, reloadOnChange: true);
+				});
+			config = BaseCore.Configuration.GetSection("apollo");
+			Console.WriteLine("2:"+config.ObjToJson());
+		}
+
 
 
 		private static void UTF8Base64EncodeAndDecode()

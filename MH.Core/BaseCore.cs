@@ -25,18 +25,37 @@ namespace MH.Core
         }
 
 
-        /// <summary>
-        /// 读取配置
-        /// </summary>
-        public static IConfigurationRoot Configuration
+		private static IConfigurationBuilder _builder;
+		private static object lockObj = new object();
+		public static IConfigurationBuilder InitConfigurationBuilder(Action<IConfigurationBuilder> act=null)
+		{
+
+			if (_builder == null)
+			{
+				lock (lockObj)
+				{
+					if (_builder == null)
+					{
+						var builder = new ConfigurationBuilder()
+						.SetBasePath(Directory.GetCurrentDirectory())
+						.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);						
+						_builder = builder;
+					}
+				}				
+			}
+			act?.Invoke(_builder);
+
+			return _builder;
+		}
+
+		/// <summary>
+		/// 读取配置
+		/// </summary>
+		public static IConfigurationRoot Configuration
         {
             get
             {
-                var builder = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-                return builder.Build();
+                return InitConfigurationBuilder().Build();
             }
         }
     }
