@@ -21,13 +21,15 @@ namespace MH.ConsoleTest
 
 		private static void ConfigBuilderTest()
 		{
-			var config = BaseCore.Configuration.GetSection("apollo");
-			Console.WriteLine("1:"+config.ObjToJson()+"\r\n");
-			BaseCore.InitConfigurationBuilder((a)=> {
-				a.AddJsonFile("appsettings03.json", optional: true, reloadOnChange: true);
-				});
-			config = BaseCore.Configuration.GetSection("apollo");
-			Console.WriteLine("2:"+config.ObjToJson());
+			var config1 = BaseCore.GetConfiguration();
+			//Console.WriteLine("1 :"+config1.GetSection("apollo").ObjToJson());
+			Console.WriteLine("1 :" + config1.GetSection("Logging").ObjToJson());
+			//BaseCore.InitConfigurationBuilder((a)=> {
+			//	a.AddJsonFile("appsettings03.json", optional: true, reloadOnChange: true);
+			//	});
+			//var 	config2 = BaseCore.GetConfiguration();
+			//Console.WriteLine("2 :"+config2["apollo"].ObjToJson());
+			//Console.WriteLine("2 :" + config2["Logging"].ObjToJson());
 		}
 
 
