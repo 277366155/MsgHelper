@@ -18,21 +18,19 @@ namespace MH.ConsoleTest
 			ConfigBuilderTest();
 			Console.Read();
         }
-
 		private static void ConfigBuilderTest()
 		{
-			var config1 = BaseCore.GetConfiguration();
-			//Console.WriteLine("1 :"+config1.GetSection("apollo").ObjToJson());
-			Console.WriteLine("1 :" + config1.GetSection("Logging").ObjToJson());
-			//BaseCore.InitConfigurationBuilder((a)=> {
-			//	a.AddJsonFile("appsettings03.json", optional: true, reloadOnChange: true);
-			//	});
-			//var 	config2 = BaseCore.GetConfiguration();
-			//Console.WriteLine("2 :"+config2["apollo"].ObjToJson());
-			//Console.WriteLine("2 :" + config2["Logging"].ObjToJson());
+			var config1 = BaseCore.Configuration;
+			//Console.WriteLine("1 :"+config1.GetValue<dynamic>("apollo").ObjToJson());
+			Console.WriteLine("1 :" + config1.GetSection("Logging:IncludeScopes").ObjToJson());
+			BaseCore.InitConfigurationBuilder((a) =>
+			{
+				a.AddJsonFile("appsettings02.json", optional: true, reloadOnChange: true);			
+			});
+			var config2 = BaseCore.Configuration;
+			Console.WriteLine("2 :" + config1.GetSection("Logging:IncludeScopes").ObjToJson());
+			Console.WriteLine("2 :" + config2.GetSection("apollo:appid").Value);			
 		}
-
-
 
 		private static void UTF8Base64EncodeAndDecode()
 		{

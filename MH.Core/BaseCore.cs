@@ -30,19 +30,19 @@ namespace MH.Core
 		public static IConfigurationBuilder InitConfigurationBuilder(Action<IConfigurationBuilder> act=null)
 		{
 
-			//if (_builder == null)
-			//{
-			//	lock (lockObj)
-			//	{
-			//		if (_builder == null)
-			//		{
+			if (_builder == null)
+			{
+				lock (lockObj)
+				{
+					if (_builder == null)
+					{
 						var builder = new ConfigurationBuilder()
 						.SetBasePath(Directory.GetCurrentDirectory())
-						.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);						
+						.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 						_builder = builder;
-			//		}
-			//	}				
-			//}
+					}
+				}
+			}
 			act?.Invoke(_builder);
 
 			return _builder;
@@ -58,16 +58,5 @@ namespace MH.Core
                 return InitConfigurationBuilder().Build();
             }
         }
-
-
-		public static IConfigurationRoot GetConfiguration() //(Action<IConfigurationBuilder> act = null)
-		{
-			var builder = new ConfigurationBuilder()
-						.SetBasePath(Directory.GetCurrentDirectory())
-						.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-			//act?.Invoke(builder);
-
-			return builder.Build();
-		}
 	}
 }
