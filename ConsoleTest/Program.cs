@@ -14,8 +14,10 @@ namespace MH.ConsoleTest
        
         static void Main(string[] args)
         {
+
+			Sms.SendMsg();
 			//UTF8Base64EncodeAndDecode();
-			ConfigBuilderTest();
+			//ConfigBuilderTest();
 			Console.Read();
         }
 		private static void ConfigBuilderTest()
