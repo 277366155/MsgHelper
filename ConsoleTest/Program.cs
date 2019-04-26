@@ -3,6 +3,7 @@ using MH.Common;
 using MH.Core;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,12 +15,26 @@ namespace MH.ConsoleTest
        
         static void Main(string[] args)
         {
-
-			Sms.SendMsg();
+			TraceListener();
+			
+			//Sms.SendMsg();
 			//UTF8Base64EncodeAndDecode();
 			//ConfigBuilderTest();
 			Console.Read();
         }
+
+		private static void TraceListener()
+		{
+			Trace.Listeners.Clear();
+			Trace.Listeners.Add(new CustomTraceListener());
+			while (true)
+			{ 
+			Console.WriteLine("输入记录：");
+			var txt = Console.ReadLine();
+			Trace.TraceWarning(txt);
+			Console.WriteLine("\r——————————————————————");
+			}
+		}
 		private static void ConfigBuilderTest()
 		{
 			var config1 = BaseCore.Configuration;
