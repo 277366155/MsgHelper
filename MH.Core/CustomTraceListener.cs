@@ -6,7 +6,7 @@ namespace MH.Core
 {
 	public class CustomTraceListener : TraceListener
 	{
-		private static string LogFileName = $"{DateTime.Now.ToString("yyyy-MM-dd HH")}.log";
+		private static string LogFileName = $"{DateTime.Now.ToString("yyyy-MM-dd")}.log";
 		private static string _dirPath = "";
 		private string LogFilePath = $"{DirPath}\\Log\\";
 

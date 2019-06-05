@@ -15,12 +15,12 @@ namespace MH.ConsoleTest
        
         static void Main(string[] args)
         {
-			TraceListener();
-			
-			//Sms.SendMsg();
-			//UTF8Base64EncodeAndDecode();
-			//ConfigBuilderTest();
-			Console.Read();
+			//TraceListener();
+            new ApolloTest().RunTest();
+            //Sms.SendMsg();
+            //UTF8Base64EncodeAndDecode();
+            //ConfigBuilderTest();
+            Console.Read();
         }
 
 		private static void TraceListener()
