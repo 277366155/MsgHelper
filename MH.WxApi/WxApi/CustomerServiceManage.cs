@@ -20,10 +20,10 @@ namespace MH.WxApi
             {
                 ContentType = ContentType.Json,
                 Url = requestUrl,
-                RequestData = param.ObjToJson()
+                RequestData = param.ToJson()
             });
 
-            return data.JsonToObj<CustomServiceResult>();
+            return data.ToObj<CustomServiceResult>();
         }
     }
 }

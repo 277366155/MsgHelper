@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MH.Common\MH.Common.csproj" />
     <ProjectReference Include="..\MH.Core\MH.Core.csproj" />
+    <ProjectReference Include="..\MH.RabbitMq\MH.RabbitMq.csproj" />
   </ItemGroup>
 
   <ItemGroup>

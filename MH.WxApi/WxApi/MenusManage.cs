@@ -22,7 +22,7 @@ namespace MH.WxApi
             {
                 ContentType = ContentType.FormUrlEncoded,
                 Url = requestUrl,
-                RequestData = buttonParam.ObjToJson()
+                RequestData = buttonParam.ToJson()
             });
             return result;
         }

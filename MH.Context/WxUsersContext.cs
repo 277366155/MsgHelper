@@ -30,7 +30,7 @@ namespace MH.Context
         public bool GetWxUserInfoAndInsertToDb(string userOpenid)
         {
             var userInfoStr = WxApi.WxApi.GetUserInfo(userOpenid);
-            var data = userInfoStr.JsonToObj<WxUsers>();
+            var data = userInfoStr.ToObj<WxUsers>();
             return Create(data);
         }
 
@@ -86,7 +86,7 @@ namespace MH.Context
             #region 获取已关注用户列表
             do
             {
-                var openidList = WxApi.WxApi.GetUserList(nextOpenid).JsonToObj<OpenidListModel>();
+                var openidList = WxApi.WxApi.GetUserList(nextOpenid).ToObj<OpenidListModel>();
                 if (openidList == null || openidList.Data == null || openidList.Data.Openid.Count <= 0)
                 {
                     break;//跳出循环体
@@ -129,7 +129,7 @@ namespace MH.Context
                             var userInfoListJson = WxApi.WxApi.GetBatchUserInfos(new OpenidListParam() { user_list = openidListParam.user_list.Skip((i - 1) * requestDataCount).Take(requestDataCount).ToList() });
                         lock (lockObj)
                         {
-                            userInfoList.User_info_list.AddRange(userInfoListJson.JsonToObj<UserInfoList>()?.User_info_list);
+                            userInfoList.User_info_list.AddRange(userInfoListJson.ToObj<UserInfoList>()?.User_info_list);
                         }
                         if (i == times)
                         {

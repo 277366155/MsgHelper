@@ -15,12 +15,26 @@ namespace MH.ConsoleTest
        
         static void Main(string[] args)
         {
-			//TraceListener();
-            new ApolloTest().RunTest();
+
+
+            //TraceListener();
+            //new ApolloTest().RunTest();
             //Sms.SendMsg();
             //UTF8Base64EncodeAndDecode();
             //ConfigBuilderTest();
+            RabbitMqTest();
             Console.Read();
+        }
+
+        private static void RabbitMqTest()
+        {
+            var rabb = new RabbitMqTest();
+            rabb.Consumer();
+            while (true)
+            {
+                Console.WriteLine("输入年龄和姓名。。");
+                rabb.Publisher();
+            }
         }
 
 		private static void TraceListener()
@@ -39,13 +53,13 @@ namespace MH.ConsoleTest
 		{
 			var config1 = BaseCore.Configuration;
 			//Console.WriteLine("1 :"+config1.GetValue<dynamic>("apollo").ObjToJson());
-			Console.WriteLine("1 :" + config1.GetSection("Logging:IncludeScopes").ObjToJson());
+			Console.WriteLine("1 :" + config1.GetSection("Logging:IncludeScopes").ToJson());
 			BaseCore.InitConfigurationBuilder((a) =>
 			{
 				a.AddJsonFile("appsettings02.json", optional: true, reloadOnChange: true);			
 			});
 			var config2 = BaseCore.Configuration;
-			Console.WriteLine("2 :" + config1.GetSection("Logging:IncludeScopes").ObjToJson());
+			Console.WriteLine("2 :" + config1.GetSection("Logging:IncludeScopes").ToJson());
 			Console.WriteLine("2 :" + config2.GetSection("apollo:appid").Value);			
 		}
 

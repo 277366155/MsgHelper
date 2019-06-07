@@ -62,7 +62,7 @@ namespace MH.WxApi
             {
                 param = new OpenidListParam();
             }
-            var resultStr = Tools.Post(new PostParam() { Url = requestUrl, ContentType = ContentType.FormUrlEncoded, RequestData = param.ObjToJson() });
+            var resultStr = Tools.Post(new PostParam() { Url = requestUrl, ContentType = ContentType.FormUrlEncoded, RequestData = param.ToJson() });
             return resultStr;
         }
         #endregion

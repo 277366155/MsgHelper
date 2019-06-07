@@ -26,7 +26,7 @@ namespace MH.Web.ApiControllers
         [Route("Init")]
         public ActionResult Init()
         {
-          return Content(new WxUsersContext().GetUserListAndUpdateDb().ObjToJson());
+          return Content(new WxUsersContext().GetUserListAndUpdateDb().ToJson());
         }
         [HttpPost]
         [Route("menu/create")]

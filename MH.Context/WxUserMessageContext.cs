@@ -71,7 +71,7 @@ namespace MH.Context
                         if (!entity.WxUsers.Any(a => !a.IsDel && a.Openid == msgData.FromUserName))
                         {
                             var userInfoJson = WxApi.WxApi.GetUserInfo(msgData.FromUserName);
-                            entity.WxUsers.Add(userInfoJson.JsonToObj<WxUsers>());
+                            entity.WxUsers.Add(userInfoJson.ToObj<WxUsers>());
                             userAddReulst = entity.SaveChanges();
                         }
                         //两者都成功才commit

@@ -32,7 +32,7 @@ namespace MH.Common.AutoMapping
                 cfg.CreateMap<WXMsgBase, WxUserMessage>().AfterMap((source, destination) =>
                 {
                     destination.MsgType = (MsgTypeEnum)Enum.Parse(typeof(MsgTypeEnum),source.MsgType.ToUpper());
-                    destination.MsgContent = source.ObjToJson();
+                    destination.MsgContent = source.ToJson();
                     destination.CreateTimeSpan = source.CreateTime;
                     destination.CreateTime = DateTime.Now;
                 });

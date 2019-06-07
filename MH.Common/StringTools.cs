@@ -21,7 +21,7 @@ namespace MH.Common
         /// </summary>
         /// <param name="obj">对象模型</param>
         /// <returns></returns>
-        public static string ObjToJson(this object obj)
+        public static string ToJson(this object obj)
         {
             if (obj != null)
             {
@@ -37,7 +37,7 @@ namespace MH.Common
         /// <typeparam name="T">目标类型</typeparam>
         /// <param name="json">json数据</param>
         /// <returns></returns>
-        public static T JsonToObj<T>(this string json)
+        public static T ToObj<T>(this string json)
         {
             if (!json.IsNullOrWhiteSpace())
             {
