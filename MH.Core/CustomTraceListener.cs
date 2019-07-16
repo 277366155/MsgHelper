@@ -20,17 +20,21 @@ namespace MH.Core
 				return _dirPath;
 			}
 		}
-		
+
 		public override void Write(string message)
 		{
 			CreateFile();
+			Console.WriteLine(message);
 			File.AppendAllText(LogFilePath+LogFileName, message);
+			//base.Write(LogFilePath + LogFileName, message);
 		}
 
 		public override void WriteLine(string message)
 		{
 			CreateFile();
+			Console.WriteLine(message);
 			File.AppendAllText(LogFilePath+LogFileName, $"[{DateTime.Now}]\t{message}\r\n");
+			//base.Write(LogFilePath + LogFileName, $"[{DateTime.Now}]\t{message}\r\n");
 		}
 
 		private void CreateFile()

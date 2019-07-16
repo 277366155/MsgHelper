@@ -1,5 +1,6 @@
 ﻿using Com.Ctrip.Framework.Apollo;
 using MH.Common;
+using MH.ConsoleTest.Common;
 using MH.Core;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -10,43 +11,54 @@ using System.Threading.Tasks;
 
 namespace MH.ConsoleTest
 {
-    class Program
-    {
-       
-        static void Main(string[] args)
-        {
+	class Program
+	{
 
+		static void Main(string[] args)
+		{
+			TraceListener();
+			//new ApolloTest().RunTest();
+			//Sms.SendMsg();
+			//UTF8Base64EncodeAndDecode();
+			//ConfigBuilderTest();
+			//RabbitMqTest();
 
-            //TraceListener();
-            //new ApolloTest().RunTest();
-            //Sms.SendMsg();
-            //UTF8Base64EncodeAndDecode();
-            //ConfigBuilderTest();
-            RabbitMqTest();
-            Console.Read();
-        }
+			//SigneCheck();
+			Console.Read();
+		}
 
-        private static void RabbitMqTest()
-        {
-            var rabb = new RabbitMqTest();
-            rabb.Consumer();
-            while (true)
-            {
-                Console.WriteLine("输入年龄和姓名。。");
-                rabb.Publisher();
-            }
-        }
+		public static void SigneCheck()
+		{
+			var data = "appId=Boo_Test&businessParam={'id':3244002}&requestId=123df&timestamp=1561790792662&vendorId=Boo";
+			var signResult = SSLHelper.GetSignResult(data);
+			Console.WriteLine($"签名结果：[{signResult}]");
+
+			var check = SSLHelper.CheckSign(signResult, data);
+			Console.WriteLine($"公钥验证签名：[{check}]");
+		}
+		private static void RabbitMqTest()
+		{
+			var rabb = new RabbitMqTest();
+			rabb.Consumer();
+			while (true)
+			{
+				Console.WriteLine("输入年龄和姓名。。");
+				rabb.Publisher();
+			}
+		}
 
 		private static void TraceListener()
 		{
 			Trace.Listeners.Clear();
 			Trace.Listeners.Add(new CustomTraceListener());
 			while (true)
-			{ 
-			Console.WriteLine("输入记录：");
-			var txt = Console.ReadLine();
-			Trace.TraceWarning(txt);
-			Console.WriteLine("\r——————————————————————");
+			{
+				Console.WriteLine("输入记录：");
+				var txt = Console.ReadLine();
+				Trace.TraceInformation("TraceInformation：" + txt);
+				Trace.TraceWarning("TraceWarning：" + txt);
+				Trace.TraceError("TraceError：" + txt);
+				Console.WriteLine("\r——————————————————————");
 			}
 		}
 		private static void ConfigBuilderTest()
@@ -56,11 +68,11 @@ namespace MH.ConsoleTest
 			Console.WriteLine("1 :" + config1.GetSection("Logging:IncludeScopes").ToJson());
 			BaseCore.InitConfigurationBuilder((a) =>
 			{
-				a.AddJsonFile("appsettings02.json", optional: true, reloadOnChange: true);			
+				a.AddJsonFile("appsettings02.json", optional: true, reloadOnChange: true);
 			});
 			var config2 = BaseCore.Configuration;
 			Console.WriteLine("2 :" + config1.GetSection("Logging:IncludeScopes").ToJson());
-			Console.WriteLine("2 :" + config2.GetSection("apollo:appid").Value);			
+			Console.WriteLine("2 :" + config2.GetSection("apollo:appid").Value);
 		}
 
 		private static void UTF8Base64EncodeAndDecode()
@@ -80,7 +92,7 @@ namespace MH.ConsoleTest
 				{
 					key = null;
 				}
-				var encodStr = Common.DEncrypt.Encrypt(input, Encoding.UTF8, key);
+				var encodStr = DEncrypt.Encrypt(input, Encoding.UTF8, key);
 				Console.WriteLine($"编码结果：{encodStr}");
 
 			}
@@ -98,26 +110,26 @@ namespace MH.ConsoleTest
 		}
 
 
-        public static void T()
-        {
-            ValidateCodeImgHelper.GetValCodeImg("13265");
-        }
+		public static void T()
+		{
+			ValidateCodeImgHelper.GetValCodeImg("13265");
+		}
 
-        public static void ImgTest()
-        {
-           var imgBytes= ValidateCodeImgHelper.CreateValidateGraphic("51s5t");
-            FileHelper.CreateFileByBytes(DateTime.Now.ToString("yyyyMMddHHmmss")+".jpeg",imgBytes);
-        }
+		public static void ImgTest()
+		{
+			var imgBytes = ValidateCodeImgHelper.CreateValidateGraphic("51s5t");
+			FileHelper.CreateFileByBytes(DateTime.Now.ToString("yyyyMMddHHmmss") + ".jpeg", imgBytes);
+		}
 
-        private static async  Task SendMailTest(Action action)
-        {
-            action();
+		private static async Task SendMailTest(Action action)
+		{
+			action();
 
-            var body = FileHelper.FileReadText("/template.html");
-            body= body.Replace("{code}","651368");
-            var toMail = "277366155@qq.com";
-            var title = "注册验证码";
-            EmailHelper.SendMailAsync(toMail, title, body);
-        }
-    }
+			var body = FileHelper.FileReadText("/template.html");
+			body = body.Replace("{code}", "651368");
+			var toMail = "277366155@qq.com";
+			var title = "注册验证码";
+			EmailHelper.SendMailAsync(toMail, title, body);
+		}
+	}
 }

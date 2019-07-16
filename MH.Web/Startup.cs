@@ -11,6 +11,7 @@ using System.IO;
 using System;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using MH.Common.AutoMapping;
+using MH.Context;
 
 namespace MH.Web
 {
