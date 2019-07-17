@@ -11,7 +11,7 @@ namespace MH.Common
         /// <summary>
         /// 取ContentType类中只读字段
         /// </summary>
-        public string ContentType { get; set; }
+        public ContentType ContentType { get; set; }
         public string Encode { get; set; }
         public MethodEnum? Method { get; set; }
         public string RequestData { get; set; }
@@ -51,25 +51,34 @@ namespace MH.Common
 
     }
 
-    public static class ContentType
-    {
-        /// <summary>
-        /// post提交application/x-www-form-urlencoded
-        /// </summary>
-        public readonly static string FormUrlEncoded = "application/x-www-form-urlencoded";
-        /// <summary>
-        /// post提交application/json
-        /// </summary>
-        public readonly static string Json = "application/json; charset=utf-8";
+	public abstract class ContentType
+	{
+		public abstract string Value { get; }
+	}
 
-        ///// <summary>
-        /// post上传文件流
-        /// </summary>
-        public readonly static string OctetStream = "application/octet-stream";
+	public class FormUrlEncoded : ContentType
+	{
+		public override string Value   => "application/x-www-form-urlencoded"; 
+	}
 
-        /// <summary>
-        /// get提交text/html;charset=UTF-8
-        /// </summary>
-        public readonly static string TextHtml = "text/html;charset=UTF-8";
-    }
+	public class ApplicationJson : ContentType
+	{
+		public override string Value => "application/json; charset=utf-8";
+	}
+
+	public class OctetStream : ContentType
+	{
+		public override string Value => "application/octet-stream";
+	}
+
+	public class TextHtml : ContentType
+	{
+		public override string Value => "text/html;charset=UTF-8";
+	}
+
+
+	public class FormData : ContentType
+	{
+		public override string Value => "multipart/form-data";
+	}
 }

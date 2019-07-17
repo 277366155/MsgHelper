@@ -20,7 +20,7 @@ namespace MH.WxApi
             var requestUrl = WXCreateMenuUrl + "?access_token=" + AccessToken;
             var result = Tools.Post(new PostParam()
             {
-                ContentType = ContentType.FormUrlEncoded,
+                ContentType =new FormUrlEncoded(),
                 Url = requestUrl,
                 RequestData = buttonParam.ToJson()
             });
@@ -35,7 +35,7 @@ namespace MH.WxApi
         public static string DeleteMenu()
         {
             var requestUrl = WXDeleteMenuUrl + "?access_token=" + AccessToken;
-            var result = Tools.Get(new GetParam() {  ContentType = ContentType.TextHtml, Url = requestUrl });
+            var result = Tools.Get(new GetParam() {  ContentType = new TextHtml(), Url = requestUrl });
             return result;
         }
 
@@ -47,7 +47,7 @@ namespace MH.WxApi
         public static string SelectMenu()
         {
             var requestUrl = WXSelectMenuUrl + "?access_token=" + AccessToken;
-            var result = Tools.Get(new GetParam() {  ContentType = ContentType.TextHtml, Url = requestUrl });
+            var result = Tools.Get(new GetParam() {  ContentType = new TextHtml(), Url = requestUrl });
             return result;
         }
 

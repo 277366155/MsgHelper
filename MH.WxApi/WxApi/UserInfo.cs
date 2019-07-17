@@ -28,7 +28,7 @@ namespace MH.WxApi
             {
                 requestUrl += "&&next_openid=" + nextOpenid;
             }
-            var resultStr = Tools.Get(new GetParam() {  Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
+            var resultStr = Tools.Get(new GetParam() {  Url = requestUrl, ContentType = new TextHtml(), RequestData = "" });
             return resultStr;
 
         }
@@ -45,7 +45,7 @@ namespace MH.WxApi
         public static string GetUserInfo(string openId, string lang = "zh_CN")
         {
             var requestUrl = WXUserInfoUrl + "?access_token=" + AccessToken + "&openid=" + openId + "&lang=" + lang;
-            var resultStr = Tools.Get(new GetParam() {  Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
+            var resultStr = Tools.Get(new GetParam() {  Url = requestUrl, ContentType = new TextHtml(), RequestData = "" });
             return resultStr;
         }
 
@@ -62,7 +62,7 @@ namespace MH.WxApi
             {
                 param = new OpenidListParam();
             }
-            var resultStr = Tools.Post(new PostParam() { Url = requestUrl, ContentType = ContentType.FormUrlEncoded, RequestData = param.ToJson() });
+            var resultStr = Tools.Post(new PostParam() { Url = requestUrl, ContentType =new FormUrlEncoded(), RequestData = param.ToJson() });
             return resultStr;
         }
         #endregion

@@ -18,7 +18,7 @@ namespace MH.WxApi
             var requestUrl = AddCustomerServiceUrl.Replace("{token}", AccessToken);
             var data = Tools.Post(new PostParam()
             {
-                ContentType = ContentType.Json,
+                ContentType = new ApplicationJson(),
                 Url = requestUrl,
                 RequestData = param.ToJson()
             });

@@ -60,7 +60,7 @@ namespace MH.Common
             //设置请求类型
             request.Method = param.Method.ToString();
             //请求内容格式
-            request.ContentType = param.ContentType;
+            request.ContentType = param.ContentType.Value;
             //request.Accept = "*/*";
             //request.AllowAutoRedirect = false;
             if (param.Url.Trim().ToLower().IndexOf("https") == 0)
@@ -109,7 +109,7 @@ namespace MH.Common
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(param.Url + (string.IsNullOrWhiteSpace(param.RequestData) ? "" : "?" + param.RequestData));
             request.Method = param.Method.ToString();
-            request.ContentType = param.ContentType;
+            request.ContentType = param.ContentType.Value;
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream myResponseStream = response.GetResponseStream();
