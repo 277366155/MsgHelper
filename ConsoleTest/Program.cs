@@ -16,12 +16,12 @@ namespace MH.ConsoleTest
 
 		static void Main(string[] args)
 		{
-			TraceListener();
+			//TraceListener();
 			//new ApolloTest().RunTest();
 			//Sms.SendMsg();
 			//UTF8Base64EncodeAndDecode();
 			//ConfigBuilderTest();
-			//RabbitMqTest();
+			RabbitMqTest();
 
 			//SigneCheck();
 			Console.Read();
@@ -40,11 +40,11 @@ namespace MH.ConsoleTest
 		{
 			var rabb = new RabbitMqTest();
 			rabb.Consumer();
-			while (true)
-			{
-				Console.WriteLine("输入年龄和姓名。。");
-				rabb.Publisher();
-			}
+			//while (true)
+			//{
+			//	Console.WriteLine("输入年龄和姓名。。");
+			//	rabb.Publisher();
+			//}
 		}
 
 		private static void TraceListener()
