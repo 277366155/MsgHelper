@@ -16,6 +16,7 @@ namespace MH.ConsoleTest
 
 		static void Main(string[] args)
 		{
+			Console.WriteLine("启动成功。。。。");
 			//TraceListener();
 			//new ApolloTest().RunTest();
 			//Sms.SendMsg();
@@ -24,6 +25,7 @@ namespace MH.ConsoleTest
 			RabbitMqTest();
 
 			//SigneCheck();
+			//SendMailTest(null);
 			Console.Read();
 		}
 
@@ -39,12 +41,13 @@ namespace MH.ConsoleTest
 		private static void RabbitMqTest()
 		{
 			var rabb = new RabbitMqTest();
-			rabb.Consumer();
-			//while (true)
-			//{
-			//	Console.WriteLine("输入年龄和姓名。。");
-			//	rabb.Publisher();
-			//}
+			//rabb.Consumer();
+			rabb.Consumer2();
+			while (true)
+			{
+				Console.WriteLine("输入年龄和姓名。。");
+				rabb.Publisher();
+			}
 		}
 
 		private static void TraceListener()
@@ -121,9 +124,9 @@ namespace MH.ConsoleTest
 			FileHelper.CreateFileByBytes(DateTime.Now.ToString("yyyyMMddHHmmss") + ".jpeg", imgBytes);
 		}
 
-		private static async Task SendMailTest(Action action)
+		private static void SendMailTest(Action action)
 		{
-			action();
+			action?.Invoke();
 
 			var body = FileHelper.FileReadText("/template.html");
 			body = body.Replace("{code}", "651368");
