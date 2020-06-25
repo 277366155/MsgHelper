@@ -86,7 +86,7 @@ namespace MH.WxApi
 
                 string result = "";
                 string requestUrl = WXTokenUrl + "&appid=" + APPID + "&Secret=" + Secret;
-                var resultStr = Tools.Get(new GetParam() {  Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
+                var resultStr = Tools.Get(new GetParam() {  Url = requestUrl, ContentType = new TextHtml() , RequestData = "" });
                 var resultObj = JsonConvert.DeserializeObject<AccessToken>(resultStr);
                 if (resultObj != null)
                 {
@@ -122,7 +122,7 @@ namespace MH.WxApi
         public static WebToken GetWebToken(this HttpContext httpContext, string code = "")
         {
             string requestUrl = WxWebTokenUrl.Replace("{appid}", APPID).Replace("{secret}", Secret).Replace("{code}", code);
-            var resultStr = Tools.Get(new GetParam() { Url = requestUrl, ContentType = ContentType.TextHtml, RequestData = "" });
+            var resultStr = Tools.Get(new GetParam() { Url = requestUrl, ContentType = new TextHtml(), RequestData = "" });
             var resultObj = JsonConvert.DeserializeObject<WebToken>(resultStr);
 
             return resultObj;

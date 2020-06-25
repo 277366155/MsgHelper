@@ -8,8 +8,7 @@ namespace MH.RabbitMq
     {
         public Publisher(RabbitMqOptions options) : base(options)
         {
-            //绑定Exchange与Queue的路由关系
-            Channel.QueueBind(options.QueueName, options.ExchangeName, options.RoutingKey, null);
+
         }
 
         public void PublisherStart<T>(T obj)
