@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MH.Admin", "MH.Admin\MH.Admin.csproj", "{90594840-C23D-4E77-888E-2DD73AD230EC}"
 EndProject
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core.NetStandard2.0.3", "Co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Context.NetStandard2.0.3", "Context.NetStandard2.0.3", "{2DAA8958-0EFF-4297-BAA5-0B1846980BB8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Run.NetCore2.1", "Run.NetCore2.1", "{E081ECC8-09D5-41E2-8C85-CA18C201CD5E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Run.NetCore3.1", "Run.NetCore3.1", "{E081ECC8-09D5-41E2-8C85-CA18C201CD5E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MH.MongoDB", "MongoDBHelper\MH.MongoDB.csproj", "{5EBE74B8-6892-44E9-A44D-F62EF55601F6}"
 EndProject

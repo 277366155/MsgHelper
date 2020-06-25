@@ -11,10 +11,12 @@ namespace MH.RabbitMq
     {
         private EventingBasicConsumer consumer;
         private string _consumerTag;
+        private bool queueAck = false;
         public Consumer(RabbitMqOptions options) : base(options)
         {
             consumer = new EventingBasicConsumer(Channel);
             _consumerTag = Channel.BasicConsume(options.QueueName, options.QueueNoAck, consumer);
+            queueAck = !options.QueueNoAck;
         }
 
         public void ConsumeStart<T>(Action<T> act)
@@ -25,7 +27,10 @@ namespace MH.RabbitMq
                 if (!string.IsNullOrWhiteSpace(msg))
                 {
                     act(msg.ToObj<T>());
-                    //Channel.BasicAck(e.DeliveryTag, false);
+                    if (queueAck)
+                    {
+                        Channel.BasicAck(e.DeliveryTag, false);
+                    }
                 }
             };
         }
@@ -40,7 +45,10 @@ namespace MH.RabbitMq
                 if (!string.IsNullOrWhiteSpace(msg))
                 {
                     result = func(msg.ToObj<T>());
-                    //Channel.BasicAck(e.DeliveryTag, false);
+                    if (queueAck)
+                    {
+                        Channel.BasicAck(e.DeliveryTag, false);
+                    }
                 }
             };
             return result;

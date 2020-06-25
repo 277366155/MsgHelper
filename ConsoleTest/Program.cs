@@ -23,6 +23,7 @@ namespace MH.ConsoleTest
             //UTF8Base64EncodeAndDecode();
             //ConfigBuilderTest();
             RabbitMqTest();
+            //ServiceCollectioinTest.TestRun();
             Console.Read();
         }
 

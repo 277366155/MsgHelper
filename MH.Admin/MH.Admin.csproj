@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject>MH.Admin.Program</StartupObject>
@@ -14,8 +14,8 @@
     <None Remove="wwwroot\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
-  </ItemGroup>
+<ItemGroup>
+<FrameworkReference Include="Microsoft.AspNetCore.App" />
+</ItemGroup>
 
 </Project>
